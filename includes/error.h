@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:47:00 by phutran           #+#    #+#             */
-/*   Updated: 2025/09/24 15:32:56 by phutran          ###   ########.fr       */
+/*   Updated: 2025/09/25 15:35:37 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@
 # define ERROR_COPY_MAP_FAILED "Failed to validate path"
 
 // MLX
-# define ERROR_MLX_INIT "Failed to initialize MinilibX"
-# define ERROR_MLX_WIN "Failed to create window"
+# define ERROR_MLX_INIT "mlx_init: Failed to initialize MinilibX"
+# define ERROR_MLX_WIN "mlx_new_window: Failed to create window"
+# define ERROR_MLX_IMAGE "mlx_xpm_file_to_image: Failed to load image"
+
+// Elements
+# define ERROR_UNKNOWN_ELEMENT_FOUND "Invalid map: Unknown element"
+# define ERROR_PLAYER_NOT_FOUND "Invalid map: Player not found"
+# define ERROR_MULTIPLE_PLAYERS_FOUND "Invalid map: Multiple players found"
+# define ERROR_WALL "Invalid map: Incomplete wall"
 
 #endif

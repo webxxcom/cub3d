@@ -6,28 +6,13 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/09/24 15:31:36 by phutran          ###   ########.fr       */
+/*   Updated: 2025/09/25 15:35:41 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	validate_filename(t_game *game, const char *filename)
-{
-	char	*basename;
-	size_t	len;
 
-	basename = ft_strrchr(filename, '/');
-	if (!basename)
-		basename = (char *)filename;
-	if (*basename == '/')
-		basename++;
-	len = ft_strlen(basename);
-	if (len == 4 && !ft_strncmp(basename + len - 4, ".cub", 4))
-		exit_game(ERROR_INVALID_FILE, game);
-	if (len < 4 || ft_strncmp(basename + len - 4, ".cub", 4))
-		exit_game(ERROR_FILE_EXTENSION, game);
-}
 
 static void	read_map(t_game *game, t_list **list, const char *map_file)
 {
@@ -58,13 +43,13 @@ static void	read_map(t_game *game, t_list **list, const char *map_file)
 
 static void	load_map(t_game *game, t_list *list)
 {
-	size_t	i;
+	int	i;
+	int	width;
 
 	if (!list)
 		exit_game(ERROR_EMPTY_FILE, game);
-	game->map.height = ft_lstsize(list);
-	game->map.grid = malloc((game->map.height + 1) * sizeof(char *));
-	if (!game->map.grid)
+	game->map = malloc((ft_lstsize(list) + 1) * sizeof(char *));
+	if (!game->map)
 	{
 		ft_lst_free(list);
 		exit_game(ERROR_PARSE_MAP_FAILED, game);
@@ -72,17 +57,14 @@ static void	load_map(t_game *game, t_list *list)
 	i = 0;
 	while (list)
 	{
-		game->map.grid[i] = list->content;
-		game->map.width = ft_strlen(list->content);
-		if (game->map.grid[i][game->map.width - 1] == '\n')
-		{
-			game->map.grid[i][game->map.width - 1] = '\0';
-			--game->map.width;
-		}
+		game->map[i] = list->content;
+		width = ft_strlen(list->content);
+		if (game->map[i][width - 1] == '\n')
+			game->map[i][width - 1] = '\0';
 		list = list->next;
 		++i;
 	}
-	game->map.grid[i] = NULL;
+	game->map[i] = NULL;
 }
 
 void	parse_map(t_game *game, const char *map_file)
@@ -94,5 +76,5 @@ void	parse_map(t_game *game, const char *map_file)
 	read_map(game, &list, map_file);
 	load_map(game, list);
 	ft_lst_free(list);
-	// validate_map(game);
+	validate_map(game);
 }

@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/09/24 15:10:39 by phutran          ###   ########.fr       */
+/*   Updated: 2025/09/25 15:35:39 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,16 @@ typedef struct s_textures
 	void	*north;
 	void	*south;
 	void	*east;
-	void	*west;	
+	void	*west;
 }			t_textures;
+
+typedef struct s_paths
+{
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
+}			t_paths;
 
 typedef	struct s_point
 {
@@ -40,20 +48,14 @@ typedef	struct s_point
 	int	y;
 }		t_point;
 
-typedef struct s_map
-{
-	char	**grid;
-	int		height;
-	int		width;
-}			t_map;
-
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	t_map		map;
+	char		**map;
 	t_point		player;
-	t_textures	*textures;
+	t_paths		paths;
+	t_textures	textures;
 }				t_game;
 
 // Game

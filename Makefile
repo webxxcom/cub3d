@@ -5,7 +5,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 SRCS		= main.c \
 			sources/game/start.c sources/game/exit.c \
-			sources/parse/parse.c
+			sources/parse/parse_map.c sources/parse/parse_textures.c sources/parse/validate.c
 OBJS		= $(SRCS:%.c=%.o)
 
 LIBFT_DIR	= libft
