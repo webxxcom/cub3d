@@ -4,9 +4,11 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 
 SRCS		= main.c \
-			sources/game/start.c sources/game/exit.c \
-			sources/parse/parse_map.c sources/parse/parse_textures.c sources/parse/validate.c
-OBJS		= $(SRCS:%.c=%.o)
+			  sources/game/start.c sources/game/exit.c sources/game/loop.c \
+			  sources/parse/parse.c sources/parse/validate.c
+
+OBJ_DIR		= obj
+OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 LIBFT_DIR	= libft
 LIBFT_A		= $(LIBFT_DIR)/libft.a
@@ -17,14 +19,15 @@ MLX_FLAGS	= -lXext -lX11 -lm
 
 INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(MLX_DIR)
 
-RM			= rm -f
+RM			= rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A) $(MLX_A)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(MLX_A) $(MLX_FLAGS) -o $(NAME)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT_A):
@@ -34,7 +37,7 @@ $(MLX_A):
 	$(MAKE) -C $(MLX_DIR)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJ_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 	$(MAKE) clean -C $(MLX_DIR)
 
