@@ -5,7 +5,7 @@ CFLAGS		= -Wall -Wextra -Werror -g -Wnull-dereference -Wuninitialized #-Wunused 
 
 SRCS		= main.c \
 			  sources/game/start.c sources/game/exit.c sources/game/loop.c sources/game/hooks.c \
-			  	sources/game/keyboard_handle.c	\
+			  	sources/game/keyboard_handle.c sources/game/key_hooks.c	\
 			  sources/parse/parse.c sources/parse/validate.c \
 			  sources/render/render.c	\
 			  sources/utils/vec_utils.c sources/utils/image.c sources/utils/image2.c sources/utils/vec_ops.c \

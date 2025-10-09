@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 12:23:29 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:45:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <X11/X.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -84,8 +85,13 @@ typedef struct s_game
 	double		lastTime;
 }	t_game;
 
+// Delta time
 uint64_t	get_time_in_ms(void);
 void		process_dtime(t_game *const game);
+
+// Keys
+int		key_press(int key, t_game *game);
+int		key_release(int key, t_game *game);
 
 // Game
 void	start_game(t_game *game, const char *filename);

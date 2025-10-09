@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 12:25:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:08:16 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ static void	key_handle(t_game *const game, int key)
 		vec2f_translate(&pl->pos,
 			game->cam.plane.x * pl->speed * game->dtime, game->cam.plane.y * pl->speed * game->dtime);
 	if (key == KEY_LEFT)
-	{
 		rotate(game, -game->cam.rotateSpeed * game->dtime);
-	}
 	if (key == KEY_RIGHT)
-	{
 		rotate(game, game->cam.rotateSpeed * game->dtime);
-	}
+	if (key == KEY_ESC)
+			mlx_loop_end(game->mlx);
 }
 
 void	keyboard_handle(t_game *const game)

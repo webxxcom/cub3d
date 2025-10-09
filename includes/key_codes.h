@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:06:34 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 10:52:34 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:47:16 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@
 # define KEY_TAB			65289
 # define KEY_ENTER			65293
 # define KEY_BACKSPACE		65288
-# define KEY_ESCAPE			65307
+# define KEY_ESC			65307
 
 /* ------------------------- Function Keys ------------------------- */
 # define KEY_F1				65470

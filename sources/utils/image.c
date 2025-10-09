@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 11:18:57 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:49:18 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_image	*get_image_from_file(void *mlx, char *filename)
 		return (NULL);
 	im->image = mlx_xpm_file_to_image(mlx, filename, &im->width, &im->height);
 	if (!im->image)
-		return (image_clean(mlx, im), NULL);
+		return (im_cleanup(mlx, im), NULL);
 	im->data = mlx_get_data_addr(im->image,
 			&im->bpp, &im->size_line, &im->endian);
 	if (!im->data)
-		return (image_clean(mlx, im), NULL);
+		return (im_cleanup(mlx, im), NULL);
 	return (im);
 }
 
@@ -38,13 +38,13 @@ t_image	*im_get_empty(void *mlx, const int width, const int height)
 		return (NULL);
 	res->image = mlx_new_image(mlx, width, height);
 	if (!res->image)
-		return (image_clean(mlx, res), NULL);
+		return (im_cleanup(mlx, res), NULL);
 	res->width = width;
 	res->height = height;
 	res->data = mlx_get_data_addr(res->image,
 			&res->bpp, &res->size_line, &res->endian);
 	if (!res->data)
-		return (image_clean(mlx, res), NULL);
+		return (im_cleanup(mlx, res), NULL);
 	return (res);
 }
 
@@ -53,7 +53,7 @@ void	im_clear(t_image *im)
 	ft_memset(im->data, 0, im->height * im->size_line);
 }
 
-void	image_clean(void *mlx, t_image *image)
+void	im_cleanup(void *mlx, t_image *image)
 {
 	if (!image || !mlx)
 		return ;

@@ -6,12 +6,11 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 12:26:22 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:20:19 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <X11/X.h>
 
 // static void	load_textures(t_game *game)
 // {
@@ -88,24 +87,13 @@ int generate_map(t_game *game)
 	return (0);
 }
 
-static int key_press(int key, t_game *game)
+int mouse_move(t_game *game)
 {
-	int	*vKey;
+	t_vec2i	pos = vec2i_init();
 
-	vKey = malloc(sizeof (int));
-	*vKey = key;
-	ft_lstadd_front(&game->pressedKeys, ft_lstnew(vKey));
-	return (1);
-}
-
-static int int_eq(void *a, void *b)
-{
-	return (*((int *)a) - *((int *)b));
-}
-
-static int	key_release(int key, t_game *game)
-{
-	ft_lst_remove_if(&game->pressedKeys, &key, int_eq, free);
+	mlx_mouse_get_pos(game->mlx, game->win, &pos.x, &pos.y);
+	mlx_mouse_move(game->mlx, game->win, 0, 0);
+	printf("pos: (%d, %d)\n", pos.x, pos.y);
 	return (1);
 }
 
@@ -123,6 +111,8 @@ static void	init_mlx(t_game *game)
 	mlx_hook(game->win, KeyPress, KeyPressMask, key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, key_release, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window, game->mlx);
+	mlx_hook(game->win, MotionNotify, NoEventMask, mouse_move, game);
+	mlx_mouse_hide(game->mlx, game->win);
 }
 
 static t_player	player_init()
@@ -145,6 +135,14 @@ static void	init_game(t_game *game)
 	game->player = player_init();
 }
 
+static void game_cleanup(t_game *game)
+{
+	im_cleanup(game->mlx, game->buffer_image);
+	ft_lst_free(game->pressedKeys);
+	ft_free_matrix(game->map);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+}
 
 void	start_game(t_game *game, const char *filename)
 {
@@ -163,4 +161,5 @@ void	start_game(t_game *game, const char *filename)
 	// }
 	game->lastTime = get_time_in_ms();
 	mlx_loop(game->mlx);
+	game_cleanup(game);
 }

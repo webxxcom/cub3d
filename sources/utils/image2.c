@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:45 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 11:18:57 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:49:18 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_image	*image_scale(void *mlx, t_image *src, int trgt_w, int trgt_h)
 		}
 		++i;
 	}
-	image_clean(mlx, src);
+	im_cleanup(mlx, src);
 	src = res;
 	return (src);
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 11:18:57 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:49:18 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			im_clear(t_image *im);
 /**
  * Destroy image with its leftovers such as the pointer itself
  */
-void			image_clean(void *mlx, t_image *image);
+void			im_cleanup(void *mlx, t_image *image);
 
 /**
  * Get image's pixel at (x, y) position

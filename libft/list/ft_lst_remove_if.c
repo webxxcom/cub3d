@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:29:18 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 10:34:45 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:51:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	ft_lst_remove_if(t_list **lst, void *data_ref,
 				prev->next = next;
 			else
 				*lst = next;
-			if (del)
-				del(curr->content);
+			del(curr->content);
 			free(curr);
 		}
 		else
