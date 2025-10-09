@@ -6,7 +6,7 @@
 /*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 14:53:16 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:57:38 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,13 @@ int generate_map(t_game *game)
 	return (0);
 }
 
-int mouse_move(int x,int y,t_game *game)
+int mouse_move(int x, int y, t_game *game)
 {
-	(void)x;
-	(void)y;
-	mlx_mouse_move(game->mlx, game->win, game->w / 2, game->h / 2);
+	const t_vec2i cntr = vec2i_construct(game->w / 2, game->h / 2);
+
+	t_vec2f dir = vec2f_construct(x - cntr.x, y - cntr.y);
+	(void)dir;
+	mlx_mouse_move(game->mlx, game->win, cntr.x, cntr.y);
 	return (1);
 }
 
@@ -110,6 +112,7 @@ static void	init_mlx(t_game *game)
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, key_release, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window, game->mlx);
 	mlx_hook(game->win, MotionNotify, PointerMotionMask, mouse_move, game);
+	mlx_mouse_hide(game->mlx, game->win);
 }
 
 static t_player	player_init()
