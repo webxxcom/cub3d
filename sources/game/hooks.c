@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:42:13 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/09 10:54:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main_loop(t_game *game)
+int	close_window(void *mlx)
 {
-	keyboard_handle(game);
-	game_render(game);
-	return (1);
+	return (mlx_loop_end(mlx));
 }

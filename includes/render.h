@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:54:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/09/25 15:35:38 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:15:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 typedef struct s_game	t_game;
 
-void	render_map(t_game *game);
+void	game_render(t_game *game);
 
 #endif

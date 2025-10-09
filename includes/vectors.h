@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   vectors.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:42:13 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/09 11:44:27 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/09 11:54:20 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-
-int	main_loop(t_game *game)
+typedef struct s_vector_2d_float
 {
-	keyboard_handle(game);
-	game_render(game);
-	return (1);
-}
+	float	x;
+	float	y;
+}	t_vec2f;
+
+typedef struct s_vector_2d_int
+{
+	int	x;
+	int	y;
+}	t_vec2i;
+
+/**
+ * Mathematics transaltion of the vector.
+ * Depicted as res = (left.x + dx, left.y + dy)
+ */
+void	vec2f_translate(t_vec2f *const vec2f, float const dx, float const dy);

@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:42:13 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/08 16:51:01 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/08 17:00:08 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main_loop(t_game *game)
+typedef struct s_vector_2d_float	t_vec2f;
+typedef struct s_vector_2d_int		t_vec2i;
+
+t_vec2f	vec2f_init()
 {
-	keyboard_handle(game);
-	game_render(game);
-	return (1);
+	return ((t_vec2f){.x = 0, .y = 0});
+}
+
+t_vec2i	vec2i_init()
+{
+	return ((t_vec2i){.x = 0, .y = 0});
+}
+
+t_vec2f	vec2f_construct(float x, float y)
+{
+	return ((t_vec2f){.x = x, .y = y});
+}
+
+t_vec2i	vec2i_construct(int x, int y)
+{
+	return ((t_vec2i){.x = x, .y = y});
 }

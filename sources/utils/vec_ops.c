@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:42:13 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/09 11:46:53 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/09 11:54:12 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "vectors.h"
 
-int	main_loop(t_game *game)
+void	vec2f_translate(t_vec2f *const vec2f, float const dx, float const dy)
 {
-	keyboard_handle(game);
-	game_render(game);
-	return (1);
+    if (!vec2f)
+        return ;
+    vec2f->x += dx;
+    vec2f->y += dy;
 }

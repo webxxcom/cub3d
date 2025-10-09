@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/09/25 15:35:39 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:52:49 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef cub3D_H
-# define cub3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -19,12 +19,17 @@
 # include <sys/time.h>
 # include <math.h>
 # include <errno.h>
+# include <stdbool.h>
 
 # include "libft.h"
 # include "mlx.h"
 # include "parse.h"
 # include "render.h"
 # include "error.h"
+# include "utils.h"
+# include "key_codes.h"
+# include "image.h"
+# include "vectors.h"
 
 typedef struct s_textures
 {
@@ -32,7 +37,7 @@ typedef struct s_textures
 	void	*south;
 	void	*east;
 	void	*west;
-}			t_textures;
+}	t_textures;
 
 typedef struct s_paths
 {
@@ -40,27 +45,44 @@ typedef struct s_paths
 	char	*south;
 	char	*east;
 	char	*west;
-}			t_paths;
+}	t_paths;
 
-typedef	struct s_point
+typedef struct s_point
 {
 	int	x;
 	int	y;
-}		t_point;
+}	t_point;
+
+typedef struct s_view
+{
+	t_vec2f		plane;
+	t_vec2f		dir;
+	float 		rotateSpeed;
+}	t_view;
 
 typedef struct s_game
 {
+	int			w;
+	int			h;
 	void		*mlx;
 	void		*win;
 	char		**map;
-	t_point		player;
+	t_vec2f		player_pos;
 	t_paths		paths;
 	t_textures	textures;
-}				t_game;
+	t_view		cam;
+	t_list		*pressedKeys;
+	t_image		*buffer_image;
+}	t_game;
 
 // Game
 void	start_game(t_game *game, const char *filename);
 void	exit_game(char *error, t_game *game);
+
+// Hooks
+int		close_window(void *mlx);
+int		main_loop(t_game *game);
+void	keyboard_handle(t_game *const game);
 
 // Parse
 
