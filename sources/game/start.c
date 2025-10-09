@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 14:57:38 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/09 23:35:30 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_view	cam_init()
 	return ((t_view){
 		.plane = vec2f_construct(0, 0.66f),
 		.dir = vec2f_construct(-1, 0),
-		.rotateSpeed = 3.5f}
+		.sensitivity = 0.2f}
 	);
 }
 #define MAP_WIDTH 20
@@ -87,16 +87,6 @@ int generate_map(t_game *game)
 	return (0);
 }
 
-int mouse_move(int x, int y, t_game *game)
-{
-	const t_vec2i cntr = vec2i_construct(game->w / 2, game->h / 2);
-
-	t_vec2f dir = vec2f_construct(x - cntr.x, y - cntr.y);
-	(void)dir;
-	mlx_mouse_move(game->mlx, game->win, cntr.x, cntr.y);
-	return (1);
-}
-
 static void	init_mlx(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -119,7 +109,8 @@ static t_player	player_init()
 {
 	return ((t_player){
 		.pos = vec2f_construct(5, 5), // ! POS IS HARDCODED
-		.speed = 4.f
+		.speed = 4.f,
+		.radius = 0.2f
 	});
 }
 

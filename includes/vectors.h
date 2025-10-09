@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:44:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 11:54:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 23:12:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,9 @@ typedef struct s_vector_2d_int
  * Mathematics transaltion of the vector.
  * Depicted as res = (left.x + dx, left.y + dy)
  */
-void	vec2f_translate(t_vec2f *const vec2f, float const dx, float const dy);
+t_vec2f	vec2f_translate(t_vec2f const vec2f, float const dx, float const dy);
+
+/**
+ * Return the normalized vector from the parameter by dividing each axis by magnitude
+ */
+t_vec2f	vec2f_normalize(t_vec2f const vec2f);

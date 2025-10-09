@@ -6,21 +6,18 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 16:51:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/08 17:00:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 23:37:13 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-typedef struct s_vector_2d_float	t_vec2f;
-typedef struct s_vector_2d_int		t_vec2i;
-
-t_vec2f	vec2f_init()
+t_vec2f	vec2f_init(void)
 {
 	return ((t_vec2f){.x = 0, .y = 0});
 }
 
-t_vec2i	vec2i_init()
+t_vec2i	vec2i_init(void)
 {
 	return ((t_vec2i){.x = 0, .y = 0});
 }
