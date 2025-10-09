@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 13:20:19 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:53:16 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,11 @@ int generate_map(t_game *game)
 	return (0);
 }
 
-int mouse_move(t_game *game)
+int mouse_move(int x,int y,t_game *game)
 {
-	t_vec2i	pos = vec2i_init();
-
-	mlx_mouse_get_pos(game->mlx, game->win, &pos.x, &pos.y);
-	mlx_mouse_move(game->mlx, game->win, 0, 0);
-	printf("pos: (%d, %d)\n", pos.x, pos.y);
+	(void)x;
+	(void)y;
+	mlx_mouse_move(game->mlx, game->win, game->w / 2, game->h / 2);
 	return (1);
 }
 
@@ -111,8 +109,7 @@ static void	init_mlx(t_game *game)
 	mlx_hook(game->win, KeyPress, KeyPressMask, key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, key_release, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window, game->mlx);
-	mlx_hook(game->win, MotionNotify, NoEventMask, mouse_move, game);
-	mlx_mouse_hide(game->mlx, game->win);
+	mlx_hook(game->win, MotionNotify, PointerMotionMask, mouse_move, game);
 }
 
 static t_player	player_init()
