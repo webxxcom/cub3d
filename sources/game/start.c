@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:52:49 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:26:22 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_view	cam_init()
 	return ((t_view){
 		.plane = vec2f_construct(0, 0.66f),
 		.dir = vec2f_construct(-1, 0),
-		.rotateSpeed = 0.01f}
+		.rotateSpeed = 3.5f}
 	);
 }
 #define MAP_WIDTH 20
@@ -125,16 +125,24 @@ static void	init_mlx(t_game *game)
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window, game->mlx);
 }
 
+static t_player	player_init()
+{
+	return ((t_player){
+		.pos = vec2f_construct(5, 5), // ! POS IS HARDCODED
+		.speed = 4.f
+	});
+}
+
 static void	init_game(t_game *game)
 {
 	game->w = 1000;
 	game->h = 650;
 	game->cam = cam_init();
-
-
-	// ! Hard code REMOVE
+	
+	
+	// ! Hard code REVISE
 	generate_map(game);
-	game->player_pos = (t_vec2f){.x = 5, .y = 5};
+	game->player = player_init();
 }
 
 
@@ -153,5 +161,6 @@ void	start_game(t_game *game, const char *filename)
 	// 	printf("%s\n", game->map[i]);
 	// 	++i;
 	// }
+	game->lastTime = get_time_in_ms();
 	mlx_loop(game->mlx);
 }

@@ -8,7 +8,8 @@ SRCS		= main.c \
 			  	sources/game/keyboard_handle.c	\
 			  sources/parse/parse.c sources/parse/validate.c \
 			  sources/render/render.c	\
-			  sources/utils/vec_utils.c sources/utils/image.c sources/utils/image2.c sources/utils/vec_ops.c
+			  sources/utils/vec_utils.c sources/utils/image.c sources/utils/image2.c sources/utils/vec_ops.c \
+			  	sources/utils/time.c
 
 OBJ_DIR		= obj
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

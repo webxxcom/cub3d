@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:52:49 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:13:55 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ static t_vec2f	init_startvals(t_game *const game, const t_vec2f rayDir,
 	if (rayDir.x < 0)
 	{
 		mapStep->x = -1;
-		sideDist.x = (game->player_pos.x - (int)game->player_pos.x) * unitStep.x;
+		sideDist.x = (game->player.pos.x - (int)game->player.pos.x) * unitStep.x;
 	}
 	else
 	{
 		mapStep->x = 1;
-		sideDist.x = ((int)game->player_pos.x + 1 - game->player_pos.x) * unitStep.x;
+		sideDist.x = ((int)game->player.pos.x + 1 - game->player.pos.x) * unitStep.x;
 	}
 	if (rayDir.y < 0)
 	{
 		mapStep->y = -1;
-		sideDist.y = (game->player_pos.y - (int)game->player_pos.y) * unitStep.y;
+		sideDist.y = (game->player.pos.y - (int)game->player.pos.y) * unitStep.y;
 	}
 	else
 	{
 		mapStep->y = 1;
-		sideDist.y = ((int)game->player_pos.y + 1 - game->player_pos.y) * unitStep.y;
+		sideDist.y = ((int)game->player.pos.y + 1 - game->player.pos.y) * unitStep.y;
 	}
 	return (sideDist);
 }
@@ -90,7 +90,7 @@ static void put_map(t_game *const game)
 		t_vec2f unitStep = vec2f_construct(fabs(1. / rayDir.x), fabs(1. / rayDir.y));
 		t_vec2i mapStep;
 		t_vec2f sideDist = init_startvals(game, rayDir, unitStep, &mapStep);
-		t_vec2i mapPos = vec2i_construct(game->player_pos.x, game->player_pos.y);
+		t_vec2i mapPos = vec2i_construct(game->player.pos.x, game->player.pos.y);
 		
 		bool hit = false;
 		float dist = 0;

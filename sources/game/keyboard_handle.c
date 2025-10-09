@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 11:59:41 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:25:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,27 @@ static void	rotate(t_game *const game, const float rotation)
 
 static void	key_handle(t_game *const game, int key)
 {
+	t_player	*const pl = &game->player;
+	
 	if (key == KEY_W)
-		vec2f_translate(&game->player_pos,
-			game->cam.dir.x * 0.01f, game->cam.dir.y * 0.01f);
+		vec2f_translate(&pl->pos,
+			game->cam.dir.x * pl->speed * game->dtime, game->cam.dir.y * pl->speed * game->dtime);
 	if (key == KEY_S)
-		vec2f_translate(&game->player_pos,
-			-game->cam.dir.x * 0.01f, -game->cam.dir.y * 0.01f);
+		vec2f_translate(&pl->pos,
+			-game->cam.dir.x * pl->speed * game->dtime, -game->cam.dir.y * pl->speed * game->dtime);
 	if (key == KEY_A)
-		vec2f_translate(&game->player_pos,
-			-game->cam.plane.x * 0.01f, -game->cam.plane.y * 0.01f);
+		vec2f_translate(&pl->pos,
+			-game->cam.plane.x * pl->speed * game->dtime, -game->cam.plane.y * pl->speed * game->dtime);
 	if (key == KEY_D)
-		vec2f_translate(&game->player_pos,
-			game->cam.plane.x * 0.01f, game->cam.plane.y * 0.01f);
+		vec2f_translate(&pl->pos,
+			game->cam.plane.x * pl->speed * game->dtime, game->cam.plane.y * pl->speed * game->dtime);
 	if (key == KEY_LEFT)
 	{
-		rotate(game, -game->cam.rotateSpeed);
+		rotate(game, -game->cam.rotateSpeed * game->dtime);
 	}
 	if (key == KEY_RIGHT)
 	{
-		rotate(game, game->cam.rotateSpeed);
+		rotate(game, game->cam.rotateSpeed * game->dtime);
 	}
 }
 

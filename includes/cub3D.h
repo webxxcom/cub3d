@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 11:52:49 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:23:29 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ typedef struct s_view
 	float 		rotateSpeed;
 }	t_view;
 
+typedef struct	s_player
+{
+	t_vec2f	pos;
+	double speed;
+}	t_player;
+
 typedef struct s_game
 {
 	int			w;
@@ -67,13 +73,19 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	char		**map;
-	t_vec2f		player_pos;
+	t_player	player;
 	t_paths		paths;
 	t_textures	textures;
 	t_view		cam;
 	t_list		*pressedKeys;
 	t_image		*buffer_image;
+
+	double		dtime;
+	double		lastTime;
 }	t_game;
+
+uint64_t	get_time_in_ms(void);
+void		process_dtime(t_game *const game);
 
 // Game
 void	start_game(t_game *game, const char *filename);
