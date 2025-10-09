@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:19:10 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 12:29:58 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:42:52 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,4 @@ void	process_dtime(t_game *const game)
 	
 	game->dtime = (t - game->lastTime) / 1000;
 	game->lastTime = t;
-	int a = system("clear");
-	(void)a;
-	printf("FPS: %d\n", (int)(1 / game->dtime));
 }
