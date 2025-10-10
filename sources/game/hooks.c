@@ -6,26 +6,27 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 17:10:03 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 19:04:10 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	cam_rotate(t_game *const game, const float dx, float const dy)
+static void	cam_rotate(t_game *const g, const float dx, float const dy)
 {
-	const t_vec2f	dir_vec = game->cam.dir;
-	const t_vec2f	plane_vec = game->cam.plane;
-	const double	rot = dx * game->cam.sensitivity * game->dtime;
+	const t_vec2f	dir_vec = g->cam.dir;
+	const t_vec2f	plane_vec = g->cam.plane;
+	const double	rot = -dx * g->cam.sensitivity * g->dtime;
 
-	game->cam.dir.x = dir_vec.x * cos(rot)+ dir_vec.y * sin(rot);
-	game->cam.dir.y = dir_vec.x * -sin(rot) + dir_vec.y * cos(rot);
-	game->cam.plane.x = plane_vec.x * cos(rot) + plane_vec.y * sin(rot);
-	game->cam.plane.y = plane_vec.x * -sin(rot) + plane_vec.y * cos(rot);
-	game->cam.pitch -= dy * game->dtime * game->cam.sensitivity * game->h;
+	g->cam.dir.x = dir_vec.x * cos(rot) - dir_vec.y * sin(rot);
+	g->cam.dir.y = dir_vec.x * sin(rot) + dir_vec.y * cos(rot);
+	g->cam.plane.x = plane_vec.x * cos(rot) - plane_vec.y * sin(rot);
+	g->cam.plane.y = plane_vec.x * sin(rot) + plane_vec.y * cos(rot);
+	if ((dy < 0 && g->cam.pitch < g->h * 2) || (dy > 0 && -g->cam.pitch < g->h * 2))
+		g->cam.pitch -= dy * g->dtime * g->cam.sensitivity * g->h;
 }
 
-int	mouse_move(int x, int y, t_game *g)
+int	mouse_move_hook(int x, int y, t_game *g)
 {
 	const t_vec2i	center = vec2i_construct(g->w / 2, g->h / 2);
 
@@ -34,7 +35,7 @@ int	mouse_move(int x, int y, t_game *g)
 	return (1);
 }
 
-int	close_window(void *mlx)
+int	close_window_hook(void *mlx)
 {
 	return (mlx_loop_end(mlx));
 }

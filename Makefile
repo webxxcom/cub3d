@@ -6,12 +6,13 @@ CFLAGS		= -Wall -Wextra -Werror -g -Wnull-dereference -Wuninitialized #-Wunused 
 SRC_FLDR	= sources
 
 SRCS		= main.c \
-			  $(SRC_FLDR)/game/start.c $(SRC_FLDR)/game/exit.c $(SRC_FLDR)/game/loop.c $(SRC_FLDR)/game/hooks.c \
-			  	$(SRC_FLDR)/game/keyboard_handle.c $(SRC_FLDR)/game/key_hooks.c $(SRC_FLDR)/game/mvement_handle.c	\
+			  $(SRC_FLDR)/game/exit.c $(SRC_FLDR)/game/hooks.c $(SRC_FLDR)/game/key_press_hook.c  \
+			  	$(SRC_FLDR)/game/key_release_hook.c $(SRC_FLDR)/game/key_utils.c $(SRC_FLDR)/game/main_loop.c \
+				$(SRC_FLDR)/game/mvement_handle.c $(SRC_FLDR)/game/start.c 	\
 			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/validate.c \
 			  $(SRC_FLDR)/render/render.c	\
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
-			  	$(SRC_FLDR)/utils/time.c
+			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c
 
 OBJ_DIR		= obj
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

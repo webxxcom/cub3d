@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 16:38:45 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 19:28:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_game
 	int				h;
 	double			dtime;
 	double			last_time;
+	bool			show_dbg;
 }	t_game;
 
 // Delta time
@@ -108,18 +109,26 @@ void		process_dtime(t_game *const game);
 void		handle_movement(t_game *const g);
 
 // Hooks
-int			key_press(int key, t_game *game);
-int			key_release(int key, t_game *game);
-int			mouse_move(int x, int y, t_game *game);
+int			close_window_hook(void *mlx);
+int			main_loop(t_game *game);
+void		repetition_handle(t_game *const game);
+int			key_press_hook(int key, t_game *game);
+int			key_release_hook(int key, t_game *game);
+int			mouse_move_hook(int x, int y, t_game *game);
+void		process_mvkeys(t_game *const g, int key, bool pressed);
+void		process_keypress(t_game *const game, int key);
 
 // Game
 void		start_game(t_game *game, const char *filename);
 void		exit_game(char *error, t_game *game);
 
-// Hooks
-int			close_window(void *mlx);
-int			main_loop(t_game *game);
-void		keyboard_handle(t_game *const game);
+// Cleanups
+void 		game_cleanup(t_game *game);
+
+// Utils
+void		toggle_bool(bool *flag);
+bool 		key_should_repeat(int key);
+bool		movement_key(int key);
 
 // Parse
 

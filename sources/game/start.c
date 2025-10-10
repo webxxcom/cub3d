@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 17:09:45 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 19:29:13 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,19 +104,28 @@ static void	load_textures(t_game *g)
 			"textures/2.4.xpm",
 		}
 	};
-
 	size_t	i;
+	size_t	j;
 
 	i = 0;
 	while (i < 2)
 	{
-		g->cubes[i].walls[NORTH] = im_load_from_xpmfile(g->mlx, textures_files[i][0]);
-		g->cubes[i].walls[WEST] = im_load_from_xpmfile(g->mlx, textures_files[i][1]);
-		g->cubes[i].walls[SOUTH] = im_load_from_xpmfile(g->mlx, textures_files[i][2]);
-		g->cubes[i].walls[EAST] = im_load_from_xpmfile(g->mlx, textures_files[i][3]);
+		j = 0;
+		while (j < 4)
+		{
+			g->cubes[i].walls[j] = im_load_from_xpmfile(g->mlx, textures_files[i][j]);
+			if (!g->cubes[i].walls[j])
+			{
+				printf("The texture %s was not loaded\n", textures_files[i][j]);
+				while (--j)
+					im_cleanup(g->mlx, g->cubes[i].walls[j]);
+				game_cleanup(g);
+				exit(1);
+			}
+			++j;
+		}
 		++i;
 	}
-
 }
 
 static void	init_mlx(t_game *game)
@@ -131,10 +140,10 @@ static void	init_mlx(t_game *game)
 	game->buffer_image = im_get_empty(game->mlx, game->w, game->h);
 	load_textures(game); // ! NOT CORRECT TEXTURE LOADING
 	mlx_loop_hook(game->mlx, main_loop, game);
-	mlx_hook(game->win, KeyPress, KeyPressMask, key_press, game);
-	mlx_hook(game->win, KeyRelease, KeyReleaseMask, key_release, game);
-	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window, game->mlx);
-	mlx_hook(game->win, MotionNotify, PointerMotionMask, mouse_move, game);
+	mlx_hook(game->win, KeyPress, KeyPressMask, key_press_hook, game);
+	mlx_key_hook(game->win, key_release_hook, game);
+	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window_hook, game->mlx);
+	mlx_hook(game->win, MotionNotify, PointerMotionMask, mouse_move_hook, game);
 	mlx_mouse_hide(game->mlx, game->win);
 }
 
@@ -147,26 +156,30 @@ static t_player	player_init()
 	});
 }
 
-static void	init_game(t_game *game)
+static void	init_game(t_game *g)
 {
-	game->w = 1000;
-	game->h = 650;
-	game->cam = cam_init();
-	ft_memset(game->moving_keys, 0, 4);
+	g->w = 1000;
+	g->h = 650;
+	g->cam = cam_init();
+	g->show_dbg = false;
+	ft_memset(g->moving_keys, 0, sizeof (g->moving_keys));
 	
 	
 	// ! Hard code REVISE
-	generate_map(game);
-	game->player = player_init();
+	generate_map(g);
+	g->player = player_init();
 }
 
-static void game_cleanup(t_game *game)
+void game_cleanup(t_game *game)
 {
-	im_cleanup(game->mlx, game->buffer_image);
 	ft_lst_free(game->pressed_keys);
 	ft_free_matrix(game->map);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
+	if (game->mlx && game->buffer_image)
+		im_cleanup(game->mlx, game->buffer_image);
+	if (game->mlx && game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+		mlx_destroy_display(game->mlx);
 }
 
 void	start_game(t_game *game, const char *filename)
