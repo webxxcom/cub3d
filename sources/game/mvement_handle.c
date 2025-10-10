@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 16:35:02 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 23:43:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	move(t_game *const g, t_vec2f dir_vec)
 	 		dir_vec.x * pl->speed * g->dtime,
 	 		dir_vec.y * pl->speed * g->dtime
 		);
-
+		
 	if (is_walkable(g, pl->pos.x + delta.x * pl->radius, pl->pos.y))
 		pl->pos.x += delta.x; 
 	if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius))

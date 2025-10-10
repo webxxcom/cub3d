@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_loop.c                                        :+:      :+:    :+:   */
+/*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 19:42:11 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/10 21:28:21 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/11 00:08:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main_loop(t_game *game)
+t_minimap   minimap_init(void)
 {
-	process_dtime(game);
-	repetition_handle(game);
-	game_render(game);
-	return (1);
+    return ((t_minimap){
+        .pos = vec2i_construct(0, 650),
+        .size = vec2i_construct(200, 150),
+        .bgcol = 0x1A1A1A,
+        .pcol = 0x4CAF50,
+        .wcol = 0x9E9E9E,
+        .rcol = 0x03A9F4,
+        .fcol = 0x2E2E2E
+        //.bcol = 0x606060
+    });
 }

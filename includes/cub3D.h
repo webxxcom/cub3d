@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 19:28:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:07:50 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # include "key_codes.h"
 # include "image.h"
 # include "vectors.h"
+
+#ifndef M_PI
+# define M_PI 3.14159265358979323846
+#endif
 
 // Define possible player's movement to avoid faster diagonal movement
 # define MOVING_FRWD 0
@@ -81,12 +85,27 @@ typedef struct s_player
 	float	radius;
 }	t_player;
 
+/**
+ * Minimap's pos is the placement of minimap's bottom-left corner
+ */
+typedef struct s_minimap
+{
+	t_vec2i		pos;
+	t_vec2i		size;
+	uint32_t	bgcol;
+	uint32_t	pcol;
+	uint32_t	wcol;
+	uint32_t	rcol;
+	uint32_t	fcol;
+}	t_minimap;
+
 typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
 	char			**map;
 	t_player		player;
+	t_minimap		minimap;
 	t_paths			paths;
 	t_cube_txtrs	cubes[2];
 	t_cam			cam;
@@ -100,6 +119,9 @@ typedef struct s_game
 	double			last_time;
 	bool			show_dbg;
 }	t_game;
+
+t_minimap   minimap_init(void);
+void	put_minimap(t_game *g);
 
 // Delta time
 uint64_t	get_time_in_ms(void);

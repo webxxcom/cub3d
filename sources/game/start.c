@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 19:29:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:08:09 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int generate_map(t_game *game)
 			else
 				game->map[y][x] = '0'; // empty space
 		}
+		printf("%s\n", game->map[y]);
 		game->map[y][MAP_WIDTH] = '\0';
 	}
 	game->map[MAP_HEIGHT] = NULL;
@@ -163,6 +164,7 @@ static void	init_game(t_game *g)
 	g->cam = cam_init();
 	g->show_dbg = false;
 	ft_memset(g->moving_keys, 0, sizeof (g->moving_keys));
+	g->minimap = minimap_init();
 	
 	
 	// ! Hard code REVISE
