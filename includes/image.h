@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 12:49:18 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 11:24:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_image
 /**
  * Get image from file for display 
  */
-t_image			*get_image_from_file(void *mlx, char *filename);
+t_image			*im_load_from_xpmfile(void *mlx, char *filename);
 
 /**
  * Initialize empty image with no pixels with width and height

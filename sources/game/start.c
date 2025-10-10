@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 23:35:30 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 17:09:45 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@
 // 		game->paths.north = get_texture_path(void);
 // }
 
-static t_view	cam_init()
+static t_cam	cam_init()
 {
-	return ((t_view){
+	return ((t_cam){
 		.plane = vec2f_construct(0, 0.66f),
 		.dir = vec2f_construct(-1, 0),
-		.sensitivity = 0.2f}
-	);
+		.sensitivity = 0.13f,
+		.pitch = 0
+	});
 }
 #define MAP_WIDTH 20
 #define MAP_HEIGHT 15
@@ -87,6 +88,37 @@ int generate_map(t_game *game)
 	return (0);
 }
 
+static void	load_textures(t_game *g)
+{
+	static char *textures_files[2][4] = {
+		{
+			"textures/1.1.xpm",
+			"textures/1.2.xpm",
+			"textures/1.3.xpm",
+			"textures/1.4.xpm",
+		},
+		{
+			"textures/2.1.xpm",
+			"textures/2.2.xpm",
+			"textures/2.3.xpm",
+			"textures/2.4.xpm",
+		}
+	};
+
+	size_t	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		g->cubes[i].walls[NORTH] = im_load_from_xpmfile(g->mlx, textures_files[i][0]);
+		g->cubes[i].walls[WEST] = im_load_from_xpmfile(g->mlx, textures_files[i][1]);
+		g->cubes[i].walls[SOUTH] = im_load_from_xpmfile(g->mlx, textures_files[i][2]);
+		g->cubes[i].walls[EAST] = im_load_from_xpmfile(g->mlx, textures_files[i][3]);
+		++i;
+	}
+
+}
+
 static void	init_mlx(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -97,6 +129,7 @@ static void	init_mlx(t_game *game)
 		exit_game(ERROR_MLX_WIN, game);
 
 	game->buffer_image = im_get_empty(game->mlx, game->w, game->h);
+	load_textures(game); // ! NOT CORRECT TEXTURE LOADING
 	mlx_loop_hook(game->mlx, main_loop, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, key_release, game);
@@ -109,8 +142,8 @@ static t_player	player_init()
 {
 	return ((t_player){
 		.pos = vec2f_construct(5, 5), // ! POS IS HARDCODED
-		.speed = 4.f,
-		.radius = 0.2f
+		.speed = 3.f,
+		.radius = 6.f 
 	});
 }
 
@@ -119,6 +152,7 @@ static void	init_game(t_game *game)
 	game->w = 1000;
 	game->h = 650;
 	game->cam = cam_init();
+	ft_memset(game->moving_keys, 0, 4);
 	
 	
 	// ! Hard code REVISE
@@ -129,7 +163,7 @@ static void	init_game(t_game *game)
 static void game_cleanup(t_game *game)
 {
 	im_cleanup(game->mlx, game->buffer_image);
-	ft_lst_free(game->pressedKeys);
+	ft_lst_free(game->pressed_keys);
 	ft_free_matrix(game->map);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);
@@ -150,7 +184,7 @@ void	start_game(t_game *game, const char *filename)
 	// 	printf("%s\n", game->map[i]);
 	// 	++i;
 	// }
-	game->lastTime = get_time_in_ms();
+	game->last_time = get_time_in_ms();
 	mlx_loop(game->mlx);
 	game_cleanup(game);
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 22:31:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:38:45 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,25 @@
 # include "image.h"
 # include "vectors.h"
 
-typedef struct s_textures
+// Define possible player's movement to avoid faster diagonal movement
+# define MOVING_FRWD 0
+# define MOVING_BCK 1
+# define MOVING_LFT 2
+# define MOVING_RGHT 3
+
+// Enumeration for wall sides, sued for textures obviously
+typedef enum e_texture_sides
 {
-	void	*north;
-	void	*south;
-	void	*east;
-	void	*west;
-}	t_textures;
+	NORTH = 0,
+	WEST,
+	SOUTH,
+	EAST
+}	t_txtres_sides;
+
+typedef struct s_cube_textures
+{
+	t_image	*walls[4];
+}	t_cube_txtrs;
 
 typedef struct s_paths
 {
@@ -54,14 +66,15 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-typedef struct s_view
+typedef struct s_camera
 {
 	t_vec2f		plane;
 	t_vec2f		dir;
-	float 		sensitivity;
-}	t_view;
+	float		sensitivity;
+	float		pitch;
+}	t_cam;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	t_vec2f	pos;
 	float	speed;
@@ -70,38 +83,43 @@ typedef struct	s_player
 
 typedef struct s_game
 {
-	int			w;
-	int			h;
-	void		*mlx;
-	void		*win;
-	char		**map;
-	t_player	player;
-	t_paths		paths;
-	t_textures	textures;
-	t_view		cam;
-	t_list		*pressedKeys;
-	t_image		*buffer_image;
+	void			*mlx;
+	void			*win;
+	char			**map;
+	t_player		player;
+	t_paths			paths;
+	t_cube_txtrs	cubes[2];
+	t_cam			cam;
+	t_list			*pressed_keys;
+	bool			moving_keys[4];
+	t_image			*buffer_image;
 
-	double		dtime;
-	double		lastTime;
+	int				w;
+	int				h;
+	double			dtime;
+	double			last_time;
 }	t_game;
 
 // Delta time
 uint64_t	get_time_in_ms(void);
 void		process_dtime(t_game *const game);
 
-// Hooks
-int		key_press(int key, t_game *game);
-int		key_release(int key, t_game *game);
-int		mouse_move(int x, int y, t_game *game);
-// Game
-void	start_game(t_game *game, const char *filename);
-void	exit_game(char *error, t_game *game);
+// Handles
+void		handle_movement(t_game *const g);
 
 // Hooks
-int		close_window(void *mlx);
-int		main_loop(t_game *game);
-void	keyboard_handle(t_game *const game);
+int			key_press(int key, t_game *game);
+int			key_release(int key, t_game *game);
+int			mouse_move(int x, int y, t_game *game);
+
+// Game
+void		start_game(t_game *game, const char *filename);
+void		exit_game(char *error, t_game *game);
+
+// Hooks
+int			close_window(void *mlx);
+int			main_loop(t_game *game);
+void		keyboard_handle(t_game *const game);
 
 // Parse
 

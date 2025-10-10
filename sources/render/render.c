@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/09 12:13:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:55:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,49 +41,56 @@ static t_vec2f	init_startvals(t_game *const game, const t_vec2f rayDir,
 	return (sideDist);
 }
 
-static void	drawVertLine(t_game *const game, int x, int h, int col)
+static void	drawVertLine(t_game *const g, int screen_x, int line_h, float dist, t_txtres_sides side, t_vec2f rayDir)
 {
 	int	y_start;
 	int	y_end;
 	int	y;
 	
-	y_start = (game->h / 2) - (h / 2);
+	y_start = (g->h / 2) - (line_h / 2) + g->cam.pitch;
 	if (y_start < 0)
 		y_start = 0;
-	y_end = (game->h / 2) + (h / 2);
-	if (y_end >= game->h)
-		y_end = game->h - 1;
+	y_end = (g->h / 2) + (line_h / 2) + g->cam.pitch;
+	if (y_end >= g->h)
+		y_end = g->h - 1;
 
 	y = y_start;
+
+	double wallX;
+	if (side == EAST || side == WEST)
+		wallX = g->player.pos.y + dist * rayDir.y;
+	else
+		wallX = g->player.pos.x + dist * rayDir.x;
+	wallX -= floor(wallX);
+
+	// uint64_t t = 0;
+	// if (t == 0)
+	// 	t = get_time_in_ms();
+	// if (t - get_time_in_ms() > 1000)
+	// 	printf("ASD");
+	int texX = (int)(wallX * (double)g->cubes[0].walls[side]->width);
+	if(side == WEST) texX = g->cubes[0].walls[side]->width - texX - 1;
+    if(side == SOUTH) texX = g->cubes[0].walls[side]->width - texX - 1;
+	double step = 1.0 * g->cubes[0].walls[side]->height / line_h;
+	double texPos = (y_start - g->cam.pitch - g->h / 2.0 + line_h / 2.) * step;
 	while (y < y_end)
 	{
-		im_set_pixel(game->buffer_image, x, y, col);
+		int texY = (int)texPos % g->cubes[0].walls[side]->height;
+        uint32_t color = im_get_pixel(g->cubes[0].walls[side], texX, texY);
+		texPos += step;
+		im_set_pixel(g->buffer_image, screen_x, y, color);
 		y++;
 	}
 }
 
-static int getColor(int num)
-{
-	if (num == 1)
-		return (0x808080); // grey wall
-	else if (num == 2)
-		return (0x0000FF); // blue tile
-	else if (num == 3)
-		return (0x00FF00); // green tile
-	else if (num == 4)
-		return (0xFF0000); // red tile
-	else
-		return (0xFFFFFF); // white fallback
-}
-
 static void put_map(t_game *const game)
 {
-	int	x;
+	int	screen_x;
 
-	x = 0;
-	while (x < game->w)
+	screen_x = 0;
+	while (screen_x < game->w)
 	{
-		double cameraX = 2 * x / (double)game->w - 1;
+		double cameraX = 2 * screen_x / (double)game->w - 1;
 		t_vec2f rayDir = vec2f_construct(
 			game->cam.dir.x + game->cam.plane.x * cameraX,
 			game->cam.dir.y + game->cam.plane.y * cameraX);
@@ -94,6 +101,7 @@ static void put_map(t_game *const game)
 		
 		bool hit = false;
 		float dist = 0;
+		t_txtres_sides	side;
 		while (!hit)
 		{
 			if (sideDist.x < sideDist.y)
@@ -101,18 +109,24 @@ static void put_map(t_game *const game)
 				mapPos.x += mapStep.x;
 				dist = sideDist.x;
 				sideDist.x += unitStep.x;
+				side = WEST;
 			}
 			else
 			{
 				mapPos.y += mapStep.y;
 				dist = sideDist.y;
 				sideDist.y += unitStep.y;
+				side = NORTH;
 			}
 			if (game->map[mapPos.y][mapPos.x] != '0')
 				hit = true;
 		}
-		drawVertLine(game, x, game->h / dist, getColor(game->map[mapPos.y][mapPos.x] - '0'));
-		++x;
+		if (rayDir.x < 0 && side == WEST)
+			side = EAST;
+		else if (rayDir.y < 0 && side == NORTH)
+			side = SOUTH;
+		drawVertLine(game, screen_x, game->h / dist, dist, side, rayDir);
+		++screen_x;
 	}
 }
 
