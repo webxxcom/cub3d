@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:39:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 19:02:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:58:56 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ inline bool	movement_key(int key)
 		|| key == KEY_S || key == KEY_D);
 }
 
-inline bool key_should_repeat(int key)
+inline bool	key_should_repeat(int key)
 {
-    return (key != KEY_F1);
+	return (key != KEY_F1);
 }
 
 void	process_mvkeys(t_game *const g, int key, bool pressed)

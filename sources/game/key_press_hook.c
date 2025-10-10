@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 19:08:59 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:59:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	process_repetition_key(t_game *g, int k)
 	key_p = malloc(sizeof (int));
 	if (!key_p)
 	{
-		ft_putendl_fd("The key was not pressed because malloc failed"
-			, STDERR_FILENO);
+		ft_putendl_fd("The key was not pressed because malloc failed",
+			STDERR_FILENO);
 		return ;
 	}
 	*key_p = k;

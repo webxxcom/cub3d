@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 19:04:10 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 01:00:06 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	cam_rotate(t_game *const g, const float dx, float const dy)
 	g->cam.dir.y = dir_vec.x * sin(rot) + dir_vec.y * cos(rot);
 	g->cam.plane.x = plane_vec.x * cos(rot) - plane_vec.y * sin(rot);
 	g->cam.plane.y = plane_vec.x * sin(rot) + plane_vec.y * cos(rot);
-	if ((dy < 0 && g->cam.pitch < g->h * 2) || (dy > 0 && -g->cam.pitch < g->h * 2))
+	if ((dy < 0 && g->cam.pitch < g->h * 2)
+		|| (dy > 0 && - g->cam.pitch < g->h * 2))
 		g->cam.pitch -= dy * g->dtime * g->cam.sensitivity * g->h;
 }
 

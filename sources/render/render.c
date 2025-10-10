@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 21:47:46 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:32:30 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ static void put_map(t_game *const game)
 				sideDist.y += unitStep.y;
 				side = NORTH;
 			}
-			if (game->map[mapPos.y][mapPos.x] != '0')
+			if (game->map.tiles[mapPos.y][mapPos.x] != '0')
 				hit = true;
 		}
 		if (rayDir.x < 0 && side == WEST)

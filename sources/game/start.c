@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/11 00:08:09 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:34:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,40 +53,39 @@ static t_cam	cam_init()
 		.pitch = 0
 	});
 }
-#define MAP_WIDTH 20
-#define MAP_HEIGHT 15
-#define WALL_DENSITY 0.15
 #include <time.h>
-int generate_map(t_game *game)
+char	**generate_map(int *w, int *h)
 {
-	int y, x;
+	const int WIDTH = 20, HEIGHT = 15;
+	const double WALL_DENSITY = 0.15;
+	char	**tiles;
+	int		y, x;
 
-	srand(time(NULL)); // seed RNG once per run
-
-	game->map = malloc(sizeof(char *) * (MAP_HEIGHT + 1));
-	if (!game->map)
-		return (1);
-
-	for (y = 0; y < MAP_HEIGHT; y++)
+	srand(time(NULL));
+	tiles = malloc(sizeof(char *) * (HEIGHT + 1));
+	if (!tiles)
+		return (NULL);
+	for (y = 0; y < HEIGHT; y++)
 	{
-		game->map[y] = malloc(MAP_WIDTH + 1);
-		if (!game->map[y])
-			return (1);
+		tiles[y] = malloc(WIDTH + 1);
+		if (!tiles[y])
+			return (NULL);
 
-		for (x = 0; x < MAP_WIDTH; x++)
+		for (x = 0; x < WIDTH; x++)
 		{
-			if (y == 0 || y == MAP_HEIGHT - 1 || x == 0 || x == MAP_WIDTH - 1)
-				game->map[y][x] = '1'; // border walls
+			if (y == 0 || y == HEIGHT - 1 || x == 0 || x == WIDTH - 1)
+				tiles[y][x] = '1';
 			else if ((double)rand() / RAND_MAX < WALL_DENSITY)
-				game->map[y][x] = rand() % 4 + 1 + '0'; // random internal wall
+				tiles[y][x] = rand() % 4 + 1 + '0';
 			else
-				game->map[y][x] = '0'; // empty space
+				tiles[y][x] = '0';
 		}
-		printf("%s\n", game->map[y]);
-		game->map[y][MAP_WIDTH] = '\0';
+		tiles[y][WIDTH] = '\0';
 	}
-	game->map[MAP_HEIGHT] = NULL;
-	return (0);
+	tiles[HEIGHT] = NULL;
+	*w = WIDTH;
+	*h = HEIGHT;
+	return (tiles);
 }
 
 static void	load_textures(t_game *g)
@@ -157,7 +156,16 @@ static t_player	player_init()
 	});
 }
 
-static void	init_game(t_game *g)
+static t_map	init_map(const char *filename)
+{
+	t_map	res;
+
+	(void)filename;
+	res.tiles = generate_map(&res.size.x, &res.size.y);
+	return (res);
+}
+
+static void	init_game(t_game *g, const char *filename)
 {
 	g->w = 1000;
 	g->h = 650;
@@ -165,17 +173,17 @@ static void	init_game(t_game *g)
 	g->show_dbg = false;
 	ft_memset(g->moving_keys, 0, sizeof (g->moving_keys));
 	g->minimap = minimap_init();
+	g->map = init_map(filename);
 	
 	
 	// ! Hard code REVISE
-	generate_map(g);
 	g->player = player_init();
 }
 
 void game_cleanup(t_game *game)
 {
 	ft_lst_free(game->pressed_keys);
-	ft_free_matrix(game->map);
+	ft_free_matrix(game->map.tiles);
 	if (game->mlx && game->buffer_image)
 		im_cleanup(game->mlx, game->buffer_image);
 	if (game->mlx && game->win)
@@ -190,7 +198,7 @@ void	start_game(t_game *game, const char *filename)
 	ft_memset(game, 0, sizeof(*game));
 	//parse_textures(game, filename);
 	//parse_map(game, filename);
-	init_game(game);
+	init_game(game, filename);
 	init_mlx(game);
 	//load_textures(game);
 	// int	i = 0;

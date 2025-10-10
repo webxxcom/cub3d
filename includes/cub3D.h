@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/11 00:07:50 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:34:15 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,17 @@ typedef struct s_minimap
 	uint32_t	fcol;
 }	t_minimap;
 
+typedef struct s_map
+{
+	char	**tiles;
+	t_vec2i	size;
+}	t_map;
+
 typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
-	char			**map;
+	t_map			map;
 	t_player		player;
 	t_minimap		minimap;
 	t_paths			paths;
