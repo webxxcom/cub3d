@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/12 11:29:49 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:13:25 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,56 @@ static t_cam	cam_init()
 #include <time.h>
 char	**generate_map(int *w, int *h)
 {
-	const int WIDTH = 20, HEIGHT = 15;
-	const double WALL_DENSITY = 0.15;
-	char	**tiles;
-	int		y, x;
+	const char *fixed_map[] = {
+		"11111111111111111111",
+		"10000300000100113001",
+		"10000001000300000001",
+		"10000000000300000001",
+		"10000000000000000141",
+		"10000020002000000001",
+		"10000000000000000001",
+		"10000200000000130041",
+		"10004000000000000001",
+		"10030000300410000001",
+		"10000033000010000001",
+		"10041000040040200001",
+		"10000030000300000001",
+		"10004000020000000201",
+		"11111111111111111111"
+	};
+	const int WIDTH = 20;
+	const int HEIGHT = 15;
+	char **tiles;
+	int y;
 
-	srand(time(NULL));
 	tiles = malloc(sizeof(char *) * (HEIGHT + 1));
 	if (!tiles)
-		return (NULL);
+		return NULL;
+
 	for (y = 0; y < HEIGHT; y++)
 	{
-		tiles[y] = malloc(WIDTH + 1);
+		tiles[y] = strdup(fixed_map[y]); // alloc + copy string
 		if (!tiles[y])
-			return (NULL);
-
-		for (x = 0; x < WIDTH; x++)
 		{
-			if (y == 0 || y == HEIGHT - 1 || x == 0 || x == WIDTH - 1)
-				tiles[y][x] = '1';
-			else if ((double)rand() / RAND_MAX < WALL_DENSITY)
-				tiles[y][x] = rand() % 4 + 1 + '0';
-			else
-				tiles[y][x] = '0';
+			// free previously allocated rows on failure
+			while (--y >= 0)
+				free(tiles[y]);
+			free(tiles);
+			return NULL;
 		}
-		tiles[y][WIDTH] = '\0';
 	}
 	tiles[HEIGHT] = NULL;
+
 	*w = WIDTH;
 	*h = HEIGHT;
-	return (tiles);
+	return tiles;
 }
 
 static void	load_textures(t_game *g)
 {
-	static char *textures_files[2][4] = {
+	static char	*floor_filename = "textures/floor.xpm";
+	static char	*ceiling_filename = "textures/ceiling.xpm";
+	static char 		*textures_files[2][4] = {
 		{
 			"textures/1.1.xpm",
 			"textures/1.2.xpm",
@@ -129,6 +144,10 @@ static void	load_textures(t_game *g)
 		}
 		++i;
 	}
+	i = 0;
+
+	g->floor = im_load_from_xpmfile(g->mlx, floor_filename);
+	g->ceiling = im_load_from_xpmfile(g->mlx, ceiling_filename);
 }
 
 #pragma endregion

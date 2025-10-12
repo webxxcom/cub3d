@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 10:10:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 10:54:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 15:04:02 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 typedef struct s_vector_2d_float	t_vec2f;
 typedef struct s_vector_2d_int		t_vec2i;
+
+typedef struct s_ray_step
+{
+	t_vec2f	pos;
+	t_vec2f	step;
+}	t_ray_step;
 
 typedef struct s_dda_data
 {
@@ -41,3 +47,4 @@ typedef struct s_dda_res
 
 t_dda_d		get_dda_start_data(t_game *const g, int const screen_x);
 t_dda_res	perform_dda(t_game *const g, double const screen_x);
+void		draw_vert_line(t_game *const g, int screen_x, t_dda_res ddar);

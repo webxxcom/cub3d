@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/12 11:32:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 13:12:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "key_codes.h"
 # include "image.h"
 # include "vectors.h"
+# include "colors.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -147,6 +148,9 @@ typedef struct s_game
 	t_cam			cam;
 	t_input			input;
 	t_image			*buffer_image;
+	
+	t_image			*ceiling;
+	t_image			*floor;
 
 	int				w;
 	int				h;
