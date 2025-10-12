@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/11 00:58:24 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 09:54:06 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	handle_movement(t_game *const g)
 	t_vec2f			mv_dir;
 
 	mv_dir = vec2f_init();
-	if (g->moving_keys[MOVING_FRWD])
+	if (g->input.moving_keys[MOVING_FRWD])
 		mv_dir = vec2f_vtranslate(mv_dir, g->cam.dir);
-	if (g->moving_keys[MOVING_BCK])
+	if (g->input.moving_keys[MOVING_BCK])
 		mv_dir = vec2f_vtranslate(mv_dir, vec2f_neg(g->cam.dir));
-	if (g->moving_keys[MOVING_RGHT])
+	if (g->input.moving_keys[MOVING_RGHT])
 		mv_dir = vec2f_vtranslate(mv_dir, plane_norm);
-	if (g->moving_keys[MOVING_LFT])
+	if (g->input.moving_keys[MOVING_LFT])
 		mv_dir = vec2f_vtranslate(mv_dir, vec2f_neg(plane_norm));
 	if (mv_dir.x != 0 || mv_dir.y != 0)
 		move(g, vec2f_normalize(mv_dir));

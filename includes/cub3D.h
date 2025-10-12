@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/11 00:34:15 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 10:08:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,43 @@ typedef struct s_map
 	t_vec2i	size;
 }	t_map;
 
+/**
+ * The input structure which describes current keyboard input.
+ * 	To revised: mouse keys.
+ * 
+ * Field descriptions:
+ *  ::pressed_keys	- a list of currently pressed keys 
+ * which can hold any key until it's a movement key or a key that should repeat.
+ * 	::moving_keys	- the static array of currently allowed pressed movement keys.
+ * required to improve optimization of the diagonal movement calculations.
+ */
+typedef struct s_input
+{
+	t_list			*pressed_keys;
+	bool			moving_keys[4];
+}	t_input;
+
+/**
+ * The struct s_game describes global game's state.
+ * 
+ * Field descriptions:
+ *  ::map 		- an instance of the map downloaded from the file.
+ *  ::player 	- an instance of an entity moveable by keyboard.
+ *  ::minimap 	- an instance of the minimap structure which
+ * 					has setting for minimap display on ther screen.
+ *  ::paths 	- paths to files which store textures to each cardinal direction.
+ * 	::cubes 	- all the possible combinations of textures
+ * 					on the cube fo each cardinal direction.
+ *  ::cam		- current game's POV.
+ *  ::input		- describes currently allowed pressed keys
+ *  ::buffer_image - describes the current frame to be drawn on the screen.
+ * All the minimap's, map's, enemy's etc. pixels are moved to that image
+ *  and then this image is to be put on the mlx display.
+ *  ::w			- window width
+ *  ::h			- window height
+ *  ::dtime		- delta time between two frames
+ *  ::show_dbg	- debug information triggered on F1
+ */
 typedef struct s_game
 {
 	void			*mlx;
@@ -115,8 +152,7 @@ typedef struct s_game
 	t_paths			paths;
 	t_cube_txtrs	cubes[2];
 	t_cam			cam;
-	t_list			*pressed_keys;
-	bool			moving_keys[4];
+	t_input			input;
 	t_image			*buffer_image;
 
 	int				w;

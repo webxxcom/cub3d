@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/11 00:34:53 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 10:04:48 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ static t_cam	cam_init()
 		.pitch = 0
 	});
 }
+
+#pragma region REMOVE WHEN PARSING IMPLEMENTED // !
+
 #include <time.h>
 char	**generate_map(int *w, int *h)
 {
@@ -128,6 +131,8 @@ static void	load_textures(t_game *g)
 	}
 }
 
+#pragma endregion
+
 static void	init_mlx(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -165,13 +170,21 @@ static t_map	init_map(const char *filename)
 	return (res);
 }
 
+static t_input	init_input()
+{
+	t_input	res;
+
+	ft_memset(&res, 0, sizeof (res));
+	return (res);
+}
+
 static void	init_game(t_game *g, const char *filename)
 {
 	g->w = 1000;
 	g->h = 650;
 	g->cam = cam_init();
 	g->show_dbg = false;
-	ft_memset(g->moving_keys, 0, sizeof (g->moving_keys));
+	g->input = init_input();
 	g->minimap = minimap_init();
 	g->map = init_map(filename);
 	
@@ -182,7 +195,7 @@ static void	init_game(t_game *g, const char *filename)
 
 void game_cleanup(t_game *game)
 {
-	ft_lst_free(game->pressed_keys);
+	ft_lst_free(game->input.pressed_keys);
 	ft_free_matrix(game->map.tiles);
 	if (game->mlx && game->buffer_image)
 		im_cleanup(game->mlx, game->buffer_image);

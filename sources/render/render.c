@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/11 00:32:30 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 09:54:26 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	render_debug(t_game *g)
 
 		// Pressed keys
 		snprintf(buf, sizeof(buf), "Keys: W:%d A:%d S:%d D:%d",
-			g->moving_keys[0], g->moving_keys[1],
-			g->moving_keys[2], g->moving_keys[3]);
+			g->input.moving_keys[0], g->input.moving_keys[1],
+			g->input.moving_keys[2], g->input.moving_keys[3]);
 
 		// Textures loaded check
 		int loaded = 1;

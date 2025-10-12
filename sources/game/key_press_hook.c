@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/11 00:59:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 09:46:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	repetition_handle(t_game *const game)
 {
 	t_list	*curr;
 
-	curr = game->pressed_keys;
+	curr = game->input.pressed_keys;
 	while (curr)
 	{
 		process_keypress(game, *((int *)curr->content));
@@ -37,7 +37,7 @@ static void	process_repetition_key(t_game *g, int k)
 		return ;
 	}
 	*key_p = k;
-	ft_lstadd_front(&g->pressed_keys, ft_lstnew(key_p));
+	ft_lstadd_front(&g->input.pressed_keys, ft_lstnew(key_p));
 }
 
 int	key_press_hook(int key, t_game *game)
