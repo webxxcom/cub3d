@@ -6,11 +6,12 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/12 09:54:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 11:37:41 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include "raycaster.h"
 
 #pragma region DEBUG
 // ! Debug function is not complient with shitty
@@ -73,35 +74,32 @@ static void	render_debug(t_game *g)
 		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
 	}
 }
+
 #pragma endregion
 
-static t_vec2f	init_startvals(t_game *const game, const t_vec2f ray_dir,
-								const t_vec2f unit_step, t_vec2i *map_step)
+void	draw_keybindings(t_game *g)
 {
-	t_vec2f	side_dist;
+	const int	DBG_X = 10;
+	const int	DBG_Y = g->h / 3;
+	const int	DBG_LINE_H = 20;
+	int			y;
 
-	side_dist = vec2f_init();
-	if (ray_dir.x < 0)
-	{
-		map_step->x = -1;
-		side_dist.x = (game->player.pos.x - (int)game->player.pos.x) * unit_step.x;
-	}
-	else
-	{
-		map_step->x = 1;
-		side_dist.x = ((int)game->player.pos.x + 1 - game->player.pos.x) * unit_step.x;
-	}
-	if (ray_dir.y < 0)
-	{
-		map_step->y = -1;
-		side_dist.y = (game->player.pos.y - (int)game->player.pos.y) * unit_step.y;
-	}
-	else
-	{
-		map_step->y = 1;
-		side_dist.y = ((int)game->player.pos.y + 1 - game->player.pos.y) * unit_step.y;
-	}
-	return (side_dist);
+	if (!g->show_keys)
+		return;
+	y = DBG_Y;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "W / ARROW_UP : Move forward");
+	y += DBG_LINE_H;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "S / ARROW_DOWN : Move backward");
+	y += DBG_LINE_H;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "A / ARROW_LEFT : Move left");
+	y += DBG_LINE_H;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "D / ARROW_RIGHT : Move right");
+	y += DBG_LINE_H;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "Left Shift : Sprint");
+	y += DBG_LINE_H;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "F1 : Toggle debug info");
+	y += DBG_LINE_H;
+	mlx_string_put(g->mlx, g->win, DBG_X, y, 0xFFFFFF, "ESC : Quit");
 }
 
 static void	drawVertLine(t_game *const g, int screen_x, int line_h, float dist, t_txtres_sides side, t_vec2f ray_dir)
@@ -126,11 +124,6 @@ static void	drawVertLine(t_game *const g, int screen_x, int line_h, float dist, 
 		wallX = g->player.pos.x + dist * ray_dir.x;
 	wallX -= floor(wallX);
 
-	// uint64_t t = 0;
-	// if (t == 0)
-	// 	t = get_time_in_ms();
-	// if (t - get_time_in_ms() > 1000)
-	// 	printf("ASD");
 	int texX = (int)(wallX * (double)g->cubes[0].walls[side]->width);
 	if(side == WEST) texX = g->cubes[0].walls[side]->width - texX - 1;
     if(side == SOUTH) texX = g->cubes[0].walls[side]->width - texX - 1;
@@ -146,49 +139,16 @@ static void	drawVertLine(t_game *const g, int screen_x, int line_h, float dist, 
 	}
 }
 
-static void put_map(t_game *const game)
+static void put_map(t_game *const g)
 {
-	int	screen_x;
+	int		screen_x;
+	t_dda_res	dda_res;
 
 	screen_x = 0;
-	while (screen_x < game->w)
+	while (screen_x < g->w)
 	{
-		double cameraX = 2 * screen_x / (double)game->w - 1;
-		t_vec2f rayDir = vec2f_construct(
-			game->cam.dir.x + game->cam.plane.x * cameraX,
-			game->cam.dir.y + game->cam.plane.y * cameraX);
-		t_vec2f unitStep = vec2f_construct(fabs(1. / rayDir.x), fabs(1. / rayDir.y));
-		t_vec2i mapStep;
-		t_vec2f sideDist = init_startvals(game, rayDir, unitStep, &mapStep);
-		t_vec2i mapPos = vec2i_construct(game->player.pos.x, game->player.pos.y);
-		
-		bool hit = false;
-		float dist = 0;
-		t_txtres_sides	side;
-		while (!hit)
-		{
-			if (sideDist.x < sideDist.y)
-			{
-				mapPos.x += mapStep.x;
-				dist = sideDist.x;
-				sideDist.x += unitStep.x;
-				side = WEST;
-			}
-			else
-			{
-				mapPos.y += mapStep.y;
-				dist = sideDist.y;
-				sideDist.y += unitStep.y;
-				side = NORTH;
-			}
-			if (game->map.tiles[mapPos.y][mapPos.x] != '0')
-				hit = true;
-		}
-		if (rayDir.x < 0 && side == WEST)
-			side = EAST;
-		else if (rayDir.y < 0 && side == NORTH)
-			side = SOUTH;
-		drawVertLine(game, screen_x, game->h / dist, dist, side, rayDir);
+		dda_res = perform_dda(g, screen_x);
+		drawVertLine(g, screen_x, g->h / dda_res.dist, dda_res.dist, dda_res.side, dda_res.ray_dir);
 		++screen_x;
 	}
 }
@@ -206,4 +166,5 @@ void	game_render(t_game *game)
 	mlx_clear_window(game->mlx, game->win);
 	put_buffer(game);
 	render_debug(game);
+	draw_keybindings(game);
 }

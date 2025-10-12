@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/10 19:42:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 11:29:49 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main_loop(t_game *game)
 {
+	game->player.speed = game->player.base_speed;
 	process_dtime(game);
 	repetition_handle(game);
 	game_render(game);

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:39:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 09:56:38 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 11:34:42 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ inline bool	movement_key(int key)
 
 inline bool	key_should_repeat(int key)
 {
-	return (key != KEY_F1);
+	return (key != KEY_F1 && key != KEY_F2);
 }
 
 void	process_mvkeys(t_game *const g, int key, bool pressed)
@@ -41,8 +41,10 @@ void	process_keypress(t_game *const g, int key)
 {
 	if (key == KEY_F1)
 		toggle_bool(&g->show_dbg);
-	if (key == KEY_Q)
-		printf("ASD\n");
+	if (key == KEY_F2)
+		toggle_bool(&g->show_keys);
+	if (key == KEY_LSHIFT)
+		g->player.speed = g->player.sprint_speed;
 	else if (key == KEY_ESC)
 		mlx_loop_end(g->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/12 10:08:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/12 11:32:55 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@
 # define MOVING_LFT 2
 # define MOVING_RGHT 3
 
-// Enumeration for wall sides, sued for textures obviously
-typedef enum e_texture_sides
-{
-	NORTH = 0,
-	WEST,
-	SOUTH,
-	EAST
-}	t_txtres_sides;
-
 typedef struct s_cube_textures
 {
 	t_image	*walls[4];
@@ -82,6 +73,8 @@ typedef struct s_player
 {
 	t_vec2f	pos;
 	float	speed;
+	float	base_speed;
+	float	sprint_speed;
 	float	radius;
 }	t_player;
 
@@ -160,6 +153,7 @@ typedef struct s_game
 	double			dtime;
 	double			last_time;
 	bool			show_dbg;
+	bool			show_keys;
 }	t_game;
 
 t_minimap   minimap_init(void);

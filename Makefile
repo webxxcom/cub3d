@@ -10,7 +10,7 @@ SRCS		= main.c \
 			  	$(SRC_FLDR)/game/key_release_hook.c $(SRC_FLDR)/game/process_keypress.c $(SRC_FLDR)/game/main_loop.c \
 				$(SRC_FLDR)/game/mvement_handle.c $(SRC_FLDR)/game/start.c $(SRC_FLDR)/game/minimap.c	\
 			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/validate.c \
-			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c	\
+			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c $(SRC_FLDR)/render/raycaster.c	\
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
 			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c
 
