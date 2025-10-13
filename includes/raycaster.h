@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 10:10:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 15:04:02 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:11:30 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef enum e_texture_sides
 typedef struct s_dda_res
 {
 	float			dist;
+	t_vec2i			map_pos;
 	t_vec2f			ray_dir;
 	t_txtres_sides	side;
 }	t_dda_res;

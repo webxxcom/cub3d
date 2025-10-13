@@ -6,22 +6,21 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:28:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/11 00:58:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:04:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_minimap	minimap_init(void)
+t_minimap	minimap_init(t_game *g)
 {
 	return ((t_minimap){
-		.pos = vec2i_construct(0, 650),
-		.size = vec2i_construct(200, 150),
+		.pos = vec2i_construct(0, g->h),
+		.size = vec2i_construct(g->map.size.x * 8, g->map.size.y * 6),
 		.bgcol = 0x1A1A1A,
-		.pcol = 0x4CAF50,
-		.wcol = 0x9E9E9E,
+		.pcol = COLOR_RED,
+		.wcol = COLOR_GRAY,
 		.rcol = 0x03A9F4,
 		.fcol = 0x2E2E2E
-		//.bcol = 0x606060
 	});
 }

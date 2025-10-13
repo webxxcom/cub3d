@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/12 14:13:25 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:24:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_cam	cam_init()
 	return ((t_cam){
 		.plane = vec2f_construct(0, 0.66f),
 		.dir = vec2f_construct(-1, 0),
-		.sensitivity = 0.13f,
+		.sensitivity = 0.0008f,
 		.pitch = 0
 	});
 }
@@ -59,25 +59,33 @@ static t_cam	cam_init()
 #include <time.h>
 char	**generate_map(int *w, int *h)
 {
+	const int HEIGHT = 24;
 	const char *fixed_map[] = {
-		"11111111111111111111",
-		"10000300000100113001",
-		"10000001000300000001",
-		"10000000000300000001",
-		"10000000000000000141",
-		"10000020002000000001",
-		"10000000000000000001",
-		"10000200000000130041",
-		"10004000000000000001",
-		"10030000300410000001",
-		"10000033000010000001",
-		"10041000040040200001",
-		"10000030000300000001",
-		"10004000020000000201",
-		"11111111111111111111"
+		"888888888884464464644464",
+		"800000000084000000000004",
+		"803300000884000000000006",
+		"800300000000000000000006",
+		"803300000884000000000004",
+		"800000000084000006660646",
+		"888808888884444446000006",
+		"777707777080808084040606",
+		"770000007808080886000006",
+		"700000000000000086000004",
+		"700000000000000086060606",
+		"770000007808080886460666",
+		"777707777884068483330333",
+		"222202222464006063000003",
+		"220000022400000043000003",
+		"200000002400000043000003",
+		"100000001444446063300033",
+		"200000002221222660050505",
+		"220000022200022050500055",
+		"200000002000002505050505",
+		"100000000000000000000005",
+		"200000002000002505050505",
+		"220000022200022050500055",
+		"222212222221222555555555"
 	};
-	const int WIDTH = 20;
-	const int HEIGHT = 15;
 	char **tiles;
 	int y;
 
@@ -87,10 +95,9 @@ char	**generate_map(int *w, int *h)
 
 	for (y = 0; y < HEIGHT; y++)
 	{
-		tiles[y] = strdup(fixed_map[y]); // alloc + copy string
+		tiles[y] = strdup(fixed_map[y]);
 		if (!tiles[y])
 		{
-			// free previously allocated rows on failure
 			while (--y >= 0)
 				free(tiles[y]);
 			free(tiles);
@@ -99,7 +106,7 @@ char	**generate_map(int *w, int *h)
 	}
 	tiles[HEIGHT] = NULL;
 
-	*w = WIDTH;
+	*w = 28;
 	*h = HEIGHT;
 	return tiles;
 }
@@ -147,7 +154,11 @@ static void	load_textures(t_game *g)
 	i = 0;
 
 	g->floor = im_load_from_xpmfile(g->mlx, floor_filename);
+	if (!g->floor)
+		printf("The %s texture was not loaded\n", floor_filename), exit(1);
 	g->ceiling = im_load_from_xpmfile(g->mlx, ceiling_filename);
+	if (!g->ceiling)
+		printf("The %s texture was not loaded\n", ceiling_filename), exit(1);
 }
 
 #pragma endregion
@@ -206,8 +217,8 @@ static void	init_game(t_game *g, const char *filename)
 	g->cam = cam_init();
 	g->show_dbg = false;
 	g->input = init_input();
-	g->minimap = minimap_init();
 	g->map = init_map(filename);
+	g->minimap = minimap_init(g);
 	
 	
 	// ! Hard code REVISE

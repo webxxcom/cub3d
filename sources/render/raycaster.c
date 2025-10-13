@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 11:00:04 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:11:35 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ t_dda_res	perform_dda(t_game *const g, double const screen_x)
 		dda_res.side = EAST;
 	else if (dda.ray_dir.y < 0 && dda_res.side == NORTH)
 		dda_res.side = SOUTH;
+	dda_res.map_pos = dda.map_pos;
 	return (dda_res);
 }

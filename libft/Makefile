@@ -1,7 +1,7 @@
 NAME 		= libft.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -O3
 
 SRCS 		= char/ft_isalpha.c char/ft_isdigit.c char/ft_isalnum.c char/ft_isascii.c char/ft_isprint.c \
 			conversion/ft_toupper.c conversion/ft_tolower.c conversion/ft_atoi.c conversion/ft_itoa.c \

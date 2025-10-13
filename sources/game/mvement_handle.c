@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 11:29:49 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 21:55:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static void	move(t_game *const g, t_vec2f dir_vec)
 {
 	t_player *const	pl = &g->player;
 	const t_vec2f	delta = vec2f_construct(
-			dir_vec.x * pl->speed * g->dtime,
-			dir_vec.y * pl->speed * g->dtime);
+			dir_vec.x * g->dtime,
+			dir_vec.y * g->dtime);
 
-	if (is_walkable(g, pl->pos.x + delta.x * pl->radius, pl->pos.y))
-		pl->pos.x += delta.x;
-	if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius))
-		pl->pos.y += delta.y;
+	if (is_walkable(g, pl->pos.x + delta.x * pl->radius * 2, pl->pos.y))
+		pl->pos.x += delta.x * pl->speed;
+	if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius * 2))
+		pl->pos.y += delta.y * pl->speed;
 }
 
 void	handle_movement(t_game *const g)

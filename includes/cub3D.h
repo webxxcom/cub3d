@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/12 13:12:53 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:12:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 typedef struct s_cube_textures
 {
 	t_image	*walls[4];
-}	t_cube_txtrs;
+}	t_cube;
 
 typedef struct s_paths
 {
@@ -144,7 +144,7 @@ typedef struct s_game
 	t_player		player;
 	t_minimap		minimap;
 	t_paths			paths;
-	t_cube_txtrs	cubes[2];
+	t_cube			cubes[2];
 	t_cam			cam;
 	t_input			input;
 	t_image			*buffer_image;
@@ -160,7 +160,7 @@ typedef struct s_game
 	bool			show_keys;
 }	t_game;
 
-t_minimap   minimap_init(void);
+t_minimap   minimap_init(t_game *g);
 void	put_minimap(t_game *g);
 
 // Delta time
