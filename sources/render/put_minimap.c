@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/13 21:36:50 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:57:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	draw_pixel(t_game *g, int x, int y, t_vec2i map_pos)
 {
 	t_minimap *const	mm = &g->minimap;
 
+	map_pos = vec2i_construct(map_pos.x, g->map.size.y - map_pos.y - 1);
 	if (g->map.tiles[map_pos.y][map_pos.x] != '0')
 		im_set_pixel(g->buffer_image, x, y, mm->wcol);
 	else
@@ -69,7 +70,7 @@ static void	draw_player(t_game *g)
 			(double)g->minimap.size.y / g->map.size.y);
 	const t_vec2f	ppos = vec2f_construct(
 			g->player.pos.x * scale.x + g->minimap.pos.x,
-			-g->player.pos.y * scale.y + g->minimap.pos.y);
+			g->player.pos.y * scale.y + g->minimap.pos.y - g->minimap.size.y);
 	const double	r = g->player.radius - 3;
 	int				alpha;
 	double			rad;

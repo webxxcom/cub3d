@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/13 22:24:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:55:56 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ static void	init_mlx(t_game *game)
 static t_player	player_init()
 {
 	return ((t_player){
-		.pos = vec2f_construct(5, 5), // ! POS IS HARDCODED
+		.pos = vec2f_construct(7, 3), // ! POS IS HARDCODED
 		.speed = 3.f,
 		.base_speed = 3.f,
 		.sprint_speed = 6.f,
