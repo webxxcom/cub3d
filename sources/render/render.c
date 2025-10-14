@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/13 22:10:22 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:54:06 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,9 @@ static void	render_debug_info(t_game *g)
 
 		// Textures loaded check
 		int loaded = 1;
-		for (int c = 0; c < 2; c++)
-			for (int w = 0; w < 4; w++)
-				if (!g->cubes[c].walls[w])
-					loaded = 0;
+		for (int i = 0; i < 2; i++)
+			if (!g->textures[i])
+				loaded = 0;
 
 		snprintf(buf, sizeof(buf),
 			"Textures: %s", loaded ? "ALL LOADED" : "MISSING");
@@ -141,14 +140,14 @@ void	draw_floor_and_ceiling(t_game *g)
 		while (x < g->w)
 	 	{
 	 		t_vec2i texPos = vec2i_construct(
-	 			(int)(g->floor->width * (floor_pos.x - (int)floor_pos.x)) & (g->floor->width - 1),
-	 			(int)(g->floor->height * (floor_pos.y - (int)floor_pos.y)) & (g->floor->height - 1) 
+	 			(int)(g->textures[0]->width * (floor_pos.x - (int)floor_pos.x)) & (g->textures[0]->width - 1),
+	 			(int)(g->textures[0]->height * (floor_pos.y - (int)floor_pos.y)) & (g->textures[0]->height - 1) 
 	 		);
 			(void)texPos;
 			if (floor_y < g->h)
-				im_set_pixel(g->buffer_image, x, floor_y, im_get_pixel(g->floor, texPos.x, texPos.y));
+				im_set_pixel(g->buffer_image, x, floor_y, im_get_pixel(g->textures[0], texPos.x, texPos.y));
 			if (ceiling_y > 0)
-				im_set_pixel(g->buffer_image, x, ceiling_y, im_get_pixel(g->ceiling, texPos.x, texPos.y));
+				im_set_pixel(g->buffer_image, x, ceiling_y, im_get_pixel(g->textures[1], texPos.x, texPos.y));
 
 	 		floor_pos = vec2f_vtranslate(floor_pos, floorUnitStep);
 	 		++x;

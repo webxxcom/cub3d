@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_vert_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/13 22:16:48 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:51:49 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_res ddar)
 	double		step_y;
 	int			tex_x;
 	double		tex_posy;
-	t_image		*cube_side = g->cubes[get_cube_type(g, ddar.map_pos)].walls[ddar.side];
+	t_image		*cube_side = g->textures[g->cubes[get_cube_type(g, ddar.map_pos)].walls_ind[ddar.side]];
 
 	if (ddar.side == SOUTH || ddar.side == NORTH)
 		wall_x = g->player.pos.x + ddar.ray_dir.x * ddar.dist;
