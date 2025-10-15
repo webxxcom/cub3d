@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/14 09:54:06 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:53:05 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,15 @@ void	draw_floor_and_ceiling(t_game *g)
 	 		);
 			(void)texPos;
 			if (floor_y < g->h)
-				im_set_pixel(g->buffer_image, x, floor_y, im_get_pixel(g->textures[0], texPos.x, texPos.y));
+				im_set_pixel(g->buffer_image, x, floor_y,
+					im_scale_pixel(
+						im_get_pixel(g->textures[0], texPos.x, texPos.y), 1 / rowDist)
+					);
 			if (ceiling_y > 0)
-				im_set_pixel(g->buffer_image, x, ceiling_y, im_get_pixel(g->textures[1], texPos.x, texPos.y));
+				im_set_pixel(g->buffer_image, x, ceiling_y,
+					im_scale_pixel(
+						im_get_pixel(g->textures[1], texPos.x, texPos.y), 1 / rowDist)
+					);
 
 	 		floor_pos = vec2f_vtranslate(floor_pos, floorUnitStep);
 	 		++x;

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 11:56:25 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:39:15 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,10 @@ t_cam	cam_init(void)
 		.sensitivity = 0.0008f,
 		.pitch = 0
 	});
+}
+
+void	init_cubes(t_cube *cubes)
+{
+	cubes[0] = (t_cube){.walls_ind = {2, 3, 4, 5}};
+	cubes[1] = (t_cube){.walls_ind = {2, 6, 4, 9}};
 }

@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:45 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 12:49:18 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:50:55 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-unsigned int	im_get_pixel(t_image *img, int x, int y)
+inline uint32_t	im_get_pixel(t_image *img, int x, int y)
 {
 	if (y < 0 || y >= img->height || x < 0 || x >= img->width)
 		return (0);
@@ -20,12 +20,22 @@ unsigned int	im_get_pixel(t_image *img, int x, int y)
 		(img->data + y * img->size_line + x * (img->bpp / 8)));
 }
 
-void	im_set_pixel(t_image *img, int x, int y, unsigned int color)
+inline void	im_set_pixel(t_image *img, int x, int y, unsigned int color)
 {
 	if (y < 0 || y >= img->height || x < 0 || x >= img->width)
 		return ;
 	*(unsigned int *)
 		(img->data + y * img->size_line + x * (img->bpp / 8)) = color;
+}
+
+inline uint32_t	im_scale_pixel(uint32_t pixel, float factor)
+{
+	if (factor < 0.f)
+		factor = 0.f;
+	return (RGB(
+		(uint8_t)ft_minf(255.f, round((pixel >> 16 & 0xFF) * factor)),
+		(uint8_t)ft_minf(255.f, round((pixel >> 8 & 0xFF) * factor)),
+		(uint8_t)ft_minf(255.f, round((pixel & 0xFF) * factor))));
 }
 
 void	im_move_pixels(t_image *dest, int off_x, int off_y, t_image *src)

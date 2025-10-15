@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_vert_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/14 09:51:49 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:53:28 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_res ddar)
 	{
 		im_set_pixel(g->buffer_image,
 			spos.x, spos.y++,
-			im_get_pixel(cube_side, tex_x, tex_posy));
+			im_scale_pixel(im_get_pixel(cube_side, tex_x, tex_posy), 1 / ddar.dist));
 		tex_posy += step_y;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 16:10:10 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:50:52 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 # include "libft.h"
 # include "mlx.h"
-# include "parse.h"
 # include "render.h"
 # include "error.h"
 # include "utils.h"
@@ -167,6 +166,7 @@ t_cam		cam_init(void);
 t_input		init_input(void);
 t_map		init_map(const char *filename);
 t_player	player_init(void);
+void	init_cubes(t_cube *cubes);
 
 void	put_minimap(t_game *g);
 
@@ -196,6 +196,7 @@ void 		game_cleanup(t_game *game);
 
 // Utils
 void		toggle_bool(bool *flag);
+float		ft_minf(float a, float b);
 bool 		key_should_repeat(int key);
 bool		movement_key(int key);
 

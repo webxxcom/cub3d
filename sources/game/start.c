@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 16:11:23 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:13:47 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 static void	load_textures(t_game *g)
 {
-	static const int	textures_n = 10;
+	static const size_t	textures_n = 10;
 	static char 		*textures_files[10] = {
 		"textures/floor.xpm",
 		"textures/ceiling.xpm",
@@ -97,40 +97,6 @@ static void	init_mlx(t_game *game)
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window_hook, game->mlx);
 	mlx_hook(game->win, MotionNotify, PointerMotionMask, mouse_move_hook, game);
 	mlx_mouse_hide(game->mlx, game->win);
-}
-
-static t_player	player_init()
-{
-	return ((t_player){
-		.pos = vec2f_construct(7, 3), // ! POS IS HARDCODED
-		.speed = 3.f,
-		.base_speed = 3.f,
-		.sprint_speed = 6.f,
-		.radius = 6.f 
-	});
-}
-
-static t_map	init_map(const char *filename)
-{
-	t_map	res;
-
-	(void)filename;
-	res.tiles = generate_map(&res.size.x, &res.size.y);
-	return (res);
-}
-
-static void	init_cubes(t_cube *cubes)
-{
-	cubes[0] = (t_cube){.walls_ind = {2, 3, 4, 5}};
-	cubes[1] = (t_cube){.walls_ind = {3, 4, 5, 6}};
-}
-
-static t_input	init_input()
-{
-	t_input	res;
-
-	ft_memset(&res, 0, sizeof (res));
-	return (res);
 }
 
 static void	init_game(t_game *g, const char *filename)

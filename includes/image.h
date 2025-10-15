@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 11:24:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:52:12 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,19 @@ void			im_cleanup(void *mlx, t_image *image);
 /**
  * Get image's pixel at (x, y) position
  */
-unsigned int	im_get_pixel(t_image *img, int x, int y);
+uint32_t		im_get_pixel(t_image *img, int x, int y);
 
 /**
  * Set the image's pixel with coordinates (x, y) to color 'color'
  */
 void			im_set_pixel(t_image *img, int x, int y, unsigned int color);
+
+/**
+ * Returns the pixel darkened or brightened by factor.
+ * Pixel becomes brighter if factor > 1 and darker if 0 < factor < 1
+ */
+uint32_t		im_scale_pixel(uint32_t pixel, float const factor);
+
 
 /**
  * 	Move all pixels from 'src' t_image to 'dest' t_image
