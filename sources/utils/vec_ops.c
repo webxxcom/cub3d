@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:46:53 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 10:24:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:05:29 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_vec2f	vec2f_translate(t_vec2f const vec2f, float const dx, float const dy)
+inline t_vec2f	vec2f_translate(t_vec2f const vec2f, float const dx, float const dy)
 {
 	return ((t_vec2f){
 		.x = vec2f.x + dx,
@@ -20,7 +20,7 @@ t_vec2f	vec2f_translate(t_vec2f const vec2f, float const dx, float const dy)
 	});
 }
 
-t_vec2f	vec2f_vtranslate(t_vec2f const left, t_vec2f const right)
+inline t_vec2f	vec2f_vtranslate(t_vec2f const left, t_vec2f const right)
 {
 	return ((t_vec2f){
 		.x = left.x + right.x,
@@ -28,7 +28,7 @@ t_vec2f	vec2f_vtranslate(t_vec2f const left, t_vec2f const right)
 	});
 }
 
-t_vec2f	vec2f_normalize(t_vec2f const vec2f)
+inline t_vec2f	vec2f_normalize(t_vec2f const vec2f)
 {
 	const double	magnitude = sqrt(vec2f.x * vec2f.x + vec2f.y * vec2f.y);
 
@@ -37,7 +37,7 @@ t_vec2f	vec2f_normalize(t_vec2f const vec2f)
 	return (vec2f_construct(vec2f.x / magnitude, vec2f.y / magnitude));
 }
 
-t_vec2f	vec2f_neg(t_vec2f const vec2f)
+inline t_vec2f	vec2f_neg(t_vec2f const vec2f)
 {
 	return ((t_vec2f){
 		.x = -vec2f.x,

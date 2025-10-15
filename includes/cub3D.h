@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/13 22:12:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 11:55:08 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,11 @@ typedef struct s_game
 }	t_game;
 
 t_minimap   minimap_init(t_game *g);
+t_cam		cam_init(void);
+t_input		init_input(void);
+t_map		init_map(const char *filename);
+t_player	player_init(void);
+
 void	put_minimap(t_game *g);
 
 // Delta time
