@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   door.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/24 14:54:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 21:02:18 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/15 22:21:11 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/15 22:22:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#include "cub3D.h"
 
-typedef struct s_game	t_game;
-typedef struct s_vector_2d_int t_vec2i;
-typedef struct s_vector_2d_float t_vec2f;
+typedef enum
+{
+	OPEN,
+	OPENING,
+	CLOSING,
+	CLOSED
+}	t_door_states;
 
-void	game_render(t_game *game);
-void	draw_line(t_game *g, t_vec2f start_f, t_vec2f end_f, uint32_t col);
+typedef struct s_door
+{
+	t_animation		*anim;
+	t_door_states	state;
+	t_vec2i			pos;
+}	t_door;
 
-#endif
+

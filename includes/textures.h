@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   textures.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/24 14:54:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 21:02:18 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/15 19:21:35 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/15 20:54:04 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef TEXTURES_H
+# define TEXTURES_H
 
-typedef struct s_game	t_game;
-typedef struct s_vector_2d_int t_vec2i;
-typedef struct s_vector_2d_float t_vec2f;
-
-void	game_render(t_game *game);
-void	draw_line(t_game *g, t_vec2f start_f, t_vec2f end_f, uint32_t col);
+typedef enum e_textures_names
+{
+	TEXTR_GRAY_BRICKWALL_SOUTH = 0,
+	TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,
+	TEXTR_GRAY_BRICKWALL_EAST,
+	TEXTR_GRAY_BRICKWALL_SHADOWED_EAST,
+	TEXTR_HITLER_PICT,
+	TEXTR_HITLER_PICT_SHDWD,
+	TEXTR_NAZI_EAGLE_PICT,
+	TEXTR_NAZI_EAGLE_PICT_SHDWD,
+	TEXTR_CEILING_ANGLES6,
+	TEXTR_FLOOR_CHESSED,
+	TEXTR_NUMBER
+}	t_textures;
 
 #endif

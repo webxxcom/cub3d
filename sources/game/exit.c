@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:50 by phutran           #+#    #+#             */
-/*   Updated: 2025/09/24 16:24:03 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/15 20:37:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	cleanup_game(t_game *game)
 		free(game->mlx);
 	}
 }
-
 void	exit_game(char *error, t_game *game)
 {
 	cleanup_game(game);

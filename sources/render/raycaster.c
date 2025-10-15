@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/13 22:11:35 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:44:45 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_dda_d	get_dda_start_data(t_game *const g, int const screen_x)
 	return (dda_d);
 }
 
-inline static void	move_by_x(t_dda_d *const dda, t_dda_res *const dda_res)
+inline static void	move_by_x(t_dda_d *const dda, t_dda_ray *const dda_res)
 {
 	dda_res->dist = dda->side_dist.x;
 	dda_res->side = WEST;
@@ -67,7 +67,7 @@ inline static void	move_by_x(t_dda_d *const dda, t_dda_res *const dda_res)
 	dda->side_dist.x += dda->unit_step.x;
 }
 
-inline static void	move_by_y(t_dda_d *const dda, t_dda_res *const dda_res)
+inline static void	move_by_y(t_dda_d *const dda, t_dda_ray *const dda_res)
 {
 	dda_res->dist = dda->side_dist.y;
 	dda_res->side = NORTH;
@@ -75,10 +75,10 @@ inline static void	move_by_y(t_dda_d *const dda, t_dda_res *const dda_res)
 	dda->side_dist.y += dda->unit_step.y;
 }
 
-t_dda_res	perform_dda(t_game *const g, double const screen_x)
+t_dda_ray	perform_dda(t_game *const g, double const screen_x)
 {
 	t_dda_d		dda;
-	t_dda_res	dda_res;
+	t_dda_ray	dda_res;
 	bool		hit;
 
 	dda = get_dda_start_data(g, screen_x);

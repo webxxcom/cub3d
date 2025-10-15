@@ -6,11 +6,12 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 16:52:12 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 21:38:08 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#ifndef IMAGE_H
+# define IMAGE_H
 
 typedef struct s_image
 {
@@ -76,3 +77,5 @@ void			im_move_pixels(t_image *dest, int off_x,
  */
 t_image			*image_scale(void *mlx, t_image *src,
 					int target_width, int target_height);
+
+#endif

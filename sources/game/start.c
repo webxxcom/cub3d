@@ -6,11 +6,12 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 18:47:54 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:53:06 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include "raycaster.h"
 
 // static void	load_textures(t_game *game)
 // {
@@ -43,28 +44,25 @@
 // 	while (!game->paths.north)
 // 		game->paths.north = get_texture_path(void);
 // }
-#define TEXTURES_N 12
 static void	load_textures(t_game *g)
 {
-	char 		*textures_files[TEXTURES_N] = {
-		"textures/floor.xpm",
-		"textures/ceiling.xpm",
-		"textures/1.1.xpm",
-		"textures/1.2.xpm",
-		"textures/1.3.xpm",
-		"textures/1.4.xpm",
-		"textures/2.1.xpm",
-		"textures/2.2.xpm",
-		"textures/2.3.xpm",
-		"textures/2.4.xpm",
-		"textures/door_closed.xpm",
-		"textures/door_open.xpm"
+	char 		*textures_files[TEXTR_NUMBER] = {
+		"textures/gray_brick_wall_south.xpm",
+		"textures/gray_brick_wall_south_shadowed.xpm",
+		"textures/gray_brick_wall_east.xpm",
+		"textures/gray_brick_wall_east_shadowed.xpm",
+		"textures/hitler_picture.xpm",
+		"textures/hitler_picture_shadowed.xpm",
+		"textures/nazi_eagle_picture.xpm",
+		"textures/nazi_eagle_picture_shadowed.xpm",
+		"textures/ceiling_angles6.xpm",
+		"textures/floor_chessed.xpm"
 	};
 	size_t	i;
 
 	i = 0;
-	g->textures = ft_calloc(TEXTURES_N, sizeof (t_image *));
-	while (i < TEXTURES_N)
+	g->textures = ft_calloc(TEXTR_NUMBER, sizeof (t_image *));
+	while (i < TEXTR_NUMBER)
 	{
 		g->textures[i] = im_load_from_xpmfile(g->mlx, textures_files[i]);
 		if (!g->textures[i])
@@ -81,6 +79,27 @@ static void	load_textures(t_game *g)
 
 #pragma endregion
 
+static void	load_animations(t_game *g)
+{
+	static char	*animation_files[] = {
+		"textures/lab_metal_white_door_sprite.xpm"
+	};
+	size_t		i;
+
+	i = 0;
+	g->animations = ft_calloc(ANIM_NUMBER, sizeof (t_animation *));
+	while (i < ANIM_NUMBER)
+	{
+		g->animations[i] = init_animation(g->mlx, animation_files[i]);
+		if (!g->animations[i])
+		{
+			ft_printf("Sprite with number %d can't be loaded\n", i);
+			exit(1);
+		}
+		++i;
+	}
+}
+
 static void	init_mlx(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -92,6 +111,7 @@ static void	init_mlx(t_game *game)
 
 	game->buffer_image = im_get_empty(game->mlx, game->w, game->h);
 	load_textures(game); // ! NOT CORRECT TEXTURE LOADING
+	load_animations(game);
 	mlx_loop_hook(game->mlx, main_loop, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, key_press_hook, game);
 	mlx_key_hook(game->win, key_release_hook, game);
@@ -109,6 +129,7 @@ static void	init_game(t_game *g, const char *filename)
 	g->input = init_input();
 	g->map = init_map(filename);
 	g->minimap = minimap_init(g);
+	g->rays = ft_calloc(g->w, sizeof (t_dda_ray));
 	init_cubes(g->cubes);
 	
 	

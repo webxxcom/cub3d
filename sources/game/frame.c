@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   frame.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/24 14:54:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 21:02:18 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/08/05 18:52:23 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/15 21:35:27 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#include "cub3D.h"
 
-typedef struct s_game	t_game;
-typedef struct s_vector_2d_int t_vec2i;
-typedef struct s_vector_2d_float t_vec2f;
-
-void	game_render(t_game *game);
-void	draw_line(t_game *g, t_vec2f start_f, t_vec2f end_f, uint32_t col);
-
-#endif
+void	frame_clean(void *mlx, t_frame *frame)
+{
+	im_cleanup(mlx, frame->image);
+	free(frame);
+}

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 18:57:43 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:52:31 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	get_cube_type(t_game *g, t_vec2i map_pos)
 	return ((g->map.tiles[map_pos.y][map_pos.x] - '0') % 2);
 }
 
-static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_res ddar)
+static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_ray ddar)
 {
 	const int	line_h = g->h / ddar.dist;
 	double		wall_x;
@@ -28,10 +28,9 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_res ddar)
 	t_image		*cube_side = g->textures[g->cubes[get_cube_type(g, ddar.map_pos)].walls_ind[ddar.side]];
 
 	if (g->map.tiles[ddar.map_pos.y][ddar.map_pos.x] == 'D')
-		cube_side = g->textures[10];
+		cube_side = animation_get_current_image(g->animations[0]);
 	else if (g->map.tiles[ddar.map_pos.y][ddar.map_pos.x] == 'O')
-		cube_side = g->textures[11];
-
+		cube_side = animation_get_current_image(g->animations[0]);
 	if (ddar.side == SOUTH || ddar.side == NORTH)
 		wall_x = g->player.pos.x + ddar.ray_dir.x * ddar.dist;
 	else
@@ -53,9 +52,9 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_res ddar)
 	}
 }
 
-void	draw_vert_line(t_game *const g, int screen_x, t_dda_res ddar)
+void	draw_vert_line(t_game *const g, int screen_x)
 {
-	const int	line_h = g->h / ddar.dist;
+	const int	line_h = g->h / g->rays[screen_x].dist;
 	int			y_start;
 	int			y_end;
 
@@ -65,5 +64,5 @@ void	draw_vert_line(t_game *const g, int screen_x, t_dda_res ddar)
 	y_end = (g->h / 2) + (line_h / 2) + g->cam.pitch;
 	if (y_end >= g->h)
 		y_end = g->h - 1;
-	draw_wall(g, vec2i_construct(screen_x, y_start), y_end, ddar);
+	draw_wall(g, vec2i_construct(screen_x, y_start), y_end, g->rays[screen_x]);
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:19:10 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 12:29:12 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 21:57:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ uint64_t	get_time_in_ms(void)
 
 void	process_dtime(t_game *const game)
 {
-	const double	t = get_time_in_ms();
+	const uint64_t	t = get_time_in_ms();
 
-	game->dtime = (t - game->last_time) / 1000;
+	game->dtime = (t - game->last_time) / 1000.;
 	game->last_time = t;
 }

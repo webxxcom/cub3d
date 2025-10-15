@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 19:15:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:52:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,18 @@
 # include <stdbool.h>
 # include <X11/X.h>
 
-# include "libft.h"
 # include "mlx.h"
-# include "render.h"
-# include "error.h"
-# include "utils.h"
-# include "key_codes.h"
-# include "image.h"
-# include "vectors.h"
+# include "libft.h"
+# include "animation.h"
 # include "colors.h"
+# include "error.h"
+# include "frame.h"
+# include "image.h"
+# include "key_codes.h"
+# include "render.h"
+# include "textures.h"
+# include "utils.h"
+# include "vectors.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -115,6 +118,8 @@ typedef struct s_input
 	bool			moving_keys[4];
 }	t_input;
 
+typedef struct s_dda_ray t_dda_ray;
+
 /**
  * The struct s_game describes global game's state.
  * 
@@ -148,8 +153,10 @@ typedef struct s_game
 	t_cam			cam;
 	t_input			input;
 	t_image			*buffer_image;
+	t_dda_ray		*rays;
 	
 	t_image			**textures;
+	t_animation		**animations;
 
 	t_image			*ceiling;
 	t_image			*floor;
