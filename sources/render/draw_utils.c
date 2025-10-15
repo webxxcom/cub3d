@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_line.c                                        :+:      :+:    :+:   */
+/*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:06:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 17:09:54 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:59:35 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static inline void	process_step_condition(int *err, t_vec2i *start, t_vec2i step
 	}
 }
 
-void	draw_line(t_game *g, t_vec2f start_f, t_vec2f end_f, uint32_t col)
+void	draw_line(t_image *im, t_vec2f start_f, t_vec2f end_f, uint32_t col)
 {
 	t_vec2i	starti;
 	t_vec2i	endi;
@@ -59,9 +59,44 @@ void	draw_line(t_game *g, t_vec2f start_f, t_vec2f end_f, uint32_t col)
 	err = delta.x - delta.y;
 	while (1)
 	{
-		im_set_pixel(g->buffer_image, starti.x, starti.y, col);
+		im_set_pixel(im, starti.x, starti.y, col);
 		if (starti.x == endi.x  && starti.y == endi.y)
 			break;
 		process_step_condition(&err, &starti, step, delta);
+	}
+}
+
+static void	fill_circle_oct(t_image *im, t_vec2i c, t_vec2i p, int32_t col)
+{
+	draw_line(im, vec2f_construct(c.x - p.x, c.y + p.y),
+		vec2f_construct(c.x + p.x, c.y + p.y), col);
+	draw_line(im, vec2f_construct(c.x - p.x, c.y - p.y),
+		vec2f_construct(c.x + p.x, c.y - p.y), col);
+	draw_line(im, vec2f_construct(c.x - p.y, c.y + p.x),
+		vec2f_construct(c.x + p.y, c.y + p.x), col);
+	draw_line(im, vec2f_construct(c.x - p.y, c.y - p.x),
+		vec2f_construct(c.x + p.y, c.y - p.x), col);
+}
+
+void	draw_circle(t_image *im, t_vec2i c, int32_t r, uint32_t col)
+{
+	float	p;
+	int32_t	x;
+	int32_t	y;
+
+	x = 0;
+	y = -r;
+	p = -r;
+	while(x < -y)
+	{
+		if (p > 0)
+		{
+			p += 2 * (y) + 1;
+			++y;
+		}
+		else
+			p += 2 * x + 1;
+		fill_circle_oct(im, c, vec2i_construct(x, y), col);
+		++x;
 	}
 }

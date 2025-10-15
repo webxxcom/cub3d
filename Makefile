@@ -12,7 +12,7 @@ SRCS		= main.c \
 				$(SRC_FLDR)/game/inits.c $(SRC_FLDR)/game/frame.c $(SRC_FLDR)/game/animation.c $(SRC_FLDR)/game/animation_move.c \
 			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/validate.c \
 			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c $(SRC_FLDR)/render/raycaster.c \
-			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/draw_line.c $(SRC_FLDR)/render/draw_floor_and_ceiling.c \
+			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/draw_utils.c $(SRC_FLDR)/render/draw_floor_and_ceiling.c \
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
 			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c
 

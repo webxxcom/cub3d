@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 22:58:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/16 00:01:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	draw_player_ray(t_game *g, t_vec2f ppos, t_vec2f scale)
 			ray_dist = max_distance;
 		else
 			ray_dist = ray->dist;
-		draw_line(g, ppos,
+		draw_line(g->buffer_image, ppos,
 			vec2f_construct(
 				ppos.x + ray->ray_dir.x * ray_dist * scale.x,
 				ppos.y + ray->ray_dir.y * ray_dist * scale.y),
@@ -78,24 +78,14 @@ static void	draw_player(t_game *g)
 			(double)g->minimap.size.x / g->map.size.x,
 			(double)g->minimap.size.y / g->map.size.y);
 	const t_vec2f	ppos = vec2f_construct(
-			round(g->player.pos.x * scale.x) + g->minimap.pos.x,
+			g->player.pos.x * scale.x + g->minimap.pos.x,
 			g->player.pos.y * scale.y + g->minimap.pos.y - g->minimap.size.y);
 	const double	r = g->player.radius - 4;
-	int				alpha;
-	double			rad;
 
 	draw_player_ray(g, ppos, scale);
-	alpha = 0;
-	while (alpha < 360)
-	{
-		rad = ((double)alpha * M_PI) / 180.;
-		draw_line(g, ppos,
-			vec2f_construct(
-				ceil(r * cos(rad) + ppos.x),
-				ceil(r * sin(rad) + ppos.y)),
-			g->minimap.pcol);
-		++alpha;
-	}
+	draw_circle(g->buffer_image,
+		vec2i_construct(round(ppos.x), round(ppos.y)),
+		r, g->minimap.pcol);
 }
 
 void	put_minimap(t_game *g)

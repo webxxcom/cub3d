@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:44:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 10:25:15 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/16 00:01:42 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ typedef struct s_vector_2d_float
 
 typedef struct s_vector_2d_int
 {
-	int	x;
-	int	y;
+	int32_t	x;
+	int32_t	y;
 }	t_vec2i;
 
 /**
