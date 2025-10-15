@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 16:40:35 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 19:03:02 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
 static void	draw_pixel(t_game *g, int x, int y, t_vec2i map_pos)
 {
 	t_minimap *const	mm = &g->minimap;
+	char				tile;
+	uint32_t			col;
 
 	map_pos = vec2i_construct(map_pos.x, g->map.size.y - map_pos.y - 1);
-	if (g->map.tiles[map_pos.y][map_pos.x] != '0')
-		im_set_pixel(g->buffer_image, x, y, mm->wcol);
+	tile = g->map.tiles[map_pos.y][map_pos.x];
+	if (tile == '0')
+		col = mm->bgcol;
+	else if (tile == 'D' || tile == 'O')
+		col = mm->dcol;
 	else
-		im_set_pixel(g->buffer_image, x, y, mm->bgcol);
+		col = mm->wcol;
+	im_set_pixel(g->buffer_image, x, y, col);
 }
 
 static void	draw_tile(t_game *g, t_vec2i offset, t_vec2i tsize, t_vec2i map_pos)
@@ -76,10 +82,13 @@ static void	draw_player_ray(t_game *g, t_vec2f ppos, t_vec2f scale)
 			dda_data.side_dist.y = ((int)g->player.pos.y + 1 - g->player.pos.y) * dda_data.unit_step.y;
 		}
 
-		double dist;
+		double dist = 0;
+		double maxDist = 5.f;
 		bool hit = false;
 		while(!hit)
 		{
+			if (dist > maxDist)
+				break ;
 			if (dda_data.side_dist.x < dda_data.side_dist.y)
 			{
 				dist = dda_data.side_dist.x;
@@ -95,6 +104,8 @@ static void	draw_player_ray(t_game *g, t_vec2f ppos, t_vec2f scale)
 			if (g->map.tiles[dda_data.map_pos.y][dda_data.map_pos.x] != '0')
 				hit = true;
 		}
+		if (dist > maxDist)
+			dist = maxDist;
 		draw_line(g, ppos,
 			vec2f_construct(
 				ppos.x + dda_data.ray_dir.x * dist * scale.x,
@@ -116,6 +127,7 @@ static void	draw_player(t_game *g)
 	int				alpha;
 	double			rad;
 
+	draw_player_ray(g, ppos, scale);
 	alpha = 0;
 	while (alpha < 360)
 	{
@@ -127,7 +139,6 @@ static void	draw_player(t_game *g)
 			g->minimap.pcol);
 		++alpha;
 	}
-	draw_player_ray(g, ppos, scale);
 }
 
 void	put_minimap(t_game *g)

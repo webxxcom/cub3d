@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 16:53:28 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:57:43 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_res ddar)
 	int			tex_x;
 	double		tex_posy;
 	t_image		*cube_side = g->textures[g->cubes[get_cube_type(g, ddar.map_pos)].walls_ind[ddar.side]];
+
+	if (g->map.tiles[ddar.map_pos.y][ddar.map_pos.x] == 'D')
+		cube_side = g->textures[10];
+	else if (g->map.tiles[ddar.map_pos.y][ddar.map_pos.x] == 'O')
+		cube_side = g->textures[11];
 
 	if (ddar.side == SOUTH || ddar.side == NORTH)
 		wall_x = g->player.pos.x + ddar.ray_dir.x * ddar.dist;

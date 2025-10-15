@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:06:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 16:51:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:09:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	draw_line(t_game *g, t_vec2f start_f, t_vec2f end_f, uint32_t col)
 	err = delta.x - delta.y;
 	while (1)
 	{
-		im_set_pixel(g->buffer_image, starti.x, starti.y, im_scale_pixel(col, 1. / starti.x));
+		im_set_pixel(g->buffer_image, starti.x, starti.y, col);
 		if (starti.x == endi.x  && starti.y == endi.y)
 			break;
 		process_step_condition(&err, &starti, step, delta);

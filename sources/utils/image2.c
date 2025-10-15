@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:45 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 16:50:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:04:26 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ inline void	im_set_pixel(t_image *img, int x, int y, unsigned int color)
 
 inline uint32_t	im_scale_pixel(uint32_t pixel, float factor)
 {
+	int	inv;
+
 	if (factor < 0.f)
 		factor = 0.f;
+	inv = 0xFF * factor;
 	return (RGB(
-		(uint8_t)ft_minf(255.f, round((pixel >> 16 & 0xFF) * factor)),
-		(uint8_t)ft_minf(255.f, round((pixel >> 8 & 0xFF) * factor)),
-		(uint8_t)ft_minf(255.f, round((pixel & 0xFF) * factor))));
+		(uint8_t)ft_minf(255.f, round(((pixel >> 16 & 0xFF) * inv) >> 8)),
+		(uint8_t)ft_minf(255.f, round(((pixel >> 8 & 0xFF) * inv) >> 8)),
+		(uint8_t)ft_minf(255.f, round(((pixel & 0xFF) * inv) >> 8))));
 }
 
 void	im_move_pixels(t_image *dest, int off_x, int off_y, t_image *src)

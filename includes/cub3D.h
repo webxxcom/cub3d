@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 16:50:52 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 19:15:31 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_minimap
 	uint32_t	wcol;
 	uint32_t	rcol;
 	uint32_t	fcol;
+	uint32_t	dcol;
 }	t_minimap;
 
 typedef struct s_map
@@ -166,7 +167,7 @@ t_cam		cam_init(void);
 t_input		init_input(void);
 t_map		init_map(const char *filename);
 t_player	player_init(void);
-void	init_cubes(t_cube *cubes);
+void		init_cubes(t_cube *cubes);
 
 void	put_minimap(t_game *g);
 
@@ -197,6 +198,8 @@ void 		game_cleanup(t_game *game);
 // Utils
 void		toggle_bool(bool *flag);
 float		ft_minf(float a, float b);
+int 		ft_min(int a, int b);
+int			ft_max(int a, int b);
 bool 		key_should_repeat(int key);
 bool		movement_key(int key);
 

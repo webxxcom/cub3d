@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:28:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/13 22:04:34 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 19:00:12 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_minimap	minimap_init(t_game *g)
 		.pcol = COLOR_RED,
 		.wcol = COLOR_GRAY,
 		.rcol = 0x03A9F4,
-		.fcol = 0x2E2E2E
+		.fcol = 0x2E2E2E,
+		.dcol = COLOR_YELLOW
 	});
 }

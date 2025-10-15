@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 16:13:47 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:47:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@
 // 	while (!game->paths.north)
 // 		game->paths.north = get_texture_path(void);
 // }
-
+#define TEXTURES_N 12
 static void	load_textures(t_game *g)
 {
-	static const size_t	textures_n = 10;
-	static char 		*textures_files[10] = {
+	char 		*textures_files[TEXTURES_N] = {
 		"textures/floor.xpm",
 		"textures/ceiling.xpm",
 		"textures/1.1.xpm",
@@ -57,13 +56,15 @@ static void	load_textures(t_game *g)
 		"textures/2.1.xpm",
 		"textures/2.2.xpm",
 		"textures/2.3.xpm",
-		"textures/2.4.xpm"
+		"textures/2.4.xpm",
+		"textures/door_closed.xpm",
+		"textures/door_open.xpm"
 	};
 	size_t	i;
 
 	i = 0;
-	g->textures = ft_calloc(10, sizeof (t_image *));
-	while (i < textures_n)
+	g->textures = ft_calloc(TEXTURES_N, sizeof (t_image *));
+	while (i < TEXTURES_N)
 	{
 		g->textures[i] = im_load_from_xpmfile(g->mlx, textures_files[i]);
 		if (!g->textures[i])

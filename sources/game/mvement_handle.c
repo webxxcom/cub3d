@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/13 21:55:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:58:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	is_walkable(t_game *g, float const x, float const y)
 {
-	return (g->map.tiles[(int)y][(int)x] == '0');
+	return (g->map.tiles[(int)y][(int)x] == '0' || g->map.tiles[(int)y][(int)x] == 'O');
 }
 
 t_vec2i	get_signs(t_vec2f const dir_vec)
