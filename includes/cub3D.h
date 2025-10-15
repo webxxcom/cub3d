@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 11:55:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:10:10 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 typedef struct s_cube_textures
 {
-	t_image	*walls[4];
+	int	walls_ind[4];
 }	t_cube;
 
 typedef struct s_paths
@@ -149,6 +149,8 @@ typedef struct s_game
 	t_input			input;
 	t_image			*buffer_image;
 	
+	t_image			**textures;
+
 	t_image			*ceiling;
 	t_image			*floor;
 

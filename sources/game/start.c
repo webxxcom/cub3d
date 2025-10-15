@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 11:56:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:11:23 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,52 +46,36 @@
 
 static void	load_textures(t_game *g)
 {
-	static char	*floor_filename = "textures/floor.xpm";
-	static char	*ceiling_filename = "textures/ceiling.xpm";
-	static char 		*textures_files[2][4] = {
-		{
-			"textures/1.1.xpm",
-			"textures/1.2.xpm",
-			"textures/1.3.xpm",
-			"textures/1.4.xpm",
-		},
-		{
-			"textures/2.1.xpm",
-			"textures/2.2.xpm",
-			"textures/2.3.xpm",
-			"textures/2.4.xpm",
-		}
+	static const int	textures_n = 10;
+	static char 		*textures_files[10] = {
+		"textures/floor.xpm",
+		"textures/ceiling.xpm",
+		"textures/1.1.xpm",
+		"textures/1.2.xpm",
+		"textures/1.3.xpm",
+		"textures/1.4.xpm",
+		"textures/2.1.xpm",
+		"textures/2.2.xpm",
+		"textures/2.3.xpm",
+		"textures/2.4.xpm"
 	};
 	size_t	i;
-	size_t	j;
 
 	i = 0;
-	while (i < 2)
+	g->textures = ft_calloc(10, sizeof (t_image *));
+	while (i < textures_n)
 	{
-		j = 0;
-		while (j < 4)
+		g->textures[i] = im_load_from_xpmfile(g->mlx, textures_files[i]);
+		if (!g->textures[i])
 		{
-			g->cubes[i].walls[j] = im_load_from_xpmfile(g->mlx, textures_files[i][j]);
-			if (!g->cubes[i].walls[j])
-			{
-				printf("The texture %s was not loaded\n", textures_files[i][j]);
-				while (--j)
-					im_cleanup(g->mlx, g->cubes[i].walls[j]);
-				game_cleanup(g);
-				exit(1);
-			}
-			++j;
+			printf("The texture %s was not loaded\n", textures_files[i]);
+			while (--i)
+				im_cleanup(g->mlx, g->textures[i]);
+			game_cleanup(g);
+			exit(1);
 		}
 		++i;
 	}
-	i = 0;
-
-	g->floor = im_load_from_xpmfile(g->mlx, floor_filename);
-	if (!g->floor)
-		printf("The %s texture was not loaded\n", floor_filename), exit(1);
-	g->ceiling = im_load_from_xpmfile(g->mlx, ceiling_filename);
-	if (!g->ceiling)
-		printf("The %s texture was not loaded\n", ceiling_filename), exit(1);
 }
 
 #pragma endregion
@@ -115,6 +99,40 @@ static void	init_mlx(t_game *game)
 	mlx_mouse_hide(game->mlx, game->win);
 }
 
+static t_player	player_init()
+{
+	return ((t_player){
+		.pos = vec2f_construct(7, 3), // ! POS IS HARDCODED
+		.speed = 3.f,
+		.base_speed = 3.f,
+		.sprint_speed = 6.f,
+		.radius = 6.f 
+	});
+}
+
+static t_map	init_map(const char *filename)
+{
+	t_map	res;
+
+	(void)filename;
+	res.tiles = generate_map(&res.size.x, &res.size.y);
+	return (res);
+}
+
+static void	init_cubes(t_cube *cubes)
+{
+	cubes[0] = (t_cube){.walls_ind = {2, 3, 4, 5}};
+	cubes[1] = (t_cube){.walls_ind = {3, 4, 5, 6}};
+}
+
+static t_input	init_input()
+{
+	t_input	res;
+
+	ft_memset(&res, 0, sizeof (res));
+	return (res);
+}
+
 static void	init_game(t_game *g, const char *filename)
 {
 	g->w = 1000;
@@ -124,6 +142,7 @@ static void	init_game(t_game *g, const char *filename)
 	g->input = init_input();
 	g->map = init_map(filename);
 	g->minimap = minimap_init(g);
+	init_cubes(g->cubes);
 	
 	
 	// ! Hard code REVISE
