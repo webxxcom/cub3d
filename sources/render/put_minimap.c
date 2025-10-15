@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/16 00:01:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/16 00:13:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	draw_tile(t_game *g, t_vec2i offset, t_vec2i tsize, t_vec2i map_pos)
 	}
 }
 
-static void	draw_player_ray(t_game *g, t_vec2f ppos, t_vec2f scale)
+static void	draw_player_ray(t_game *g, t_vec2i ppos, t_vec2f scale)
 {
 	const float	max_distance = 3.f;
 	float		ray_dist;
@@ -64,9 +64,9 @@ static void	draw_player_ray(t_game *g, t_vec2f ppos, t_vec2f scale)
 		else
 			ray_dist = ray->dist;
 		draw_line(g->buffer_image, ppos,
-			vec2f_construct(
-				ppos.x + ray->ray_dir.x * ray_dist * scale.x,
-				ppos.y + ray->ray_dir.y * ray_dist * scale.y),
+			vec2i_construct(
+				round(ppos.x + ray->ray_dir.x * ray_dist * scale.x),
+				round(ppos.y + ray->ray_dir.y * ray_dist * scale.y)),
 			g->minimap.rcol);
 		++screen_x;
 	}
@@ -77,15 +77,13 @@ static void	draw_player(t_game *g)
 	const t_vec2f	scale = vec2f_construct(
 			(double)g->minimap.size.x / g->map.size.x,
 			(double)g->minimap.size.y / g->map.size.y);
-	const t_vec2f	ppos = vec2f_construct(
-			g->player.pos.x * scale.x + g->minimap.pos.x,
-			g->player.pos.y * scale.y + g->minimap.pos.y - g->minimap.size.y);
+	const t_vec2i	ppos = vec2i_construct(
+			round(g->player.pos.x * scale.x) + g->minimap.pos.x,
+			round(g->player.pos.y * scale.y) + g->minimap.pos.y - g->minimap.size.y);
 	const double	r = g->player.radius - 4;
 
 	draw_player_ray(g, ppos, scale);
-	draw_circle(g->buffer_image,
-		vec2i_construct(round(ppos.x), round(ppos.y)),
-		r, g->minimap.pcol);
+	draw_circle(g->buffer_image, ppos, r, g->minimap.pcol);
 }
 
 void	put_minimap(t_game *g)
