@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/17 13:02:04 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 22:59:16 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,25 @@ static void	load_animations(t_game *g)
 	}
 }
 
-static void	init_mlx(t_game *game)
+static void	init_mlx(t_game *g)
 {
-	game->mlx = mlx_init();
-	if (!game->mlx)
-		exit_game(ERROR_MLX_INIT, game);
-	game->win = mlx_new_window(game->mlx, game->w, game->h, "cub3D");
-	if (!game->win)
-		exit_game(ERROR_MLX_WIN, game);
+	g->mlx = mlx_init();
+	if (!g->mlx)
+		exit_game(ERROR_MLX_INIT, g);
+	g->win = mlx_new_window(g->mlx, g->w, g->h, "cub3D");
+	if (!g->win)
+		exit_game(ERROR_MLX_WIN, g);
 
-	game->buffer_image = im_get_empty(game->mlx, game->w, game->h);
-	load_textures(game); // ! NOT CORRECT TEXTURE LOADING
-	load_animations(game);
-	mlx_loop_hook(game->mlx, main_loop, game);
-	mlx_hook(game->win, KeyPress, KeyPressMask, key_press_hook, game);
-	mlx_key_hook(game->win, key_release_hook, game);
-	mlx_hook(game->win, DestroyNotify, NoEventMask, close_window_hook, game->mlx);
-	mlx_hook(game->win, MotionNotify, PointerMotionMask, mouse_move_hook, game);
-	mlx_mouse_hide(game->mlx, game->win);
+	g->buffer_image = im_get_empty(g->mlx, g->w, g->h);
+	load_textures(g); // ! NOT CORRECT TEXTURE LOADING
+	load_animations(g);
+	init_entities(g);
+	mlx_loop_hook(g->mlx, main_loop, g);
+	mlx_hook(g->win, KeyPress, KeyPressMask, key_press_hook, g);
+	mlx_key_hook(g->win, key_release_hook, g);
+	mlx_hook(g->win, DestroyNotify, NoEventMask, close_window_hook, g->mlx);
+	mlx_hook(g->win, MotionNotify, PointerMotionMask, mouse_move_hook, g);
+	mlx_mouse_hide(g->mlx, g->win);
 }
 
 static void	init_game(t_game *g, const char *filename)

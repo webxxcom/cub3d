@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/17 13:01:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:03:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@
 # include "key_codes.h"
 # include "render.h"
 # include "textures.h"
-# include "utils.h"
 # include "vectors.h"
 # include "sprite.h"
+# include "entity.h"
+# include "array.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -156,7 +157,8 @@ typedef struct s_game
 	t_image			*buffer_image;
 	t_dda_ray		*rays;
 	t_sprite		*sprites;
-	
+	t_array			entities;
+
 	t_image			**textures;
 	t_animation		**animations;
 
@@ -178,6 +180,8 @@ t_map		init_map(const char *filename);
 t_player	player_init(void);
 void		init_cubes(t_cube *cubes);
 t_sprite	*init_sprites(t_game *g);
+void		init_entities(t_game *g);
+t_entity *find_entity_at(t_game *const g, t_vec2i pos);
 
 void	put_minimap(t_game *g);
 

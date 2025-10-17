@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   array.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 16:53:22 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 10:53:42 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/17 23:51:36 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/18 00:18:43 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#ifndef ARRAY_H
+# define ARRAY_H
 
-typedef struct s_vector_2d_float	t_vec2f;
-typedef struct s_vector_2d_int		t_vec2i;
+#include <stddef.h>
 
-t_vec2f	vec2f_init(void);
-t_vec2f	vec2f_construct(float x, float y);
+typedef struct s_array
+{
+	void	*data;
+	size_t	size;
+	size_t	capacity;
+	size_t	elem_size;
+}	t_array;
 
-t_vec2i	vec2i_init(void);
-t_vec2i	vec2i_construct(int x, int y);
+t_array	array_init(size_t elem_size);
+
+void	array_push(t_array *arr, void *data);
+
+size_t	array_size(t_array *arr);
+
+void	*array_get(t_array *arr, size_t idx);
+
+void	array_free(t_array *arr);
+
+#endif

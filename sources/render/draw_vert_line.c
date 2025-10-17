@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 16:41:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:30:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,24 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	double		tex_posy;
 	t_image		*cube_side;
 
-	if (obs_data.obs == 'D')
-		cube_side = g->animations[0]->frames[0]->image;
-	else if (obs_data.obs == 'O')
-		cube_side = g->animations[0]->frames[4]->image;
+	t_entity	*ent = find_entity_at(g, obs_data.map_pos);
+	if (ent)
+	{
+		cube_side = animation_get_current_image(ent->anim);
+	}
 	else
 		cube_side = g->textures[g->cubes[get_cube_type(obs_data.obs)].walls_ind[obs_data.side]];
-		
-	if (obs_data.side == SOUTH || obs_data.side == NORTH)
-		wall_x = g->player.pos.x + ray_dir.x * obs_data.dist;
-	else
+	
+	if ((obs_data.side == EAST || obs_data.side == WEST))
 		wall_x = g->player.pos.y + ray_dir.y * obs_data.dist;
+	else
+		wall_x = g->player.pos.x + ray_dir.x * obs_data.dist;
 	wall_x = wall_x - floor(wall_x);
 	step_y = (double)cube_side->height / line_h;
 	tex_x = cube_side->width * wall_x;
-	if ((obs_data.side == EAST || obs_data.side == WEST) && ray_dir.x > 0)
+	if ((obs_data.side == EAST || obs_data.side == WEST) && ray_dir.x > 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
 		tex_x = cube_side->width - tex_x - 1;
-	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0)
+	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
 		tex_x = cube_side->width - tex_x - 1;
 	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + g->cam.pitch)) * step_y;
 	const float shade = 1 / obs_data.dist;

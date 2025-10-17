@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_loop.c                                        :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/18 00:34:32 by webxxcom         ###   ########.fr       */
+/*   Created: 2025/10/18 00:22:01 by webxxcom          #+#    #+#             */
+/*   Updated: 2025/10/18 00:22:11 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "libft.h"
 
-static inline void	update_all_map_entities(t_game *g)
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	t_entity	*tmp;
-	size_t		i;
+	void	*new_ptr;
 
-	i = 0;
-	while (i < array_size(&g->entities))
+	if (new_size == 0)
 	{
-		tmp = array_get(&g->entities, i);
-		if (!tmp)
-			continue ;
-		tmp->update(g, tmp);
-		++i;
+		free(ptr);
+		return (NULL);
 	}
-}
-
-int	main_loop(t_game *g)
-{
-	g->player.speed = g->player.base_speed;
-	process_dtime(g);
-	update_all_map_entities(g);
-	repetition_handle(g);
-	game_render(g);
-	return (1);
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (ptr)
+	{
+		size_t	copy_size = old_size < new_size ? old_size : new_size;
+		ft_memcpy(new_ptr, ptr, copy_size);
+		free(ptr);
+	}
+	return (new_ptr);
 }

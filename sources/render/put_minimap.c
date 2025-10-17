@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 16:44:38 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:28:05 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	draw_player_ray(t_game *g, t_vec2i ppos, t_vec2f scale)
 	float		ray_dist;
 	t_dda_ray	*ray;
 	int			screen_x;
-	
+
 	screen_x = 0;
 	while (screen_x < g->w)
 	{
@@ -79,7 +79,8 @@ static void	draw_player(t_game *g)
 			(double)g->minimap.size.y / g->map.size.y);
 	const t_vec2i	ppos = vec2i_construct(
 			round(g->player.pos.x * scale.x) + g->minimap.pos.x,
-			round(g->player.pos.y * scale.y) + g->minimap.pos.y - g->minimap.size.y);
+			round(g->player.pos.y * scale.y)
+			+ g->minimap.pos.y - g->minimap.size.y);
 	const double	r = g->player.radius - 4;
 
 	draw_player_ray(g, ppos, scale);

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 16:43:50 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:09:15 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ t_dda_ray	perform_dda(t_game *const g, double const screen_x)
 			const size_t	idx = dda_res.count++;
 			dda_res.crossed_textures[idx].dist = wall_data.dist;
 			dda_res.crossed_textures[idx].side = wall_data.side;
+			dda_res.crossed_textures[idx].map_pos = dda.map_pos;
 			dda_res.crossed_textures[idx].obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x];
 		}
 		else if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] != '0')

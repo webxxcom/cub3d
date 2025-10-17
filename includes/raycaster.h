@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 10:10:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 16:26:27 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:09:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ typedef enum e_texture_sides
 	EAST
 }	t_txtres_sides;
 
-typedef struct s_textrue_data
+typedef struct s_texture_data
 {
 	float			dist;
 	char			obs;
+	t_vec2i			map_pos;
 	t_txtres_sides	side;
 }	t_obs_data;
 

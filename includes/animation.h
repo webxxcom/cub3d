@@ -6,14 +6,14 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:14:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 22:26:44 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:04:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ANIMATION_H
 # define ANIMATION_H
 
-# define ANIMATION_DELAY 90
+# define ANIMATION_DELAY 200
 
 typedef struct s_game t_game;
 typedef struct s_frame t_frame;
@@ -42,7 +42,7 @@ t_animation		*init_animation(void *mlx, char *animation_file);
  * 	To use properly the animation's argument must
  * be passed to mlx_loop_hook when called
  */
-int			animate(t_game *g, t_animation *anim, int anim_state);
+int			animation_update(t_game *g, t_animation *anim, int anim_state);
 
 /**
  * 	Get current animation's frame.

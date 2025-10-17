@@ -6,16 +6,16 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:06:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/16 00:06:03 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:27:29 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static inline t_vec2i	get_step_for_line(t_vec2i const start, t_vec2i const end)
+static inline t_vec2i	get_step_for_line(t_vec2i start, t_vec2i end)
 {
 	t_vec2i	step;
-	
+
 	step = vec2i_init();
 	if (start.x < end.x)
 		step.x = 1;
@@ -28,7 +28,8 @@ static inline t_vec2i	get_step_for_line(t_vec2i const start, t_vec2i const end)
 	return (step);
 }
 
-static inline void	process_step_condition(int *err, t_vec2i *start, t_vec2i step, t_vec2i delta)
+static inline void	process_step_condition(
+		int *err, t_vec2i *start, t_vec2i step, t_vec2i delta)
 {
 	const int	e2 = 2 * *err;
 
@@ -56,8 +57,8 @@ void	draw_line(t_image *im, t_vec2i start, t_vec2i end, uint32_t col)
 	while (1)
 	{
 		im_set_pixel(im, start.x, start.y, col);
-		if (start.x == end.x  && start.y == end.y)
-			break;
+		if (start.x == end.x && start.y == end.y)
+			break ;
 		process_step_condition(&err, &start, step, delta);
 	}
 }
@@ -83,7 +84,7 @@ void	draw_circle(t_image *im, t_vec2i c, int32_t r, uint32_t col)
 	x = 0;
 	y = -r;
 	p = -r;
-	while(x < -y)
+	while (x < -y)
 	{
 		if (p > 0)
 		{

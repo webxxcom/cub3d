@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:48:47 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 22:34:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 22:50:20 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	animate(t_game *g, t_animation *anim, int anim_state)
+int	animation_update(t_game *g, t_animation *anim, int anim_state)
 {
 	uint64_t const	curr_time = get_time_in_ms();
 	t_frame	*const	curr_frame = anim->frames[anim->curr_frame_n];
@@ -20,7 +20,7 @@ int	animate(t_game *g, t_animation *anim, int anim_state)
 
 	(void)g;
 	int	step = 1;
-	if (anim_state == 1)
+	if (anim_state == 2 || anim_state == 3)
 		step = -1;
 	if (curr_time - frame_time > ANIMATION_DELAY)
 	{

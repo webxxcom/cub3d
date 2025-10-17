@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:50 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 20:37:54 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:19:56 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	cleanup_game(t_game *game)
 {
+	array_free(&game->entities);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

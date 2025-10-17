@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:46:53 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 16:05:29 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:26:06 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-inline t_vec2f	vec2f_translate(t_vec2f const vec2f, float const dx, float const dy)
+inline t_vec2f	vec2f_translate(t_vec2f const vec2f, float dx, float dy)
 {
 	return ((t_vec2f){
 		.x = vec2f.x + dx,
@@ -43,4 +43,9 @@ inline t_vec2f	vec2f_neg(t_vec2f const vec2f)
 		.x = -vec2f.x,
 		.y = -vec2f.y
 	});
+}
+
+inline bool	vec2i_equals(t_vec2i left, t_vec2i right)
+{
+	return (left.x == right.x && left.y == right.y);
 }

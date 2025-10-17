@@ -78,6 +78,7 @@ void		*ft_bzero(void *dest, size_t count);
 void		*ft_memcpy(void *dest, const void *src, size_t count);
 void		*ft_memmove(void *dest, const void *src, size_t count);
 void		*ft_calloc(size_t num, size_t size);
+void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 void		ft_free_matrix(char **matrix); // Extended - OK
 

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 13:31:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:46:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,14 @@ t_cam	cam_init(void)
 
 void	init_cubes(t_cube *cubes)
 {
-	cubes[0] = (t_cube){.walls_ind = {0, 1, 2, 3}};
-	cubes[1] = (t_cube){.walls_ind = {0, 4, 1, 2}};
+	cubes[0] = (t_cube){
+		.walls_ind = {
+			TEXTR_GRAY_BRICKWALL_SOUTH,	TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,
+			TEXTR_GRAY_BRICKWALL_EAST,	TEXTR_GRAY_BRICKWALL_SHADOWED_EAST}
+		};
+	cubes[1] = (t_cube){
+		.walls_ind = {
+			TEXTR_GRAY_BRICKWALL_SOUTH,	TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,
+			TEXTR_HITLER_PICT,			TEXTR_GRAY_BRICKWALL_SHADOWED_EAST}
+		};
 }

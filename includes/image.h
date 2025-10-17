@@ -6,12 +6,14 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 21:38:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 22:18:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IMAGE_H
 # define IMAGE_H
+
+# define TRANSPARENT_COLOR 0xFF000000
 
 typedef struct s_image
 {
@@ -24,7 +26,6 @@ typedef struct s_image
 	int		endian;
 }	t_image;
 
-# define TRANSPARENT_COLOR 0xFF000000
 
 /**
  * Get image from file for display 

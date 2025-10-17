@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:39:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 19:15:25 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:17:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,31 @@ void	process_mvkeys(t_game *const g, int key, bool pressed)
 		g->input.moving_keys[MOVING_RGHT] = pressed;
 }
 
-
-static bool	is_interactable(t_game *const g, t_vec2f pos)
+t_entity *find_entity_at(t_game *const g, t_vec2i pos)
 {
-	(void)g;
-	(void)pos;
-	return (true);
+	t_entity	*tmp;
+	size_t		i;
+
+	i = 0;
+	while (i < array_size(&g->entities))
+	{
+		tmp = array_get(&g->entities, i);
+		if (vec2i_equals(tmp->pos, pos))
+			return (tmp);
+		++i;
+	}
+	return (NULL);
 }
 
 static void	player_interact(t_game *const g)
 {
-	const t_vec2f dir = vec2f_construct(
+	const t_vec2i	dir = vec2i_construct(
 		g->player.pos.x + g->cam.dir.x, g->player.pos.y + g->cam.dir.y);
-	
-	if (is_interactable(g, dir))
-	{
-		if (g->map.tiles[(int)dir.y][(int)dir.x] == 'D')
-			g->map.tiles[(int)dir.y][(int)dir.x] = 'O';
-		else if (g->map.tiles[(int)dir.y][(int)dir.x] == 'O')
-			g->map.tiles[(int)dir.y][(int)dir.x] = 'D';
-	}
+	t_entity 		*ent;
+
+	ent = find_entity_at(g, dir);
+	if (ent)
+		ent->interact(g, ent);
 }
 
 void	process_keypress(t_game *const g, int key)
@@ -69,6 +74,10 @@ void	process_keypress(t_game *const g, int key)
 		g->player.speed = g->player.sprint_speed;
 	if (key == KEY_F)
 		player_interact(g);
+	if (key == KEY_Q)
+	{
+		printf("ASD\n");
+	}
 	else if (key == KEY_ESC)
 		mlx_loop_end(g->mlx);
 }
