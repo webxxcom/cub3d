@@ -6,63 +6,79 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/16 00:06:10 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:41:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "raycaster.h"
 
-static int	get_cube_type(t_game *g, t_vec2i map_pos)
+static int	get_cube_type(char obs)
 {
-	return ((g->map.tiles[map_pos.y][map_pos.x] - '0') % 2);
+	return ((obs - '0') % 2);
 }
 
-static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_dda_ray ddar)
+static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t_vec2f ray_dir)
 {
-	const int	line_h = g->h / ddar.dist;
+	const int	line_h = g->h / obs_data.dist;
 	double		wall_x;
 	double		step_y;
 	int			tex_x;
 	double		tex_posy;
-	t_image		*cube_side = g->textures[g->cubes[get_cube_type(g, ddar.map_pos)].walls_ind[ddar.side]];
+	t_image		*cube_side;
 
-	if (g->map.tiles[ddar.map_pos.y][ddar.map_pos.x] == 'D')
-		cube_side = animation_get_current_image(g->animations[0]);
-	else if (g->map.tiles[ddar.map_pos.y][ddar.map_pos.x] == 'O')
-		cube_side = animation_get_current_image(g->animations[0]);
-	if (ddar.side == SOUTH || ddar.side == NORTH)
-		wall_x = g->player.pos.x + ddar.ray_dir.x * ddar.dist;
+	if (obs_data.obs == 'D')
+		cube_side = g->animations[0]->frames[0]->image;
+	else if (obs_data.obs == 'O')
+		cube_side = g->animations[0]->frames[4]->image;
 	else
-		wall_x = g->player.pos.y + ddar.ray_dir.y * ddar.dist;
+		cube_side = g->textures[g->cubes[get_cube_type(obs_data.obs)].walls_ind[obs_data.side]];
+		
+	if (obs_data.side == SOUTH || obs_data.side == NORTH)
+		wall_x = g->player.pos.x + ray_dir.x * obs_data.dist;
+	else
+		wall_x = g->player.pos.y + ray_dir.y * obs_data.dist;
 	wall_x = wall_x - floor(wall_x);
 	step_y = (double)cube_side->height / line_h;
 	tex_x = cube_side->width * wall_x;
-	if ((ddar.side == EAST || ddar.side == WEST) && ddar.ray_dir.x > 0)
+	if ((obs_data.side == EAST || obs_data.side == WEST) && ray_dir.x > 0)
 		tex_x = cube_side->width - tex_x - 1;
-	if ((ddar.side == NORTH || ddar.side == SOUTH) && ddar.ray_dir.y < 0)
+	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0)
 		tex_x = cube_side->width - tex_x - 1;
 	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + g->cam.pitch)) * step_y;
+	const float shade = 1 / obs_data.dist;
 	while (spos.y < y_end)
 	{
-		im_set_pixel(g->buffer_image,
-			spos.x, spos.y++,
-			im_scale_pixel(im_get_pixel(cube_side, tex_x, tex_posy), 1 / ddar.dist));
+		uint32_t col = im_get_pixel(cube_side, tex_x, tex_posy);
+		if (col != TRANSPARENT_COLOR)
+		{
+			im_set_pixel(g->buffer_image,
+				spos.x, spos.y,
+				im_scale_pixel(col, shade));
+		}
 		tex_posy += step_y;
+		++spos.y;
 	}
 }
 
 void	draw_vert_line(t_game *const g, int screen_x)
 {
-	const int	line_h = g->h / g->rays[screen_x].dist;
-	int			y_start;
-	int			y_end;
+	int	i;
 
-	y_start = (g->h / 2) - (line_h / 2) + g->cam.pitch;
-	if (y_start < 0)
-		y_start = 0;
-	y_end = (g->h / 2) + (line_h / 2) + g->cam.pitch;
-	if (y_end >= g->h)
-		y_end = g->h - 1;
-	draw_wall(g, vec2i_construct(screen_x, y_start), y_end, g->rays[screen_x]);
+	i = g->rays[screen_x].count - 1;
+	while (i >= 0)
+	{
+		const int	line_h = g->h / g->rays[screen_x].crossed_textures[i].dist;
+		int			y_start;
+		int			y_end;
+
+		y_start = (g->h / 2) - (line_h / 2) + g->cam.pitch;
+		if (y_start < 0)
+			y_start = 0;
+		y_end = (g->h / 2) + (line_h / 2) + g->cam.pitch;
+		if (y_end >= g->h)
+			y_end = g->h - 1;
+		draw_wall(g, vec2i_construct(screen_x, y_start), y_end, g->rays[screen_x].crossed_textures[i], g->rays[screen_x].ray_dir);
+		--i;
+	}
 }

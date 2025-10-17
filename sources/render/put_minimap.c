@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/16 00:13:34 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:44:38 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ static void	draw_player_ray(t_game *g, t_vec2i ppos, t_vec2f scale)
 	while (screen_x < g->w)
 	{
 		ray = g->rays + screen_x;
-		if (ray->dist > max_distance)
+		if (ray->crossed_textures[0].dist > max_distance)
 			ray_dist = max_distance;
 		else
-			ray_dist = ray->dist;
+			ray_dist = ray->crossed_textures[0].dist;
 		draw_line(g->buffer_image, ppos,
 			vec2i_construct(
 				round(ppos.x + ray->ray_dir.x * ray_dist * scale.x),

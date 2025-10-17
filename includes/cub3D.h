@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 22:52:07 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:01:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include "textures.h"
 # include "utils.h"
 # include "vectors.h"
+# include "sprite.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -154,6 +155,7 @@ typedef struct s_game
 	t_input			input;
 	t_image			*buffer_image;
 	t_dda_ray		*rays;
+	t_sprite		*sprites;
 	
 	t_image			**textures;
 	t_animation		**animations;
@@ -175,6 +177,7 @@ t_input		init_input(void);
 t_map		init_map(const char *filename);
 t_player	player_init(void);
 void		init_cubes(t_cube *cubes);
+t_sprite	*init_sprites(t_game *g);
 
 void	put_minimap(t_game *g);
 

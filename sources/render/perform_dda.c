@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycaster.c                                        :+:      :+:    :+:   */
+/*   perform_dda.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 22:44:45 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:43:50 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ t_dda_d	get_dda_start_data(t_game *const g, int const screen_x)
 	return (dda_d);
 }
 
-inline static void	move_by_x(t_dda_d *const dda, t_dda_ray *const dda_res)
+inline static void	move_by_x(t_dda_d *const dda, t_obs_data *const walld)
 {
-	dda_res->dist = dda->side_dist.x;
-	dda_res->side = WEST;
+	walld->dist = dda->side_dist.x;
+	walld->side = WEST;
 	dda->map_pos.x += dda->map_step.x;
 	dda->side_dist.x += dda->unit_step.x;
 }
 
-inline static void	move_by_y(t_dda_d *const dda, t_dda_ray *const dda_res)
+inline static void	move_by_y(t_dda_d *const dda, t_obs_data *const walld)
 {
-	dda_res->dist = dda->side_dist.y;
-	dda_res->side = NORTH;
+	walld->dist = dda->side_dist.y;
+	walld->side = NORTH;
 	dda->map_pos.y += dda->map_step.y;
 	dda->side_dist.y += dda->unit_step.y;
 }
@@ -78,26 +78,39 @@ inline static void	move_by_y(t_dda_d *const dda, t_dda_ray *const dda_res)
 t_dda_ray	perform_dda(t_game *const g, double const screen_x)
 {
 	t_dda_d		dda;
+	t_obs_data	wall_data;
 	t_dda_ray	dda_res;
 	bool		hit;
 
 	dda = get_dda_start_data(g, screen_x);
 	hit = false;
 	ft_memset(&dda_res, 0, sizeof (dda_res));
+	ft_memset(&wall_data, 0, sizeof (t_obs_data));
 	dda_res.ray_dir = dda.ray_dir;
 	while (!hit)
 	{
 		if (dda.side_dist.x < dda.side_dist.y)
-			move_by_x(&dda, &dda_res);
+			move_by_x(&dda, &wall_data);
 		else
-			move_by_y(&dda, &dda_res);
-		if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] != '0')
+			move_by_y(&dda, &wall_data);
+		if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'O'
+			|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'D')
+		{
+			const size_t	idx = dda_res.count++;
+			dda_res.crossed_textures[idx].dist = wall_data.dist;
+			dda_res.crossed_textures[idx].side = wall_data.side;
+			dda_res.crossed_textures[idx].obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x];
+		}
+		else if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] != '0')
+		{
 			hit = true;
+		}
 	}
-	if (dda.ray_dir.x < 0 && dda_res.side == WEST)
-		dda_res.side = EAST;
-	else if (dda.ray_dir.y < 0 && dda_res.side == NORTH)
-		dda_res.side = SOUTH;
-	dda_res.map_pos = dda.map_pos;
+	if (dda.ray_dir.x < 0 && wall_data.side == WEST)
+		wall_data.side = EAST;
+	else if (dda.ray_dir.y < 0 && wall_data.side == NORTH)
+		wall_data.side = SOUTH;
+	wall_data.obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x];
+	dda_res.crossed_textures[dda_res.count++] = wall_data;
 	return (dda_res);
 }

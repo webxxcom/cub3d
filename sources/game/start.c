@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/15 22:53:06 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:02:04 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ static void	init_game(t_game *g, const char *filename)
 	g->minimap = minimap_init(g);
 	g->rays = ft_calloc(g->w, sizeof (t_dda_ray));
 	init_cubes(g->cubes);
+	g->sprites = init_sprites(g);
 	
 	
 	// ! Hard code REVISE
