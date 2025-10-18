@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mvement_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 17:30:39 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/18 23:30:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static bool	is_walkable(t_game *g, float const x, float const y)
 {
 	return (g->map.tiles[(int)y][(int)x] == '0'
-		|| g->map.tiles[(int)y][(int)x] == 'O');
+		|| g->map.tiles[(int)y][(int)x] == 'O'
+		|| g->map.tiles[(int)y][(int)x] == 'E'
+		|| g->map.tiles[(int)y][(int)x] == '9');
 }
 
 t_vec2i	get_signs(t_vec2f const dir_vec)

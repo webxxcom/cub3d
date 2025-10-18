@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/18 11:52:24 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/19 00:13:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 // }
 static void	load_textures(t_game *g)
 {
-	char 		*textures_files[TEXTR_NUMBER] = {
+	static char *g_texture_files[] = {
 		"textures/gray_brick_wall_south.xpm",
 		"textures/gray_brick_wall_south_shadowed.xpm",
 		"textures/gray_brick_wall_east.xpm",
@@ -55,19 +55,46 @@ static void	load_textures(t_game *g)
 		"textures/hitler_picture_shadowed.xpm",
 		"textures/nazi_eagle_picture.xpm",
 		"textures/nazi_eagle_picture_shadowed.xpm",
-		"textures/ceiling_angles6.xpm",
-		"textures/floor_chessed.xpm"
-	};
-	size_t	i;
 
+		"textures/ceiling_angles6.xpm",
+		"textures/floor_chessed.xpm",
+
+		"textures/office_beige_wall_flag_nazi.xpm",
+		"textures/office_beige_wall_portrait_hitler.xpm",
+		"textures/office_beige_wall_flag_nazi_military.xpm",
+		"textures/office_beige_wall_plain.xpm",
+		"textures/office_beige_archway.xpm",
+		"textures/office_beige_wall_lamp.xpm",
+		"textures/office_beige_window_large_curtain.xpm",
+		"textures/office_beige_wall_portrait_lenin.xpm",
+		"textures/office_beige_wall_portrait_stalin.xpm",
+
+		"textures/lab_metal_grey_tiles.xpm",
+		"textures/lab_metal_grey_tiles_blood1.xpm",
+		"textures/lab_metal_grey_tiles_blood2.xpm",
+		"textures/lab_metal_grey_tiles_blood3.xpm",
+		"textures/lab_metal_grey_tiles_blood4.xpm",
+		"textures/lab_metal_grey_tiles_clock.xpm",
+		"textures/lab_metal_sign_radiation.xpm",
+
+
+
+		"textures/office_beige_wall_flag_britain.xpm",
+		"textures/office_beige_wall_flag_france.xpm",
+		"textures/office_beige_wall_flag_japan.xpm",
+		"textures/office_beige_wall_flag_soviet.xpm",
+		"textures/office_beige_wall_map.xpm"
+	};
+
+	size_t	i;
 	i = 0;
 	g->textures = ft_calloc(TEXTR_NUMBER, sizeof (t_image *));
 	while (i < TEXTR_NUMBER)
 	{
-		g->textures[i] = im_load_from_xpmfile(g->mlx, textures_files[i]);
+		g->textures[i] = im_load_from_xpmfile(g->mlx, g_texture_files[i]);
 		if (!g->textures[i])
 		{
-			printf("The texture %s was not loaded\n", textures_files[i]);
+			printf("The texture %s was not loaded\n", g_texture_files[i]);
 			while (--i)
 				im_cleanup(g->mlx, g->textures[i]);
 			game_cleanup(g);
@@ -82,7 +109,8 @@ static void	load_textures(t_game *g)
 static void	load_animations(t_game *g)
 {
 	static char	*animation_files[] = {
-		"textures/lab_metal_white_door_sprite.xpm"
+		"textures/lab_metal_white_door_sprite.xpm",
+		"textures/lab_metal_grey_tiles_hexdoor_animation.xpm"
 	};
 	size_t		i;
 
@@ -90,7 +118,7 @@ static void	load_animations(t_game *g)
 	g->animations = ft_calloc(ANIM_NUMBER, sizeof (t_animation *));
 	while (i < ANIM_NUMBER)
 	{
-		g->animations[i] = init_animation(g->mlx, animation_files[i]);
+		g->animations[i] = im_load_from_xpmfile(g->mlx, animation_files[i]);
 		if (!g->animations[i])
 		{
 			ft_printf("Sprite with number %d can't be loaded\n", i);

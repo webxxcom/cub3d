@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:21:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 21:39:16 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 00:17:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_frame	*extract_frame_from_sprite(
 	return (frame);
 }
 
-t_frame	*frame_get_with_size(void *mlx, int width, int height)
+static t_frame	*frame_get_with_size(void *mlx, int width, int height)
 {
 	t_frame	*frame;
 
@@ -50,13 +50,13 @@ t_frame	*frame_get_with_size(void *mlx, int width, int height)
 	return (frame);
 }
 
-void	sprite_to_frames(void *mlx, t_image *sprite, t_animation *anim)
+static void	sprite_to_frames(void *mlx, t_image *sprite, t_animation *anim)
 {
-	const int	frame_offset = 64;
+	const int	frame_offset = TILE_SIZE;
 	int			curr_frame;
 
 	anim->total_frames = sprite->width / frame_offset;
-	anim->frames = ft_calloc(1, anim->total_frames * sizeof (t_frame *));
+	anim->frames = ft_calloc(anim->total_frames, sizeof (t_frame *));
 	if (!anim->frames)
 		return ;
 	curr_frame = 0;
@@ -68,7 +68,7 @@ void	sprite_to_frames(void *mlx, t_image *sprite, t_animation *anim)
 	}
 }
 
-t_animation	*init_animation(void *mlx, char *animation_file)
+t_animation	*init_animation(t_game *g, t_animation_types anim_type)
 {
 	t_animation	*animation;
 	t_image		*sprite;
@@ -76,11 +76,10 @@ t_animation	*init_animation(void *mlx, char *animation_file)
 	animation = ft_calloc(1, sizeof (t_animation));
 	if (!animation)
 		return (NULL);
-	sprite = im_load_from_xpmfile(mlx, animation_file);
+	sprite = g->animations[anim_type];
 	if (!sprite)
 		return (free(animation), NULL);
-	sprite_to_frames(mlx, sprite, animation);
-	im_cleanup(mlx, sprite);
+	sprite_to_frames(g->mlx, sprite, animation);
 	return (animation);
 }
 

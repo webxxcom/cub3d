@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/18 17:41:34 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/19 00:13:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define M_PI 3.14159265358979323846
 #endif
 
+# define TILE_SIZE 64
+
 // Define possible player's movement to avoid faster diagonal movement
 # define MOVING_FRWD 0
 # define MOVING_BCK 1
@@ -59,12 +61,6 @@ typedef struct s_paths
 	char	*east;
 	char	*west;
 }	t_paths;
-
-typedef struct s_point
-{
-	int	x;
-	int	y;
-}	t_point;
 
 typedef struct s_camera
 {
@@ -123,6 +119,7 @@ typedef struct s_input
 
 typedef struct s_dda_ray t_dda_ray;
 
+
 /**
  * The struct s_game describes global game's state.
  * 
@@ -152,7 +149,7 @@ typedef struct s_game
 	t_player		player;
 	t_minimap		minimap;
 	t_paths			paths;
-	t_cube			cubes[10];
+	t_cube			cubes[50];
 	t_cam			cam;
 	t_input			input;
 	t_image			*buffer_image;
@@ -161,7 +158,7 @@ typedef struct s_game
 	t_array			entities;
 
 	t_image			**textures;
-	t_animation		**animations;
+	t_image			**animations;
 
 	t_image			*ceiling;
 	t_image			*floor;
@@ -214,9 +211,6 @@ void 		game_cleanup(t_game *game);
 
 // Utils
 void		toggle_bool(bool *flag);
-float		ft_minf(float a, float b);
-int 		ft_min(int a, int b);
-int			ft_max(int a, int b);
 bool 		key_should_repeat(int key);
 bool		movement_key(int key);
 

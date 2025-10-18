@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:59:07 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:34:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 00:23:02 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_sprite	*init_sprites(t_game *g)
 	return (sp);
 }
 
-static inline t_entity	init_door(t_game *g, int x, int y)
+static inline t_entity	init_door(t_game *g, int x, int y, t_animation_types animation)
 {
 	t_entity	ent;
 
@@ -34,8 +34,7 @@ static inline t_entity	init_door(t_game *g, int x, int y)
 		.update = door_update,
 		.interact = door_interact
 	};
-	ent.anim = init_animation(g->mlx,
-			"textures/lab_metal_white_door_sprite.xpm");
+	ent.anim = init_animation(g, animation);
 	return (ent);
 }
 
@@ -54,7 +53,12 @@ void	init_entities(t_game *g)
 		{
 			if (g->map.tiles[j][i] == 'D')
 			{
-				tmp = init_door(g, i, j);
+				tmp = init_door(g, i, j, ANIM_DOOR_OPEN_CLOSE);
+				array_push(&g->entities, &tmp);
+			}
+			else if (g->map.tiles[j][i] == 'E')
+			{
+				tmp = init_door(g, i, j, ANIM_LAB_METAL_GREY_TILES_HEXDOOR);
 				array_push(&g->entities, &tmp);
 			}
 			++i;

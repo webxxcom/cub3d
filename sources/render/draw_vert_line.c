@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_vert_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 17:49:06 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/18 23:21:11 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 static int	get_cube_type(char obs)
 {
-	if (obs - '0' - 1 > 3)
-		return (0);
-	return (obs - '0' - 1);
+	if (obs - '0' - 1 <= 16)
+		return (obs - '0' - 1);
+	return (0);
 }
 
 static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t_vec2f ray_dir)
@@ -47,7 +47,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
 		tex_x = cube_side->width - tex_x - 1;
 	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam))) * step_y;
-	const float shade = 1 / obs_data.dist;
+	float shade = 1 / obs_data.dist;
 	while (spos.y < y_end)
 	{
 		uint32_t col = im_get_pixel(cube_side, tex_x, tex_posy);
