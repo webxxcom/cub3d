@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mvement_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:35:06 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:30:39 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	move(t_game *const g, t_vec2f dir_vec)
 			dir_vec.x * g->dtime,
 			dir_vec.y * g->dtime);
 
+	cam_process_bob(&g->cam, g->player.speed, g->dtime);
 	if (is_walkable(g, pl->pos.x + delta.x * pl->radius * 2, pl->pos.y))
 		pl->pos.x += delta.x * pl->speed;
 	if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius * 2))
@@ -63,4 +64,6 @@ void	handle_movement(t_game *const g)
 		mv_dir = vec2f_vtranslate(mv_dir, vec2f_neg(plane_norm));
 	if (mv_dir.x != 0 || mv_dir.y != 0)
 		move(g, vec2f_normalize(mv_dir));
+	else
+		g->cam.bob_phase *= 1 - g->dtime;
 }

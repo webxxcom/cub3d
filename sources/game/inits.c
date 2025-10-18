@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 23:46:07 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:50:08 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ char	**generate_map(int *w, int *h)
 	const int HEIGHT = 24;
 	const int WIDTH = 25;
 	const char *fixed_map[] = {
-		"888888888884464464644464",
-		"800000000084000000000004",
-		"803300000884000000000006",
-		"8003000000D0000000000006",
-		"803300000884000000000004",
-		"800000000084000006660646",
-		"888808888884444446000006",
-		"7777D7777080808084040606",
-		"770000007808080886000006",
+		"111111114115555555555555",
+		"100000000015000000000005",
+		"101100000815000000000005",
+		"1002000000D0000000000005",
+		"101100000815000000000005",
+		"10000000001500000555D555",
+		"100000000015555556000006",
+		"1111D1311010808084040606",
+		"770000001118080886000006",
 		"700000000000000086000004",
 		"700000000000000086060606",
 		"770000007808080886460666",
@@ -116,20 +116,38 @@ t_cam	cam_init(void)
 		.plane = vec2f_construct(0, 0.66f),
 		.dir = vec2f_construct(-1, 0),
 		.sensitivity = 0.0008f,
-		.pitch = 0
+		.pitch = 0,
+		.bob_phase = 0
 	});
 }
+
+//cube = {NORTH, WEST, SOUTH, EAST}
 
 void	init_cubes(t_cube *cubes)
 {
 	cubes[0] = (t_cube){
 		.walls_ind = {
-			TEXTR_GRAY_BRICKWALL_SOUTH,	TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,
-			TEXTR_GRAY_BRICKWALL_EAST,	TEXTR_GRAY_BRICKWALL_SHADOWED_EAST}
+			TEXTR_GRAY_BRICKWALL_NORTH,				TEXTR_GRAY_BRICKWALL_EAST,
+			TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,	TEXTR_GRAY_BRICKWALL_SHADOWED_WEST}
 		};
 	cubes[1] = (t_cube){
 		.walls_ind = {
-			TEXTR_GRAY_BRICKWALL_SOUTH,	TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,
-			TEXTR_HITLER_PICT,			TEXTR_GRAY_BRICKWALL_SHADOWED_EAST}
+			TEXTR_GRAY_BRICKWALL_NORTH,				TEXTR_GRAY_BRICKWALL_EAST,
+			TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,	TEXTR_NAZI_EAGLE_PICT_SHDWD}
+		};
+	cubes[2] = (t_cube){
+		.walls_ind = {
+			TEXTR_HITLER_PICT,						TEXTR_GRAY_BRICKWALL_EAST,
+			TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,	TEXTR_GRAY_BRICKWALL_SHADOWED_WEST}
+		};
+	cubes[3] = (t_cube){
+		.walls_ind = {
+			TEXTR_GRAY_BRICKWALL_NORTH,		TEXTR_GRAY_BRICKWALL_EAST,
+			TEXTR_HITLER_PICT_SHDWD,		TEXTR_GRAY_BRICKWALL_SHADOWED_WEST}
+		};
+	cubes[3] = (t_cube){
+		.walls_ind = {
+			TEXTR_GRAY_BRICKWALL_NORTH,		TEXTR_GRAY_BRICKWALL_EAST,
+			TEXTR_HITLER_PICT_SHDWD,		TEXTR_GRAY_BRICKWALL_SHADOWED_WEST}
 		};
 }

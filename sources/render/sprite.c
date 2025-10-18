@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:50:16 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 13:20:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 11:53:03 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_sprite(t_game *g, t_sprite *s)
 	{
 		for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
         {
-		  im_set_pixel(g->buffer_image, y, i, COLOR_CYAN);
+		  //im_set_pixel(g->buffer_image, y, i, COLOR_CYAN);
         }
 	}
 }

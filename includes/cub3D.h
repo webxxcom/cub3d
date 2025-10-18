@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/18 00:03:58 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:41:34 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_camera
 	t_vec2f		dir;
 	float		sensitivity;
 	float		pitch;
+	float		bob_phase;
 }	t_cam;
 
 typedef struct s_player
@@ -151,7 +152,7 @@ typedef struct s_game
 	t_player		player;
 	t_minimap		minimap;
 	t_paths			paths;
-	t_cube			cubes[2];
+	t_cube			cubes[10];
 	t_cam			cam;
 	t_input			input;
 	t_image			*buffer_image;
@@ -181,7 +182,9 @@ t_player	player_init(void);
 void		init_cubes(t_cube *cubes);
 t_sprite	*init_sprites(t_game *g);
 void		init_entities(t_game *g);
-t_entity *find_entity_at(t_game *const g, t_vec2i pos);
+t_entity 	*find_entity_at(t_game *const g, t_vec2i pos);
+float		cam_get_pitch(t_cam *cam);
+void		cam_process_bob(t_cam *cam, float player_speed, float dtime);
 
 void	put_minimap(t_game *g);
 

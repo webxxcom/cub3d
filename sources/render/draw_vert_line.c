@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_vert_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:30:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:49:06 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 static int	get_cube_type(char obs)
 {
-	return ((obs - '0') % 2);
+	if (obs - '0' - 1 > 3)
+		return (0);
+	return (obs - '0' - 1);
 }
 
 static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t_vec2f ray_dir)
@@ -29,9 +31,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 
 	t_entity	*ent = find_entity_at(g, obs_data.map_pos);
 	if (ent)
-	{
 		cube_side = animation_get_current_image(ent->anim);
-	}
 	else
 		cube_side = g->textures[g->cubes[get_cube_type(obs_data.obs)].walls_ind[obs_data.side]];
 	
@@ -46,7 +46,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 		tex_x = cube_side->width - tex_x - 1;
 	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
 		tex_x = cube_side->width - tex_x - 1;
-	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + g->cam.pitch)) * step_y;
+	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam))) * step_y;
 	const float shade = 1 / obs_data.dist;
 	while (spos.y < y_end)
 	{
@@ -73,10 +73,10 @@ void	draw_vert_line(t_game *const g, int screen_x)
 		int			y_start;
 		int			y_end;
 
-		y_start = (g->h / 2) - (line_h / 2) + g->cam.pitch;
+		y_start = (g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam);
 		if (y_start < 0)
 			y_start = 0;
-		y_end = (g->h / 2) + (line_h / 2) + g->cam.pitch;
+		y_end = (g->h / 2) + (line_h / 2) + cam_get_pitch(&g->cam);
 		if (y_end >= g->h)
 			y_end = g->h - 1;
 		draw_wall(g, vec2i_construct(screen_x, y_start), y_end, g->rays[screen_x].crossed_textures[i], g->rays[screen_x].ray_dir);

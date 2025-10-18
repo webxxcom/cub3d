@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures.h                                         :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/15 19:21:35 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 17:37:25 by rkravche         ###   ########.fr       */
+/*   Created: 2025/10/18 15:48:47 by rkravche          #+#    #+#             */
+/*   Updated: 2025/10/18 17:30:56 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEXTURES_H
-# define TEXTURES_H
+#include "cub3D.h"
 
-typedef enum e_textures_names
+inline float	cam_get_pitch(t_cam *cam)
 {
-	TEXTR_GRAY_BRICKWALL_NORTH = 0,
-	TEXTR_GRAY_BRICKWALL_SHADOWED_SOUTH,
-	TEXTR_GRAY_BRICKWALL_EAST,
-	TEXTR_GRAY_BRICKWALL_SHADOWED_WEST,
-	TEXTR_HITLER_PICT,
-	TEXTR_HITLER_PICT_SHDWD,
-	TEXTR_NAZI_EAGLE_PICT,
-	TEXTR_NAZI_EAGLE_PICT_SHDWD,
-	TEXTR_CEILING_ANGLES6,
-	TEXTR_FLOOR_CHESSED,
-	TEXTR_NUMBER
-}	t_textures;
+	float const	bob_amplitude_y = 10.0f;
+	float const	pitch_offset = sinf(cam->bob_phase) * bob_amplitude_y;
 
-#endif
+	return (cam->pitch + pitch_offset);
+}
+
+inline void	cam_process_bob(t_cam *cam, float player_speed, float dtime)
+{
+	if (cam->bob_phase > 3.14f)
+		cam->bob_phase = -cam->bob_phase;
+	cam->bob_phase += player_speed * dtime * 2.f;
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_floor_and_ceiling.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/15 21:03:02 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/18 15:54:15 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	draw_floor_and_ceiling(t_game *g)
 	int				ceiling_y;
 	int				x;
 	const float		posZ = 0.5 * g->h;
-	const int		horizon = g->h / 2 + g->cam.pitch;
+	const int		horizon = g->h / 2 + cam_get_pitch(&g->cam);
 
 	floor_y = horizon + 1;
 	ceiling_y = horizon + 1;
