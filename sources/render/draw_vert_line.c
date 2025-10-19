@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 23:21:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 17:24:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,37 @@
 
 static int	get_cube_type(char obs)
 {
-	if (obs - '0' - 1 <= 16)
+	if (obs - '0' - 1 <= 17)
 		return (obs - '0' - 1);
 	return (0);
+}
+
+uint32_t	apply_all_lights_to_pixel(t_game *g, uint32_t col, float base_shade, t_vec2f obs_pos)
+{
+	t_light	*light;
+	size_t	i;
+	float	light_bonus;
+	uint32_t lit_col;
+
+	i = 0;
+	light_bonus = 0;
+	while (i < 1)
+	{
+		light = array_get(&g->lights, i);
+		t_vec2f	hit_vec = vec2f_construct(obs_pos.x, obs_pos.y);
+		float dx = light->pos.x - hit_vec.x;
+		float dy = light->pos.y - hit_vec.y;
+		float dist2 = dx * dx + dy * dy;
+
+		if (dist2 < light->intensity * light->intensity)
+			light_bonus = light->strength / (1.0f + dist2);
+		float r = (((col >> 16) & 0xFF) /  255.f) * fminf(1.0f, base_shade + ((float)((light->color >> 16) & 0xFF) / 255.f) * light_bonus);
+		float g_col = (((col >> 8) & 0xFF) /  255.f) * fminf(1.0f, base_shade + ((float)((light->color >> 8) & 0xFF) / 255.f) * light_bonus);
+		float b = (((col & 0xFF) / 255.f)) * fminf(1.0f, base_shade + ((float)(light->color & 0xFF) / 255.f) * light_bonus);
+		lit_col = ((int)(r * 255) << 16) | ((int)(g_col * 255) << 8) | ((int)(b * 255));
+		++i;
+	}
+	return (lit_col);
 }
 
 static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t_vec2f ray_dir)
@@ -47,15 +75,17 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
 		tex_x = cube_side->width - tex_x - 1;
 	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam))) * step_y;
-	float shade = 1 / obs_data.dist;
+	float base_shade = 1 / obs_data.dist;
 	while (spos.y < y_end)
 	{
 		uint32_t col = im_get_pixel(cube_side, tex_x, tex_posy);
 		if (col != TRANSPARENT_COLOR)
 		{
+			uint32_t lit_col = apply_all_lights_to_pixel(g, col, base_shade,
+				vec2f_construct(g->player.pos.x + ray_dir.x * obs_data.dist, g->player.pos.y + ray_dir.y * obs_data.dist));
 			im_set_pixel(g->buffer_image,
 				spos.x, spos.y,
-				im_scale_pixel(col, shade));
+				lit_col);
 		}
 		tex_posy += step_y;
 		++spos.y;

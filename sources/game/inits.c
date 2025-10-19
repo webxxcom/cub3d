@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 00:05:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 16:29:16 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ char	**generate_map(int *w, int *h)
 		"101100000155000009000005",
 		"10000000001500000555D555",
 		"10000000001567855>>>0>>>",
-		"1111D131111>?>?>>>00000>",
+		"1111D131111>?B?>>>00000>",
 		">>>>0>>>>>>?00000>00000>",
 		">0000000000A00000E00000>",
 		">0000000000@00000>00000>",
-		">0000000000>@>>@>>>>D>>",
+		">0000000000>@>>>@>>>>D>>",
 		">0000000000000000000000>",
 		">0000000000000000000000>",
 		">0000000000000000000000>",
@@ -213,4 +213,9 @@ void	init_cubes(t_cube *cubes)
 		TEXTR_LAB_METAL_GREY_TILES,
 		TEXTR_LAB_METAL_GREY_TILES,
 		TEXTR_LAB_METAL_SIGN_RADIATION);
+	cubes[i++] = CUBE(
+		TEXTR_LAB_METAL_GREY_TILES,
+		TEXTR_LAB_METAL_GREY_TILES,
+		TEXTR_LAB_METAL_GREY_TILES,
+		TEXTR_LAB_METAL_GREY_TILES);
 }

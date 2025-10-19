@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/19 00:13:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:03:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,14 @@ typedef struct s_input
 
 typedef struct s_dda_ray t_dda_ray;
 
+typedef struct s_light
+{
+	t_vec2f		pos;
+	float		intensity;
+	float 		strength;
+	uint32_t	color;
+}	t_light;
+
 
 /**
  * The struct s_game describes global game's state.
@@ -156,6 +164,7 @@ typedef struct s_game
 	t_dda_ray		*rays;
 	t_sprite		*sprites;
 	t_array			entities;
+	t_array			lights;
 
 	t_image			**textures;
 	t_image			**animations;

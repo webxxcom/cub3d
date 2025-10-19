@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/19 00:13:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 17:27:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	load_textures(t_game *g)
 		"textures/lab_metal_grey_tiles_blood4.xpm",
 		"textures/lab_metal_grey_tiles_clock.xpm",
 		"textures/lab_metal_sign_radiation.xpm",
-
+		"textures/lab_metal_light_on.xpm",
 
 
 		"textures/office_beige_wall_flag_britain.xpm",
@@ -128,6 +128,35 @@ static void	load_animations(t_game *g)
 	}
 }
 
+static void	init_lights(t_game *g)
+{
+	t_light	tmp;
+	size_t	i;
+	size_t	j;
+
+	g->lights = array_init(sizeof (t_light));
+	j = 0;
+	while (g->map.tiles[j])
+	{
+		i = 0;
+		while (g->map.tiles[j][i])
+		{
+			if (g->map.tiles[j][i] == ':')
+			{
+				tmp = (t_light){.pos={i + 0.5,j+0.5},.intensity = 10.f, .strength = 3.f, .color=COLOR_GOLD};
+				array_push(&g->lights, &tmp);
+			}
+			else if (g->map.tiles[j][i] == 'B')
+			{
+				tmp = (t_light){.pos={i + 0.5,j+0.5},.intensity = 6.f, .strength = 7.f, .color=COLOR_RED};
+				array_push(&g->lights, &tmp);
+			}
+			++i;
+		}
+		++j;
+	}
+}
+
 static void	init_mlx(t_game *g)
 {
 	g->mlx = mlx_init();
@@ -141,6 +170,7 @@ static void	init_mlx(t_game *g)
 	load_textures(g); // ! NOT CORRECT TEXTURE LOADING
 	load_animations(g);
 	init_entities(g);
+	init_lights(g);
 	mlx_loop_hook(g->mlx, main_loop, g);
 	mlx_hook(g->win, KeyPress, KeyPressMask, key_press_hook, g);
 	mlx_key_hook(g->win, key_release_hook, g);

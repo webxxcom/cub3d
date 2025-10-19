@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   draw_floor_and_ceiling.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 15:54:15 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/19 17:27:26 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include "raycaster.h"
 
 void	draw_floor_and_ceiling(t_game *g)
 {
@@ -25,7 +26,7 @@ void	draw_floor_and_ceiling(t_game *g)
 	floor_y = horizon + 1;
 	ceiling_y = horizon + 1;
 	while (floor_y < g->h || ceiling_y > 0)
-	{ 
+	{
 		int p = floor_y - horizon;
 		float rowDist = posZ / p;
 
@@ -38,23 +39,27 @@ void	draw_floor_and_ceiling(t_game *g)
 			g->player.pos.y + rowDist * rayDir1.y
 		);
 		x = 0;
+		float shade = 1 / rowDist;
+		uint32_t col;
 		while (x < g->w)
 	 	{
 	 		t_vec2i texPos = vec2i_construct(
 	 			(int)(g->textures[TEXTR_FLOOR_CHESSED]->width * (floor_pos.x - (int)floor_pos.x)) & (g->textures[TEXTR_FLOOR_CHESSED]->width - 1),
-	 			(int)(g->textures[TEXTR_FLOOR_CHESSED]->height * (floor_pos.y - (int)floor_pos.y)) & (g->textures[TEXTR_FLOOR_CHESSED]->height - 1) 
+	 			(int)(g->textures[TEXTR_FLOOR_CHESSED]->height * (floor_pos.y - (int)floor_pos.y)) & (g->textures[TEXTR_FLOOR_CHESSED]->height - 1)
 	 		);
-			(void)texPos;
 			if (floor_y < g->h)
+			{
+				col = im_get_pixel(g->textures[TEXTR_FLOOR_CHESSED], texPos.x, texPos.y);
 				im_set_pixel(g->buffer_image, x, floor_y,
-					im_scale_pixel(
-						im_get_pixel(g->textures[TEXTR_FLOOR_CHESSED], texPos.x, texPos.y), 1 / rowDist)
-					);
+					apply_all_lights_to_pixel(g, col, shade, floor_pos)
+				);
+			}
 			if (ceiling_y > 0)
+			{
+				col = im_get_pixel(g->textures[TEXTR_CEILING_ANGLES6], texPos.x, texPos.y);
 				im_set_pixel(g->buffer_image, x, ceiling_y,
-					im_scale_pixel(
-						im_get_pixel(g->textures[TEXTR_CEILING_ANGLES6], texPos.x, texPos.y), 1 / rowDist)
-					);
+					apply_all_lights_to_pixel(g, col, shade, floor_pos));
+			}
 
 	 		floor_pos = vec2f_vtranslate(floor_pos, floorUnitStep);
 	 		++x;

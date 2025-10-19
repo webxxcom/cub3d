@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 19:21:35 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 23:21:07 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 16:21:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum e_textures_names
 	TEXTR_LAB_METAL_GREY_TILES_BLOOD4,
 	TEXTR_LAB_METAL_GREY_TILES_CLOCK,
 	TEXTR_LAB_METAL_SIGN_RADIATION,
+	TEXTR_LAB_METAL_LIGHT_ON,
 	
 	TEXTR_OFFICE_BEIGE_FLAG_BRITAIN,
 	TEXTR_OFFICE_BEIGE_FLAG_JAPAN,
