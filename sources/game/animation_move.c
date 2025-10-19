@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:48:47 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 22:50:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 21:43:37 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	animation_update(t_game *g, t_animation *anim, int anim_state)
 		step = -1;
 	if (curr_time - frame_time > ANIMATION_DELAY)
 	{
-		if ((anim_state == 0 && anim->curr_frame_n != 0) || (anim_state == 1 && anim->curr_frame_n != anim->total_frames - 1))
+		if ((anim_state == 0 && anim->curr_frame_n != 0) || (anim_state == 1 && anim->curr_frame_n + 1 != anim->total_frames))
 		{
 			anim->curr_frame_n = (anim->curr_frame_n + step) % anim->total_frames;
 			anim->frames[anim->curr_frame_n]->time = curr_time;

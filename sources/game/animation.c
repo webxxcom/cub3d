@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:21:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 00:17:34 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 21:43:19 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_frame	*frame_get_with_size(void *mlx, int width, int height)
 static void	sprite_to_frames(void *mlx, t_image *sprite, t_animation *anim)
 {
 	const int	frame_offset = TILE_SIZE;
-	int			curr_frame;
+	size_t		curr_frame;
 
 	anim->total_frames = sprite->width / frame_offset;
 	anim->frames = ft_calloc(anim->total_frames, sizeof (t_frame *));
@@ -85,7 +85,7 @@ t_animation	*init_animation(t_game *g, t_animation_types anim_type)
 
 void	animation_clean(void *mlx, t_animation *anim)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < anim->total_frames)

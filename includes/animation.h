@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:14:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 00:17:30 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 21:46:23 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef enum
 
 typedef struct s_animation
 {
-	int		total_frames;
-	int		curr_frame_n;
+	size_t	total_frames;
+	size_t	curr_frame_n;
 	t_frame	**frames;
 }	t_animation;
 
