@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/19 17:27:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 18:38:12 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,12 @@ static void	init_lights(t_game *g)
 		{
 			if (g->map.tiles[j][i] == ':')
 			{
-				tmp = (t_light){.pos={i + 0.5,j+0.5},.intensity = 10.f, .strength = 3.f, .color=COLOR_GOLD};
+				tmp = (t_light){.pos={i + 0.5,j+0.5},.intensity = 10.f, .strength = 1.f, .color=colorf_from_uint(COLOR_GOLD)};
 				array_push(&g->lights, &tmp);
 			}
 			else if (g->map.tiles[j][i] == 'B')
 			{
-				tmp = (t_light){.pos={i + 0.5,j+0.5},.intensity = 6.f, .strength = 7.f, .color=COLOR_RED};
+				tmp = (t_light){.pos={i + 0.5,j+0.5},.intensity = 4.f, .strength = 1.f, .color=colorf_from_uint(COLOR_RED)};
 				array_push(&g->lights, &tmp);
 			}
 			++i;

@@ -16,7 +16,8 @@ SRCS		= main.c \
 			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/sprite.c \
 				$(SRC_FLDR)/render/draw_floor_and_ceiling.c \
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
-			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c $(SRC_FLDR)/utils/array.c $(SRC_FLDR)/utils/draw_utils.c
+			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c $(SRC_FLDR)/utils/array.c $(SRC_FLDR)/utils/draw_utils.c \
+				$(SRC_FLDR)/utils/colorf.c
 
 OBJ_DIR		= obj
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

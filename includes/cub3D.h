@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/19 12:03:24 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 18:33:52 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include "sprite.h"
 # include "entity.h"
 # include "array.h"
+# include "colorf.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -124,7 +125,7 @@ typedef struct s_light
 	t_vec2f		pos;
 	float		intensity;
 	float 		strength;
-	uint32_t	color;
+	t_colorf		color;
 }	t_light;
 
 

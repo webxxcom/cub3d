@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 17:27:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/19 18:42:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	draw_floor_and_ceiling(t_game *g)
 			{
 				col = im_get_pixel(g->textures[TEXTR_FLOOR_CHESSED], texPos.x, texPos.y);
 				im_set_pixel(g->buffer_image, x, floor_y,
-					apply_all_lights_to_pixel(g, col, shade, floor_pos)
+					apply_all_lights_to_pixel(&g->lights, colorf_from_uint(col), shade, floor_pos)
 				);
 			}
 			if (ceiling_y > 0)
 			{
 				col = im_get_pixel(g->textures[TEXTR_CEILING_ANGLES6], texPos.x, texPos.y);
 				im_set_pixel(g->buffer_image, x, ceiling_y,
-					apply_all_lights_to_pixel(g, col, shade, floor_pos));
+					apply_all_lights_to_pixel(&g->lights, colorf_from_uint(col), shade, floor_pos));
 			}
 
 	 		floor_pos = vec2f_vtranslate(floor_pos, floorUnitStep);
