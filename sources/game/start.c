@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/19 18:38:12 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/21 16:37:17 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,17 +213,10 @@ void	start_game(t_game *game, const char *filename)
 {
 	(void)filename;
 	ft_memset(game, 0, sizeof(*game));
-	//parse_textures(game, filename);
-	//parse_map(game, filename);
+	parse(game, filename);
 	init_game(game, filename);
 	init_mlx(game);
-	//load_textures(game);
-	// int	i = 0;
-	// while (game->map[i])
-	// {
-	// 	printf("%s\n", game->map[i]);
-	// 	++i;
-	// }
+	load_textures(game);
 	game->last_time = get_time_in_ms();
 	mlx_loop(game->mlx);
 	game_cleanup(game);
