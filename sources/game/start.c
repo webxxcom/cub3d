@@ -3,47 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 18:10:51 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/22 20:52:26 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "raycaster.h"
 
-// static void	load_textures(t_game *game)
-// {
-// 	int	height;
-// 	int	width;
-
-// 	game->textures.north = mlx_xpm_file_to_image(
-// 			game->mlx, game->paths.north, &width, &height);
-// 	game->textures.north = mlx_xpm_file_to_image(
-// 			game->mlx, game->paths.north, &width, &height);
-// 	game->textures.north = mlx_xpm_file_to_image(
-// 			game->mlx, game->paths.north, &width, &height);
-// 	game->textures.north = mlx_xpm_file_to_image(
-// 			game->mlx, game->paths.north, &width, &height);
-// 	if (!game->textures.north || !game->textures.south
-// 		|| !game->textures.east || !game->textures.west)
-// 		exit_game(ERROR_MLX_IMAGE, game);
-// }
-
-// static char	*get_texture_path(void)
-// {
-// 	char	*path;
-
-// 	path = ft_get_next_line()
-// }
-
-// static void parse_textures(t_game *game, const char *map_file);
-// {
-// 	printf("NO ");
-// 	while (!game->paths.north)
-// 		game->paths.north = get_texture_path(void);
-// }
 static void	load_textures(t_game *g)
 {
 	static char *g_texture_files[] = {
@@ -181,10 +150,13 @@ static void	init_mlx(t_game *g)
 
 static void	init_game(t_game *g, const char *filename)
 {
-	g->w = 1000;
-	g->h = 650;
-	g->cam = cam_init();
+	g->w = WINDOW_WIDTH;
+	g->h = WINDOW_HEIGHT;
 	g->show_dbg = false;
+	g->show_keys = false;
+	g->dtime = 0;
+	g->last_time = get_time_in_ms();
+	g->cam = cam_init();
 	g->input = init_input();
 	g->map = init_map(filename);
 	g->minimap = minimap_init(g);
@@ -211,13 +183,11 @@ void game_cleanup(t_game *game)
 
 void	start_game(t_game *game, const char *filename)
 {
-	(void)filename;
-	ft_memset(game, 0, sizeof(*game));
-	parse(game, filename);
+	ft_memset(game, 0, sizeof (t_game));
 	init_game(game, filename);
 	init_mlx(game);
 	load_textures(game);
-	game->last_time = get_time_in_ms();
+	parse(game, filename);
 	mlx_loop(game->mlx);
 	game_cleanup(game);
 }

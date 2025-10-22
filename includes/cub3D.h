@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 15:53:38 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/22 20:52:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 #endif
 
 # define TILE_SIZE 64
+# define WINDOW_WIDTH 1000
+# define WINDOW_HEIGHT 650
 
 // Define possible player's movement to avoid faster diagonal movement
 # define MOVING_FRWD 0
@@ -157,6 +159,13 @@ typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
+	int				w;
+	int				h;
+	bool			show_dbg;
+	bool			show_keys;
+	double			dtime;
+	double			last_time;
+	
 	t_map			map;
 	t_player		player;
 	t_minimap		minimap;
@@ -175,13 +184,6 @@ typedef struct s_game
 
 	t_image			*ceiling;
 	t_image			*floor;
-
-	int				w;
-	int				h;
-	double			dtime;
-	double			last_time;
-	bool			show_dbg;
-	bool			show_keys;
 }	t_game;
 
 t_minimap   minimap_init(t_game *g);
