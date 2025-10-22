@@ -1,7 +1,34 @@
 {
-   Memcheck:Value
-   fun:writev
-   fun:_XSend
-   fun:XWindowEvent
-   fun:mlx_int_wait_first_expose
+
+    leak writev
+
+    Memcheck:Leak
+
+    ...
+
+    fun:X*
+
+}
+
+{
+
+    leak writev
+
+    Memcheck:Leak
+
+    ...
+
+    fun:_dl*
+
+}
+{
+
+    leak writev
+
+    Memcheck:Leak
+
+    ...
+
+    fun:_X*
+
 }
