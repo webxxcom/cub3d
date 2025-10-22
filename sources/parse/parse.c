@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 17:52:21 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/21 18:11:15 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,5 @@ void	parse(t_game *game, const char *map_file)
 	read_file(game, &list, map_file);
 	load_map(game, list);
 	ft_lst_free(list);
-	// int	i = 0;
-	// while (game->map.tiles[i])
-	// {
-	// 	printf("%s\n", game->map.tiles[i]);
-	// 	++i;
-	// }
 	validate_map(game);
 }

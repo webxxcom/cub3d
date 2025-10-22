@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate.c                                         :+:      :+:    :+:   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 15:40:11 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/21 18:27:35 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,26 @@ static void	validate_walls(t_game *game)
 	char	**map;
 	int		i;
 	int		j;
+	int		len;
 
 	map = game->map.tiles;
 	i = -1;
+	len = ft_strlen(map[0]);
 	while (map[++i])
 	{
 		j = -1;
 		while (map[i][++j])
 		{
 			if (map[i][j] != ' ' && map[i][j] != '1'
-				&& (map[i - 1][j - 1] == ' ' || map[i - 1][j] == ' '
+				&& (j > len - 1
+				|| map[i - 1][j - 1] == ' ' || map[i - 1][j] == ' '
 				|| map[i - 1][j + 1] == ' ' || map[i + 1][j - 1] == ' '
 				|| map[i + 1][j] == ' ' || map[i + 1][j + 1] == ' '
 				|| map[i][j - 1] == ' ' || map[i][j + 1] == ' '
 				|| map[i - 1][j + 1] == '\0' || map[i + 1][j + 1] == '\0'))
 				exit_game(ERROR_WALL, game);
 		}
+		len = j;
 	}
 }
 
