@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 15:39:08 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/22 15:53:38 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_paths
 	char	*south;
 	char	*east;
 	char	*west;
+	char	*floor;
+	char	*ceiling;
 }	t_paths;
 
 typedef struct s_camera

@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 18:04:16 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/22 15:59:59 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	read_textures(t_game *game, int fd)
 	char	**elements;
 	int		element_count;
 
-	element_count = 4;
+	element_count = 6;
 	while (element_count)
 	{
 		line = ft_get_next_line(fd);
@@ -45,7 +45,6 @@ static void	read_map(t_game *game, t_list **list, int fd)
 	char	*line;
 
 	new = NULL;
-	errno = 0;
 	while (1)
 	{
 		line = ft_get_next_line(fd);
