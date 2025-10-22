@@ -1,6 +1,6 @@
 {
 
-    leak writev
+    leak name1
 
     Memcheck:Leak
 
@@ -12,7 +12,7 @@
 
 {
 
-    leak writev
+    leak name2
 
     Memcheck:Leak
 
@@ -23,7 +23,7 @@
 }
 {
 
-    leak writev
+    leak name3
 
     Memcheck:Leak
 

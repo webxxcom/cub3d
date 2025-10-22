@@ -6,18 +6,19 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 23:30:58 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:26:32 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static bool	is_walkable(t_game *g, float const x, float const y)
+static bool	is_walkable(t_game *g, int const x, int const y)
 {
-	return (g->map.tiles[(int)y][(int)x] == '0'
-		|| g->map.tiles[(int)y][(int)x] == 'O'
-		|| g->map.tiles[(int)y][(int)x] == 'E'
-		|| g->map.tiles[(int)y][(int)x] == '9');
+	return (g->map.tiles[y][x] == '0');
+	// return (g->map.tiles[(int)y][(int)x] == '0'
+	// 	|| g->map.tiles[(int)y][(int)x] == 'O'
+	// 	|| g->map.tiles[(int)y][(int)x] == 'E'
+	// 	|| g->map.tiles[(int)y][(int)x] == '9');
 }
 
 t_vec2i	get_signs(t_vec2f const dir_vec)

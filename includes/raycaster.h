@@ -6,11 +6,12 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 10:10:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 21:27:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:49:50 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#ifndef RAYCASTER_H
+# define RAYCASTER_H
 
 typedef struct s_vector_2d_float	t_vec2f;
 typedef struct s_vector_2d_int		t_vec2i;
@@ -74,3 +75,5 @@ typedef struct s_fac
 	int32_t	ceiling_y;
 	float	shade;
 }	t_fac;
+
+#endif

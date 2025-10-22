@@ -6,19 +6,11 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 19:01:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 23:22:20 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include "raycaster.h"
-
-static int	get_cube_type(char obs)
-{
-	if (obs <= 'B')
-		return (obs - '0' - 1);
-	return (0);
-}
 
 static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t_vec2f ray_dir)
 {
@@ -28,13 +20,19 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	int			tex_x;
 	double		tex_posy;
 	t_image		*cube_side;
+	t_image		*decor = NULL;
 
-	t_entity	*ent = find_entity_at(g, obs_data.map_pos);
-	if (ent)
-		cube_side = animation_get_current_image(ent->anim);
-	else
-		cube_side = g->textures[g->cubes[get_cube_type(obs_data.obs)].walls_ind[obs_data.side]];
-	
+	t_decoration *tmp;
+	for(size_t i = 0; i < array_size(&g->decorations); ++i)
+	{
+		tmp =array_get(&g->decorations, i); 
+		if (vec2i_equals(tmp->pos, obs_data.map_pos) && tmp->direction == obs_data.side)
+		{
+			decor = tmp->texture;
+			break;
+		}
+	}
+	cube_side = g->textures[obs_data.side];
 	if ((obs_data.side == EAST || obs_data.side == WEST))
 		wall_x = g->player.pos.y + ray_dir.y * obs_data.dist;
 	else
@@ -42,22 +40,34 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	wall_x = wall_x - floor(wall_x);
 	step_y = (double)cube_side->height / line_h;
 	tex_x = cube_side->width * wall_x;
-	if ((obs_data.side == EAST || obs_data.side == WEST) && ray_dir.x > 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
+	if ((obs_data.side == EAST || obs_data.side == WEST) && ray_dir.x > 0)
 		tex_x = cube_side->width - tex_x - 1;
-	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0 && obs_data.obs != 'D' && obs_data.obs != 'O')
+	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0)
 		tex_x = cube_side->width - tex_x - 1;
 	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam))) * step_y;
-	float base_shade = 1 / obs_data.dist;
+	//float base_shade = 1 / obs_data.dist;
 	while (spos.y < y_end)
 	{
 		uint32_t col = im_get_pixel(cube_side, tex_x, tex_posy);
 		if (col != TRANSPARENT_COLOR)
 		{
-			uint32_t lit_col = compute_lit_color(&g->lights, colorf_from_uint(col), base_shade,
-				vec2f_construct(g->player.pos.x + ray_dir.x * obs_data.dist, g->player.pos.y + ray_dir.y * obs_data.dist));
+			//uint32_t lit_col = compute_lit_color(&g->lights, colorf_from_uint(col), base_shade,
+				//vec2f_construct(g->player.pos.x + ray_dir.x * obs_data.dist, g->player.pos.y + ray_dir.y * obs_data.dist));
 			im_set_pixel(g->buffer_image,
 				spos.x, spos.y,
-				lit_col);
+				col);
+		}
+		if (decor)
+		{
+			col = im_get_pixel(decor, tex_x, tex_posy);
+			if (col != TRANSPARENT_COLOR)
+			{
+				//uint32_t lit_col = compute_lit_color(&g->lights, colorf_from_uint(col), base_shade,
+					//vec2f_construct(g->player.pos.x + ray_dir.x * obs_data.dist, g->player.pos.y + ray_dir.y * obs_data.dist));
+				im_set_pixel(g->buffer_image,
+					spos.x, spos.y,
+					col);
+			}
 		}
 		tex_posy += step_y;
 		++spos.y;

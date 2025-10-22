@@ -6,11 +6,11 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/22 20:54:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 23:02:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycaster.h"
+#include "cub3D.h"
 
 static void	init_startvals(t_game *const game,
 		t_vec2f const ray_dir, t_dda_d *dda_d)
@@ -93,28 +93,27 @@ t_dda_ray	perform_dda(t_game *const g, double const screen_x)
 			move_by_x(&dda, &wall_data);
 		else
 			move_by_y(&dda, &wall_data);
-		if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'O'
-			|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'D'
-			|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'E'
-			|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == '9'
-			|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == ':')
-		{
-			const size_t	idx = dda_res.count++;
-			dda_res.crossed_textures[idx].dist = wall_data.dist;
-			dda_res.crossed_textures[idx].side = wall_data.side;
-			dda_res.crossed_textures[idx].map_pos = dda.map_pos;
-			dda_res.crossed_textures[idx].obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x];
-		}
-		else if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] != '0')
-		{
+		// if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'O'
+		// 	|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'D'
+		// 	|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == 'E'
+		// 	|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == '9'
+		// 	|| g->map.tiles[dda.map_pos.y][dda.map_pos.x] == ':')
+		// {
+		// 	const size_t	idx = dda_res.count++;
+		// 	dda_res.crossed_textures[idx].dist = wall_data.dist;
+		// 	dda_res.crossed_textures[idx].side = wall_data.side;
+		// 	dda_res.crossed_textures[idx].map_pos = dda.map_pos;
+		// 	dda_res.crossed_textures[idx].obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x];
+		// }
+		if (g->map.tiles[dda.map_pos.y][dda.map_pos.x] != '0')
 			hit = true;
-		}
 	}
 	if (dda.ray_dir.x < 0 && wall_data.side == WEST)
 		wall_data.side = EAST;
 	else if (dda.ray_dir.y < 0 && wall_data.side == NORTH)
 		wall_data.side = SOUTH;
 	wall_data.obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x];
+	wall_data.map_pos = dda.map_pos;
 	dda_res.crossed_textures[dda_res.count++] = wall_data;
 	return (dda_res);
 }

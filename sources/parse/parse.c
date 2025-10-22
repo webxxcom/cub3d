@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 18:11:15 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/22 22:26:25 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ static void	load_map(t_game *game, t_list *list)
 		if (game->map.tiles[i][width - 1] == '\n')
 			game->map.tiles[i][width - 1] = '\0';
 		list = list->next;
+
 		++i;
 	}
 	game->map.tiles[i] = NULL;
+	game->map.size.x = width;
+	game->map.size.y = i;
 }
 
 void	parse(t_game *game, const char *map_file)

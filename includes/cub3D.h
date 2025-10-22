@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 20:52:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:48:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # include "entity.h"
 # include "array.h"
 # include "colorf.h"
+# include "raycaster.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -134,6 +135,14 @@ typedef struct s_light
 }	t_light;
 
 
+typedef struct s_decoration
+{
+	t_vec2i			pos;
+	t_txtres_sides	direction;
+	char			*texture_path;
+	t_image			*texture;
+}	t_decoration;
+
 /**
  * The struct s_game describes global game's state.
  * 
@@ -166,11 +175,12 @@ typedef struct s_game
 	double			dtime;
 	double			last_time;
 	
+	t_array			decorations;
+
 	t_map			map;
 	t_player		player;
 	t_minimap		minimap;
 	t_paths			paths;
-	t_cube			cubes[50];
 	t_cam			cam;
 	t_input			input;
 	t_image			*buffer_image;

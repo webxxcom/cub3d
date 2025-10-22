@@ -1,0 +1,1 @@
+leakgrind --log-file=a.log --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./cub3D maps/map1.cub 

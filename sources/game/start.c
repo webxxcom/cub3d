@@ -6,71 +6,39 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 20:52:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 23:25:20 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "raycaster.h"
 
+static bool	load_texture(t_game *g, char *path, size_t i)
+{
+	g->textures[i] = im_load_from_xpmfile(g->mlx, path);
+	if (!g->textures[i])
+	{
+		printf("The texture %s was not loaded\n", path);
+		while (--i)
+			im_cleanup(g->mlx, g->textures[i]);
+		game_cleanup(g);
+		return (false);
+	}
+	return (true);
+}
+
 static void	load_textures(t_game *g)
 {
-	static char *g_texture_files[] = {
-		"textures/gray_brick_wall_south.xpm",
-		"textures/gray_brick_wall_south_shadowed.xpm",
-		"textures/gray_brick_wall_east.xpm",
-		"textures/gray_brick_wall_east_shadowed.xpm",
-		"textures/hitler_picture.xpm",
-		"textures/hitler_picture_shadowed.xpm",
-		"textures/nazi_eagle_picture.xpm",
-		"textures/nazi_eagle_picture_shadowed.xpm",
-
-		"textures/ceiling_angles6.xpm",
-		"textures/floor_chessed.xpm",
-
-		"textures/office_beige_wall_flag_nazi.xpm",
-		"textures/office_beige_wall_portrait_hitler.xpm",
-		"textures/office_beige_wall_flag_nazi_military.xpm",
-		"textures/office_beige_wall_plain.xpm",
-		"textures/office_beige_archway.xpm",
-		"textures/office_beige_wall_lamp.xpm",
-		"textures/office_beige_window_large_curtain.xpm",
-		"textures/office_beige_wall_portrait_lenin.xpm",
-		"textures/office_beige_wall_portrait_stalin.xpm",
-
-		"textures/lab_metal_grey_tiles.xpm",
-		"textures/lab_metal_grey_tiles_blood1.xpm",
-		"textures/lab_metal_grey_tiles_blood2.xpm",
-		"textures/lab_metal_grey_tiles_blood3.xpm",
-		"textures/lab_metal_grey_tiles_blood4.xpm",
-		"textures/lab_metal_grey_tiles_clock.xpm",
-		"textures/lab_metal_sign_radiation.xpm",
-		"textures/lab_metal_light_on.xpm",
-
-
-		"textures/office_beige_wall_flag_britain.xpm",
-		"textures/office_beige_wall_flag_france.xpm",
-		"textures/office_beige_wall_flag_japan.xpm",
-		"textures/office_beige_wall_flag_soviet.xpm",
-		"textures/office_beige_wall_map.xpm"
-	};
-
 	size_t	i;
+
 	i = 0;
-	g->textures = ft_calloc(TEXTR_NUMBER, sizeof (t_image *));
-	while (i < TEXTR_NUMBER)
-	{
-		g->textures[i] = im_load_from_xpmfile(g->mlx, g_texture_files[i]);
-		if (!g->textures[i])
-		{
-			printf("The texture %s was not loaded\n", g_texture_files[i]);
-			while (--i)
-				im_cleanup(g->mlx, g->textures[i]);
-			game_cleanup(g);
-			exit(1);
-		}
-		++i;
-	}
+	g->textures = ft_calloc(6, sizeof (t_image *));
+	load_texture(g, g->paths.north, i++);
+	load_texture(g, g->paths.west, i++);
+	load_texture(g, g->paths.south, i++);
+	load_texture(g, g->paths.east, i++);
+	load_texture(g, g->paths.floor, i++);
+	load_texture(g, g->paths.ceiling, i++);
 }
 
 #pragma endregion
@@ -125,6 +93,26 @@ static void	init_lights(t_game *g)
 		++j;
 	}
 }
+static char	*remove_nl(char *el)
+{
+	const size_t	len = ft_strlen(el);
+
+	el[len - 1] = '\0';
+	return (el);
+}
+static void	init_decorations(t_game *g)
+{
+	size_t			i;
+	t_decoration	*tmp;
+
+	i = 0;
+	while (i < array_size(&g->decorations))
+	{
+		tmp = array_get(&g->decorations, i);
+		tmp->texture = im_load_from_xpmfile(g->mlx, remove_nl(tmp->texture_path));
+		++i;
+	}
+}
 
 static void	init_mlx(t_game *g)
 {
@@ -140,6 +128,7 @@ static void	init_mlx(t_game *g)
 	load_animations(g);
 	init_entities(g);
 	init_lights(g);
+	init_decorations(g);
 	mlx_loop_hook(g->mlx, main_loop, g);
 	mlx_hook(g->win, KeyPress, KeyPressMask, key_press_hook, g);
 	mlx_key_hook(g->win, key_release_hook, g);
@@ -158,15 +147,15 @@ static void	init_game(t_game *g, const char *filename)
 	g->last_time = get_time_in_ms();
 	g->cam = cam_init();
 	g->input = init_input();
-	g->map = init_map(filename);
-	g->minimap = minimap_init(g);
 	g->rays = ft_calloc(g->w, sizeof (t_dda_ray));
-	init_cubes(g->cubes);
 	g->sprites = init_sprites(g);
+	g->decorations = array_init(sizeof (t_decoration));
 	
 	
 	// ! Hard code REVISE
 	g->player = player_init();
+	parse(g, filename);
+	g->minimap = minimap_init(g);
 }
 
 void game_cleanup(t_game *game)
@@ -187,7 +176,6 @@ void	start_game(t_game *game, const char *filename)
 	init_game(game, filename);
 	init_mlx(game);
 	load_textures(game);
-	parse(game, filename);
 	mlx_loop(game->mlx);
 	game_cleanup(game);
 }

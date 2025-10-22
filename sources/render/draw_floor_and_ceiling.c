@@ -6,12 +6,11 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 21:26:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:49:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include "raycaster.h"
 
 static inline void	draw_textured_fac(
 		t_game *g, t_fac *facd, t_vec2i tex_pos, int32_t x)
@@ -20,16 +19,16 @@ static inline void	draw_textured_fac(
 
 	if (facd->floor_y < g->h)
 	{
-		col = im_get_pixel(g->textures[TEXTR_FLOOR_CHESSED],
+		col = im_get_pixel(g->textures[TEXTR_FLOOR],
 				tex_pos.x, tex_pos.y);
-		im_set_pixel(g->buffer_image, x, facd->floor_y,
-			compute_lit_color(&g->lights, colorf_from_uint(col),
-				facd->shade, facd->floor_pos)
+		im_set_pixel(g->buffer_image, x, facd->floor_y, col
+			//compute_lit_color(&g->lights, colorf_from_uint(col),
+				//facd->shade, facd->floor_pos)
 			);
 	}
 	if (facd->ceiling_y > 0)
 	{
-		col = im_get_pixel(g->textures[TEXTR_CEILING_ANGLES6],
+		col = im_get_pixel(g->textures[TEXTR_CEILING],
 				tex_pos.x, tex_pos.y);
 		im_set_pixel(g->buffer_image, x, facd->ceiling_y,
 			compute_lit_color(&g->lights, colorf_from_uint(col),
@@ -46,12 +45,12 @@ static inline void	draw_horizontal_line(t_game *g, t_fac *facd)
 	while (x < g->w)
 	{
 		tex_pos = vec2i_construct(
-				(int)(g->textures[TEXTR_FLOOR_CHESSED]->width
+				(int)(g->textures[TEXTR_FLOOR]->width
 					* (facd->floor_pos.x - (int)facd->floor_pos.x))
-				% g->textures[TEXTR_FLOOR_CHESSED]->width,
-				(int)(g->textures[TEXTR_FLOOR_CHESSED]->height
+				% g->textures[TEXTR_FLOOR]->width,
+				(int)(g->textures[TEXTR_FLOOR]->height
 					* (facd->floor_pos.y - (int)facd->floor_pos.y))
-				% g->textures[TEXTR_FLOOR_CHESSED]->height
+				% g->textures[TEXTR_FLOOR]->height
 				);
 		draw_textured_fac(g, facd, tex_pos, x);
 		facd->floor_pos = vec2f_vtranslate(

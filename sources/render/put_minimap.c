@@ -6,12 +6,11 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:28:05 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:49:23 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include "raycaster.h"
 
 static void	draw_pixel(t_game *g, int x, int y, t_vec2i map_pos)
 {
@@ -19,12 +18,9 @@ static void	draw_pixel(t_game *g, int x, int y, t_vec2i map_pos)
 	char				tile;
 	uint32_t			col;
 
-	map_pos = vec2i_construct(map_pos.x, g->map.size.y - map_pos.y - 1);
 	tile = g->map.tiles[map_pos.y][map_pos.x];
 	if (tile == '0')
 		col = mm->bgcol;
-	else if (tile == 'D' || tile == 'O')
-		col = mm->dcol;
 	else
 		col = mm->wcol;
 	im_set_pixel(g->buffer_image, x, y, col);
@@ -72,7 +68,7 @@ static void	draw_player_ray(t_game *g, t_vec2i ppos, t_vec2f scale)
 	}
 }
 
-static void	draw_player(t_game *g)
+void	draw_player(t_game *g)
 {
 	const t_vec2f	scale = vec2f_construct(
 			(double)g->minimap.size.x / g->map.size.x,
@@ -80,7 +76,7 @@ static void	draw_player(t_game *g)
 	const t_vec2i	ppos = vec2i_construct(
 			round(g->player.pos.x * scale.x) + g->minimap.pos.x,
 			round(g->player.pos.y * scale.y)
-			+ g->minimap.pos.y - g->minimap.size.y);
+			+ g->minimap.pos.y);
 	const double	r = g->player.radius - 4;
 
 	draw_player_ray(g, ppos, scale);
@@ -105,7 +101,7 @@ void	put_minimap(t_game *g)
 		{
 			draw_tile(g,
 				vec2i_construct(i * tsize.x + mm->pos.x,
-					-(j * tsize.y + tsize.y) + mm->pos.y),
+					j * tsize.y + mm->pos.y),
 				tsize,
 				vec2i_construct(i, j));
 			++i;

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/18 11:57:16 by rkravche         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:49:26 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include "raycaster.h"
 
 #pragma region DEBUG
 // ! Debug function is not complient with shitty
@@ -184,7 +183,7 @@ static void	put_buffer(t_game *const g)
 	im_clear(g->buffer_image);
 	calculate_each_ray(g);
 	put_lines(g);
-	draw_sprite(g, g->sprites);
+	//draw_sprite(g, g->sprites);
 	put_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win,
 		g->buffer_image->image, 0, 0);
