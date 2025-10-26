@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 11:39:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 11:40:12 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,14 @@ static void	read_map(t_game *game, t_list **list, int fd)
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] == '\n' && !new)
+		if (line[0] == '\n')
 		{
 			free(line);
-			continue ;
+			if (!new)
+				continue ;
+			else
+				break ;
 		}
-		// The decorations are found
 		if (line[0] == '#')
 		{
 			free(line);
@@ -110,12 +112,6 @@ static void	read_map(t_game *game, t_list **list, int fd)
 		if (!new)
 			break ;
 		ft_lstadd_back(list, new);
-	}
-	if (errno)
-	{
-		close(fd);
-		ft_lst_free(*list);
-		exit_game(ERROR_READ_FILE_FAILED, game);
 	}
 }
 
@@ -177,4 +173,9 @@ void	read_file(t_game *game, t_list **list, const char *map_file)
 	read_map(game, list, fd);
 	read_decorations(game, fd);
 	close(fd);
+	if (errno)
+	{
+		ft_lst_free(*list);
+		exit_game(ERROR_READ_FILE_FAILED, game);
+	}
 }
