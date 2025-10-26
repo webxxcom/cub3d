@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 13:25:40 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 17:46:27 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	read_textures(t_game *game, int fd)
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
+		if (line[0] == '\n' || line[0] == '[')
+			continue ;
 		elements = ft_split(line, " ");
 		if (!elements)
 			break ;
@@ -93,7 +95,7 @@ static void	read_map(t_game *game, t_list **list, int fd)
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] == '\n' || line[0] == '#')
+		if (line[0] == '\n' || line [0] == '[')
 		{
 			free(line);
 			if (!new)
@@ -114,11 +116,11 @@ static void	parse_decoration(t_game *g, char *line)
 	char			**fields;
 
 	fields = ft_split(line, " \t");
-	if (ft_strncmp(fields[0], "WALL", 5) == 0)
+	if (ft_strcmp(fields[0], "WALL") == 0)
 		parse_normal_wall_decoration(g, fields + 1);
-	else if (ft_strncmp(fields[0], "DOOR", 5) == 0)
+	else if (ft_strcmp(fields[0], "DOOR") == 0)
 		parse_door_decoration(g, fields + 1);
-	else if (ft_strncmp(fields[0], "LIGHT", 6) == 0)
+	else if (ft_strcmp(fields[0], "LIGHT") == 0)
 		parse_light_decoration(g, fields + 1);
 }
 
@@ -126,22 +128,64 @@ static void	read_decorations(t_game *g, int fd)
 {
 	char	*line;
 
+	ft_get_next_line(fd);
+	ft_get_next_line(fd);
 	while (1)
 	{
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] == '\n' || line[0] == '#')
+		if (line[0] == '\n')
 			continue ;
 		remove_nl(line);
 		parse_decoration(g, line);
 		free(line);
 	}
-	// if (errno)
-	// {
-	// 	close(fd);
-	// 	exit_game(ERROR_READ_FILE_FAILED, g);
-	// }
+}
+
+static bool	line_is_whitespace(char *l)
+{
+	size_t	i;
+
+	i = 0;
+	while (l[i])
+	{
+		if (!ft_isspace(l[i]))
+			return (false);
+		++i;
+	}
+	return (true);
+}
+
+static void read_section_by_section(t_game *g, t_list **ls, int fd)
+{
+	char	*l;
+	int32_t	sect_count;
+	
+	sect_count = 3;
+	while (sect_count)
+	{
+		l = ft_get_next_line(fd);
+		if (!l)
+		{
+			printf(".cub misses some configurations\n");
+			exit(1);// ! HARDCODED EXIT
+		}
+		if (line_is_whitespace(l))
+			continue ;
+		if (ft_strcmp(l, "[TILES]\n") == 0)
+			read_textures(g, fd);
+		else if (ft_strcmp(l, "[MAP]\n") == 0)
+			read_map(g, ls, fd);
+		else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)
+			read_decorations(g, fd);
+		else
+		{
+			printf(".cub misses some configurations\n");
+			exit(1);// ! HARDCODED EXIT
+		}
+		--sect_count;
+	}
 }
 
 void	read_file(t_game *game, t_list **list, const char *map_file)
@@ -151,9 +195,7 @@ void	read_file(t_game *game, t_list **list, const char *map_file)
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		exit_game(ERROR_OPEN_FILE_FAILED, game);
-	read_textures(game, fd);
-	read_map(game, list, fd);
-	read_decorations(game, fd);
+	read_section_by_section(game, list, fd);
 	close(fd);
 	if (errno)
 	{

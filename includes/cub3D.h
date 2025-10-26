@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 22:48:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:47:44 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,16 @@ typedef struct s_light
 	t_colorf		color;
 }	t_light;
 
+typedef enum
+{
+	WALL = 0,
+	LIGHT,
+	DOOR
+}	t_decor_types;
 
 typedef struct s_decoration
 {
+	t_decor_types	type;
 	t_vec2i			pos;
 	t_txtres_sides	direction;
 	char			*texture_path;

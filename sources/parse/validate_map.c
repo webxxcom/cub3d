@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 11:16:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:44:28 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	validate_filename(t_game *game, const char *filename)
 	if (*basename == '/')
 		basename++;
 	len = ft_strlen(basename);
-	if (len == 4 && !ft_strncmp(basename + len - 4, ".cub", 4))
+	if (len == 4 && !ft_strcmp(basename + len - 4, ".cub"))
 		exit_game(ERROR_INVALID_FILE, game);
-	if (len < 4 || ft_strncmp(basename + len - 4, ".cub", 4))
+	if (len < 4 || ft_strcmp(basename + len - 4, ".cub"))
 		exit_game(ERROR_FILE_EXTENSION, game);
 }
 

@@ -40,6 +40,7 @@ int			ft_isdigit(int ch);
 int			ft_isalnum(int ch);
 int			ft_isascii(int ch);
 int			ft_isprint(int ch);
+int			ft_isspace(int c);
 
 // Convert
 
@@ -68,6 +69,7 @@ void		ft_putchar_fd(char ch, int fd);
 void		ft_putstr_fd(char *str, int fd);
 void		ft_putendl_fd(char *str, int fd);
 void		ft_putnbr_fd(int num, int fd);
+int			ft_strcmp(char *left, char *right);
 
 // Memory
 

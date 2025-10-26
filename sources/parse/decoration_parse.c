@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 13:34:37 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 17:02:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static t_txtres_sides	parse_direction(char *dir)
 {
-	if (ft_strncmp(dir, "SOUTH", 6) == 0)
+	if (ft_strcmp(dir, "SOUTH") == 0)
 		return (SOUTH);
-	if (ft_strncmp(dir, "EAST", 5) == 0)
+	if (ft_strcmp(dir, "EAST") == 0)
 		return (EAST);
-	if (ft_strncmp(dir, "WEST", 5) == 0)
+	if (ft_strcmp(dir, "WEST") == 0)
 		return (WEST);
-	if (ft_strncmp(dir, "NORTH", 6) == 0)
+	if (ft_strcmp(dir, "NORTH") == 0)
 		return (NORTH);
 	printf("INCORRECT DECORATION DIRECTION %s\n", dir);
 	exit(1);
@@ -50,6 +50,7 @@ void	parse_normal_wall_decoration(t_game *g, char *fields[])
 	decor.pos = pos;
 	decor.texture_path = fields[2];
 	decor.direction = parse_direction(fields[3]);
+	decor.type = WALL;
 	array_push(&g->decorations, &decor);
 }
 
@@ -59,8 +60,15 @@ void	parse_door_decoration(t_game *g, char *fields[])
 	t_decoration	decor;
 
 	ft_memset(&decor, 0, sizeof (t_decoration));
+	// if (g->map.tiles[pos.y][pos.x] != '0')
+	// {
+	// 	// ! HARDCODE
+	// 	printf("The door can only be placed on void tile '0' and not on '%c'\n", g->map.tiles[pos.y][pos.x]);
+	// 	exit(1);
+	// }
 	decor.pos = pos;
 	decor.texture_path = fields[2];
+	decor.type = DOOR;
 	array_push(&g->decorations, &decor);
 } 
 
@@ -73,5 +81,6 @@ void	parse_light_decoration(t_game *g, char *fields[])
 	decor.pos = pos;
 	decor.texture_path = fields[2];
 	decor.direction = parse_direction(fields[3]);
+	decor.type = LIGHT;
 	array_push(&g->decorations, &decor);
 }
