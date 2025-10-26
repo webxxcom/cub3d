@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/22 23:22:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 11:20:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	wall_x = wall_x - floor(wall_x);
 	step_y = (double)cube_side->height / line_h;
 	tex_x = cube_side->width * wall_x;
-	if ((obs_data.side == EAST || obs_data.side == WEST) && ray_dir.x > 0)
+	if (obs_data.side == EAST && ray_dir.x < 0)
 		tex_x = cube_side->width - tex_x - 1;
-	if ((obs_data.side == NORTH || obs_data.side == SOUTH) && ray_dir.y < 0)
+	if (obs_data.side == NORTH && ray_dir.y > 0)
 		tex_x = cube_side->width - tex_x - 1;
 	tex_posy = (spos.y - ((g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam))) * step_y;
-	//float base_shade = 1 / obs_data.dist;
+	float base_shade = 1 / obs_data.dist;
 	while (spos.y < y_end)
 	{
 		uint32_t col = im_get_pixel(cube_side, tex_x, tex_posy);
@@ -55,7 +55,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 				//vec2f_construct(g->player.pos.x + ray_dir.x * obs_data.dist, g->player.pos.y + ray_dir.y * obs_data.dist));
 			im_set_pixel(g->buffer_image,
 				spos.x, spos.y,
-				col);
+				im_scale_pixel(col, base_shade));
 		}
 		if (decor)
 		{
@@ -66,7 +66,7 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 					//vec2f_construct(g->player.pos.x + ray_dir.x * obs_data.dist, g->player.pos.y + ray_dir.y * obs_data.dist));
 				im_set_pixel(g->buffer_image,
 					spos.x, spos.y,
-					col);
+					im_scale_pixel(col, base_shade));
 			}
 		}
 		tex_posy += step_y;
@@ -74,17 +74,17 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	}
 }
 
-void	draw_vert_line(t_game *const g, int screen_x)
+void	draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd)
 {
-	int	i;
+	int		y_start;
+	int		y_end;
+	int		line_h;
+	size_t	i;
 
-	i = g->rays[screen_x].count - 1;
-	while (i >= 0)
+	i = 0;
+	while (i < rayd.count)
 	{
-		const int	line_h = g->h / g->rays[screen_x].crossed_textures[i].dist;
-		int			y_start;
-		int			y_end;
-
+		line_h = g->h / g->rays[screen_x].crossed_textures[i].dist;
 		y_start = (g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam);
 		if (y_start < 0)
 			y_start = 0;
@@ -92,6 +92,6 @@ void	draw_vert_line(t_game *const g, int screen_x)
 		if (y_end >= g->h)
 			y_end = g->h - 1;
 		draw_wall(g, vec2i_construct(screen_x, y_start), y_end, g->rays[screen_x].crossed_textures[i], g->rays[screen_x].ray_dir);
-		--i;
+		++i;
 	}
 }

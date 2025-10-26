@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 23:24:43 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 11:39:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,32 @@ static void	read_textures(t_game *game, int fd)
 	}
 }
 
-static void	find_and_set_player_pos(t_game *g, const char *l, int j)
+static void	set_player_start_pos(t_game *g, int x, int y, char dir)
+{
+	g->player.pos = (t_vec2f){.x = x, .y = y};
+	if (dir == 'N')
+	{
+		g->cam.dir = vec2f_construct(0, -1);
+		g->cam.plane = vec2f_construct(0.66, 0);
+	}
+	else if (dir == 'W')
+	{
+		g->cam.dir = vec2f_construct(-1, 0);
+		g->cam.plane = vec2f_construct(0, -0.66);
+	}
+	else if (dir == 'S')
+	{
+		g->cam.dir = vec2f_construct(0, 1);
+		g->cam.plane = vec2f_construct(-0.66, 0);
+	}
+	else 
+	{
+		g->cam.dir = vec2f_construct(1, 0);
+		g->cam.plane = vec2f_construct(0, 0.66);
+	}
+}
+
+static void	find_and_set_player_pos(t_game *g, char *l, int j)
 {
 	size_t	i;
 
@@ -48,6 +73,7 @@ static void	find_and_set_player_pos(t_game *g, const char *l, int j)
 	{
 		if (l[i] == 'N' || l[i] == 'S' || l[i] == 'E' || l[i] == 'W')
 		{
+			set_player_start_pos(g, i, j, l[i]);
 			g->player.pos = (t_vec2f){.x = i, .y = j};
 			return ;
 		}

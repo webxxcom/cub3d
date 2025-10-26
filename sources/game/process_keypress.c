@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:39:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:17:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 10:08:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ void	process_keypress(t_game *const g, int key)
 		g->player.speed = g->player.sprint_speed;
 	if (key == KEY_F)
 		player_interact(g);
-	if (key == KEY_Q)
-	{
-		printf("ASD\n");
-	}
 	else if (key == KEY_ESC)
 		mlx_loop_end(g->mlx);
 }

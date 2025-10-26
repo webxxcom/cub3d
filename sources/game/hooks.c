@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 00:02:24 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 10:09:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	mouse_move_hook(int x, int y, t_game *g)
 {
 	const t_vec2i	center = vec2i_construct(g->w / 2, g->h / 2);
 
-	cam_rotate(g, x - center.x, y - center.y);
+	cam_rotate(g, center.x - x, y - center.y);
 	mlx_mouse_move(g->mlx, g->win, center.x, center.y);
 	return (1);
 }

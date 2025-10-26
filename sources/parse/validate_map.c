@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 18:27:35 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/26 11:16:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,34 @@ void	validate_filename(t_game *game, const char *filename)
 
 static void	validate_elements(t_game *game)
 {
-	int	player_count;
-	int	i;
-	int	j;	
+	int		player_count;
+	int32_t	i;
+	int32_t	j;	
 
 	player_count = 0;
-	i = -1;
-	while (game->map.tiles[++i])
+	j = 0;
+	while (j < game->map.size.y)
 	{
-		j = -1;
-		while (game->map.tiles[i][++j])
+		i = 0;
+		while (game->map.tiles[j][i])
 		{
-			if (game->map.tiles[i][j] != '0' && game->map.tiles[i][j] != '1'
-				&& game->map.tiles[i][j] != 'N' && game->map.tiles[i][j] != 'S'
-				&& game->map.tiles[i][j] != 'E' && game->map.tiles[i][j] != 'W'
-				&& game->map.tiles[i][j] != ' ')
+			if (game->map.tiles[j][i] != '0' && game->map.tiles[j][i] != '1'
+				&& game->map.tiles[j][i] != 'N' && game->map.tiles[j][i] != 'S'
+				&& game->map.tiles[j][i] != 'E' && game->map.tiles[j][i] != 'W'
+				&& game->map.tiles[j][i] != ' ')
+			{
+				printf("%d, %d\n%s\n%c\n", i, j, game->map.tiles[j], game->map.tiles[j][i]);
 				exit_game(ERROR_UNKNOWN_ELEMENT_FOUND, game);
-			if (game->map.tiles[i][j] == 'N' || game->map.tiles[i][j] == 'S'
-				|| game->map.tiles[i][j] == 'E' || game->map.tiles[i][j] == 'W')
+			}
+			if (game->map.tiles[j][i] == 'N' || game->map.tiles[j][i] == 'S'
+				|| game->map.tiles[j][i] == 'E' || game->map.tiles[j][i] == 'W')
+			{
+				game->map.tiles[j][i] = '0';
 				++player_count;
+			}
+			++i;
 		}
+		++j;
 	}
 	if (player_count == 0)
 		exit_game(ERROR_PLAYER_NOT_FOUND, game);
@@ -60,28 +68,30 @@ static void	validate_elements(t_game *game)
 
 static void	validate_borders(t_game *game)
 {
-	int	i;
-	int	j;
+	int32_t	i;
+	int32_t	j;
 
-	i = -1;
-	while (game->map.tiles[++i])
+	j = 0;
+	while (j < game->map.size.y)
 	{
-		j = -1;
-		while (game->map.tiles[i][++j])
+		i = 0;
+		while (game->map.tiles[j][i])
 		{
-			if (i == 0
-				&& game->map.tiles[i][j] != ' ' && game->map.tiles[i][j] != '1')
+			if (j == 0
+				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
 				exit_game(ERROR_WALL, game);
-			else if (!game->map.tiles[i + 1]
-				&& game->map.tiles[i][j] != ' ' && game->map.tiles[i][j] != '1')
+			else if (!game->map.tiles[j + 1]
+				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
 				exit_game(ERROR_WALL, game);
-			else if (j == 0
-				&& game->map.tiles[i][j] != ' ' && game->map.tiles[i][j] != '1')
+			else if (i == 0
+				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
 				exit_game(ERROR_WALL, game);
-			else if (!game->map.tiles[i][j + 1]
-				&& game->map.tiles[i][j] != ' ' && game->map.tiles[i][j] != '1')
+			else if (!game->map.tiles[j][i + 1]
+				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
 				exit_game(ERROR_WALL, game);
+			++i;
 		}
+		++j;
 	}
 }
 

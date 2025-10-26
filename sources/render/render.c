@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 22:49:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 09:54:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static void	put_lines(t_game *const g)
 	screen_x = 0;
 	while (screen_x < g->w)
 	{
-		draw_vert_line(g, screen_x);
+		draw_vert_line(g, screen_x, g->rays[screen_x]);
 		++screen_x;
 	}
 }

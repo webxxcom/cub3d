@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/22 21:48:03 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 09:39:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ t_input	init_input(void)
 t_cam	cam_init(void)
 {
 	return ((t_cam){
-		.plane = vec2f_construct(0.66f, 0.f),
-		.dir = vec2f_construct(0.f, 1.f),
 		.sensitivity = 0.0008f,
 		.pitch = 0,
 		.bob_phase = 0

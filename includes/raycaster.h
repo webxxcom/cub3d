@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 10:10:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/22 22:49:50 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 09:54:30 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_dda_ray
 
 t_dda_d		get_dda_start_data(t_game *const g, int const screen_x);
 t_dda_ray	perform_dda(t_game *const g, double const screen_x);
-void		draw_vert_line(t_game *const g, int screen_x);
+void		draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd);
 void		draw_floor_and_ceiling(t_game *g);
 uint32_t	compute_lit_color(t_array *g, t_colorf pixel, float base_shade, t_vec2f obs_pos);
 
