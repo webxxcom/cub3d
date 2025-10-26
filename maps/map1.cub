@@ -24,9 +24,9 @@ C textures/ceiling_angles6.xpm
 11110111 1110101 101111010001
 11111111 1111111 111111111111
 
-# Decorations - (x, y, facing direction{SOUTH, WEST, NORTH, EAST}, path to texture)
+# Decorations - (TYPE{WALL, DOOR, LIGHT}, x, y, path to texture, optional params)
 
-WALL 25 5 textures/hitler_picture_transparent.xpm SOUTH
-WALL 23 0 textures/nazi_eagle_picture.xpm SOUTH
-DOOR 26 5 textures/hitler_picture_transparent.xpm
-LIGHT 25 13 textures/hitler_picture_transparent.xpm NORTH
+WALL	25 5	textures/hitler_picture_transparent.xpm	SOUTH
+WALL	23 0	textures/nazi_eagle_picture.xpm		SOUTH
+DOOR	26 5	textures/lab_metal_white_door_sprite.xpm
+LIGHT	25 13	textures/1.xpm	                        NORTH

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 11:16:44 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:31:10 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static size_t	find_longest(t_list *l)
 	return (longest);
 }
 
-static void	remove_nl(char *l, int32_t len)
+static void	remove_nl_fill(char *l, int32_t len)
 {
 	int32_t	i;
 	bool	nl_found;
@@ -67,7 +67,7 @@ static void	load_map(t_game *game, t_list *list)
 	while (list)
 	{
 		game->map.tiles[i] = realloc(list->content, longest);
-		remove_nl(game->map.tiles[i], longest);
+		remove_nl_fill(game->map.tiles[i], longest);
 		list = list->next;
 		++i;
 	}

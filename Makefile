@@ -11,7 +11,8 @@ SRCS		= main.c \
 				$(SRC_FLDR)/game/mvement_handle.c $(SRC_FLDR)/game/start.c $(SRC_FLDR)/game/minimap.c \
 				$(SRC_FLDR)/game/inits.c $(SRC_FLDR)/game/inits2.c $(SRC_FLDR)/game/frame.c $(SRC_FLDR)/game/camera.c \
 				$(SRC_FLDR)/game/animation.c $(SRC_FLDR)/game/animation_move.c $(SRC_FLDR)/game/entity.c \
-			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/input.c $(SRC_FLDR)/parse/validate_map.c $(SRC_FLDR)/parse/validate_elements.c \
+			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/input.c $(SRC_FLDR)/parse/validate_map.c \
+			  	$(SRC_FLDR)/parse/validate_elements.c $(SRC_FLDR)/parse/decoration_parse.c \
 			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c $(SRC_FLDR)/render/perform_dda.c \
 			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/sprite.c \
 				$(SRC_FLDR)/render/draw_floor_and_ceiling.c $(SRC_FLDR)/render/compute_lit_color.c \

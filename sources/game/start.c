@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 23:25:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:40:29 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,7 @@ static void	init_lights(t_game *g)
 		++j;
 	}
 }
-static char	*remove_nl(char *el)
-{
-	const size_t	len = ft_strlen(el);
 
-	el[len - 1] = '\0';
-	return (el);
-}
 static void	init_decorations(t_game *g)
 {
 	size_t			i;
@@ -110,6 +104,11 @@ static void	init_decorations(t_game *g)
 	{
 		tmp = array_get(&g->decorations, i);
 		tmp->texture = im_load_from_xpmfile(g->mlx, remove_nl(tmp->texture_path));
+		if (!tmp->texture)
+		{
+			printf("Texture was not loaded %s\n", tmp->texture_path);
+			exit(1);
+		}
 		++i;
 	}
 }

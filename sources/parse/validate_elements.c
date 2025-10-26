@@ -6,17 +6,18 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/22 21:59:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:41:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static char	*remove_nl(char *el)
+char	*remove_nl(char *el)
 {
 	const size_t	len = ft_strlen(el);
 
-	el[len - 1] = '\0';
+	if (el[len - 1] == '\n')
+		el[len - 1] = '\0';
 	return (el);
 }
 

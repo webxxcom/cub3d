@@ -62,7 +62,7 @@ char		*ft_substr(const char *str, unsigned int pos, size_t count);
 char		*ft_strjoin(const char *str1, const char *str2);
 char		*ft_strtrim(const char *str1, const char *set);
 char		*ft_strmapi(const char *str, char (*f)(unsigned int, char));
-char		**ft_split(const char *str, char ch); // Improve
+char		**ft_split(const char *str, const char *delims); // Improve
 void		ft_striteri(char *str, void (*f)(unsigned int, char*));
 void		ft_putchar_fd(char ch, int fd);
 void		ft_putstr_fd(char *str, int fd);
