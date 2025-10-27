@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 11:20:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:35:22 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,13 @@ static void	draw_wall(t_game *g, t_vec2i spos, int y_end, t_obs_data obs_data, t
 	t_image		*cube_side;
 	t_image		*decor = NULL;
 
-	t_decoration *tmp;
-	for(size_t i = 0; i < array_size(&g->decorations); ++i)
-	{
-		tmp =array_get(&g->decorations, i); 
-		if (vec2i_equals(tmp->pos, obs_data.map_pos) && tmp->direction == obs_data.side)
-		{
-			decor = tmp->texture;
-			break;
-		}
-	}
-	cube_side = g->textures[obs_data.side];
+	t_decoration *tmp = g->map.tiles[obs_data.map_pos.y][obs_data.map_pos.x].sides[obs_data.side];
+	if (tmp && tmp->type != DECOR_DOOR)
+		decor = tmp->texture;
+	if (obs_data.obs == TILE_DOOR)
+		cube_side = tmp->texture;
+	else
+		cube_side = g->textures[obs_data.side];
 	if ((obs_data.side == EAST || obs_data.side == WEST))
 		wall_x = g->player.pos.y + ray_dir.y * obs_data.dist;
 	else
@@ -79,10 +75,10 @@ void	draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd)
 	int		y_start;
 	int		y_end;
 	int		line_h;
-	size_t	i;
+	int32_t	i;
 
-	i = 0;
-	while (i < rayd.count)
+	i = rayd.count - 1;
+	while (i >= 0)
 	{
 		line_h = g->h / g->rays[screen_x].crossed_textures[i].dist;
 		y_start = (g->h / 2) - (line_h / 2) + cam_get_pitch(&g->cam);
@@ -92,6 +88,6 @@ void	draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd)
 		if (y_end >= g->h)
 			y_end = g->h - 1;
 		draw_wall(g, vec2i_construct(screen_x, y_start), y_end, g->rays[screen_x].crossed_textures[i], g->rays[screen_x].ray_dir);
-		++i;
+		--i;
 	}
 }

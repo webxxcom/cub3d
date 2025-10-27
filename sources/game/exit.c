@@ -3,29 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:50 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 16:15:37 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/27 17:42:40 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	cleanup_game(t_game *game)
-{
-	array_free(&game->entities);
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-}
 void	exit_game(char *error, t_game *game)
 {
-	cleanup_game(game);
+	game_cleanup(game);
 	if (error)
 	{
 		printf("Error\n");

@@ -6,38 +6,30 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 09:46:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:17:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	repetition_handle(t_game *const game)
+void	repetition_handle(t_game *const g)
 {
-	t_list	*curr;
+	int		*tmp;
+	size_t	i;
 
-	curr = game->input.pressed_keys;
-	while (curr)
+	i = 0;
+	while (i < array_size(&g->input.pressed_keys))
 	{
-		process_keypress(game, *((int *)curr->content));
-		curr = curr->next;
+		tmp = array_get(&g->input.pressed_keys, i);
+		process_keypress(g, *tmp);
+		++i;
 	}
-	handle_movement(game);
+	handle_movement(g);
 }
 
 static void	process_repetition_key(t_game *g, int k)
 {
-	int	*key_p;
-
-	key_p = malloc(sizeof (int));
-	if (!key_p)
-	{
-		ft_putendl_fd("The key was not pressed because malloc failed",
-			STDERR_FILENO);
-		return ;
-	}
-	*key_p = k;
-	ft_lstadd_front(&g->input.pressed_keys, ft_lstnew(key_p));
+	array_push(&g->input.pressed_keys, &k);
 }
 
 int	key_press_hook(int key, t_game *game)

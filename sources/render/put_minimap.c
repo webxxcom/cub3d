@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:44:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/22 22:49:23 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:30:47 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	draw_pixel(t_game *g, int x, int y, t_vec2i map_pos)
 	char				tile;
 	uint32_t			col;
 
-	tile = g->map.tiles[map_pos.y][map_pos.x];
+	tile = g->map.tiles[map_pos.y][map_pos.x].type;
 	if (tile == '0')
 		col = mm->bgcol;
 	else

@@ -6,15 +6,28 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:44:26 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/12 09:46:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:17:13 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	int_eq(void *a, void *b)
+static void	remove_repeating_key(t_game *g, int key)
 {
-	return (*((int *)a) - *((int *)b));
+	int		*tmp;
+	size_t	i;
+
+	i = 0;
+	while (i < array_size(&g->input.pressed_keys))
+	{
+		tmp = array_get(&g->input.pressed_keys, i);
+		if (*tmp == key)
+		{
+			array_remove(&g->input.pressed_keys, i);
+			return ;
+		}
+		++i;
+	}
 }
 
 int	key_release_hook(int key, t_game *game)
@@ -24,7 +37,7 @@ int	key_release_hook(int key, t_game *game)
 	else
 	{
 		if (key_should_repeat(key))
-			ft_lst_remove_if(&game->input.pressed_keys, &key, int_eq, free);
+			remove_repeating_key(game, key);
 		else
 			process_keypress(game, key);
 	}

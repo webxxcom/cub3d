@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 16:47:44 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:42:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@
 # define MOVING_LFT 2
 # define MOVING_RGHT 3
 
-typedef struct s_cube_textures
-{
-	int	walls_ind[4];
-}	t_cube;
-
 typedef struct s_paths
 {
 	char	*north;
@@ -102,12 +97,52 @@ typedef struct s_minimap
 	uint32_t	dcol;
 }	t_minimap;
 
+typedef enum
+{
+	DECOR_WALL = 0,
+	DECOR_LIGHT,
+	DECOR_DOOR
+}	t_decor_types;
+
+typedef struct s_decoration
+{
+	t_decor_types	type;
+	t_vec2i			pos;
+	t_txtres_sides	direction;
+	char			*texture_path;
+	t_image			*texture;
+	t_animation		*animation;
+	int				state;
+	void	(*interact)(t_game *const,struct s_decoration *);
+	void	(*update)(t_game *const, struct s_decoration *);
+}	t_decoration;
+
+typedef enum e_tile_type {
+	TILE_VOID = ' ',
+	TILE_WALL = '1',
+	TILE_FLOOR = '0',
+	TILE_DOOR = 'D',
+	TILE_PLAYER_N = 'N',
+	TILE_PLAYER_S = 'S',
+	TILE_PLAYER_E = 'E',
+	TILE_PLAYER_W = 'W',
+} t_tile_type;
+
+typedef struct s_tile
+{
+	t_decoration	*sides[4];
+	t_tile_type		type;
+	t_vec2i			pos;
+}	t_tile;
+
 typedef struct s_map
 {
-	char	**tiles;
+	t_tile	**tiles;
+	t_array	decorations;
 	t_vec2i	size;
 }	t_map;
-
+void	door_update(t_game *const g, t_decoration *door);
+void	door_interact(t_game *const g, t_decoration *door);
 /**
  * The input structure which describes current keyboard input.
  * 	To revised: mouse keys.
@@ -120,8 +155,8 @@ typedef struct s_map
  */
 typedef struct s_input
 {
-	t_list			*pressed_keys;
-	bool			moving_keys[4];
+	t_array	pressed_keys;
+	bool	moving_keys[4];
 }	t_input;
 
 typedef struct s_dda_ray t_dda_ray;
@@ -134,21 +169,6 @@ typedef struct s_light
 	t_colorf		color;
 }	t_light;
 
-typedef enum
-{
-	WALL = 0,
-	LIGHT,
-	DOOR
-}	t_decor_types;
-
-typedef struct s_decoration
-{
-	t_decor_types	type;
-	t_vec2i			pos;
-	t_txtres_sides	direction;
-	char			*texture_path;
-	t_image			*texture;
-}	t_decoration;
 
 /**
  * The struct s_game describes global game's state.
@@ -182,8 +202,6 @@ typedef struct s_game
 	double			dtime;
 	double			last_time;
 	
-	t_array			decorations;
-
 	t_map			map;
 	t_player		player;
 	t_minimap		minimap;
@@ -192,59 +210,52 @@ typedef struct s_game
 	t_input			input;
 	t_image			*buffer_image;
 	t_dda_ray		*rays;
-	t_sprite		*sprites;
-	t_array			entities;
-	t_array			lights;
 
 	t_image			**textures;
-	t_image			**animations;
 
 	t_image			*ceiling;
 	t_image			*floor;
 }	t_game;
 
-t_minimap   minimap_init(t_game *g);
-t_cam		cam_init(void);
-t_input		init_input(void);
-t_map		init_map(const char *filename);
-t_player	player_init(void);
-void		init_cubes(t_cube *cubes);
-t_sprite	*init_sprites(t_game *g);
-void		init_entities(t_game *g);
-t_entity 	*find_entity_at(t_game *const g, t_vec2i pos);
-float		cam_get_pitch(t_cam *cam);
-void		cam_process_bob(t_cam *cam, float player_speed, float dtime);
+t_minimap   	minimap_init(t_game *g);
+t_cam			cam_init(void);
+t_input			init_input(void);
+t_player		player_init(void);
+t_decoration 	*find_decoration_at(t_game *const g, t_vec2i pos);
+float			cam_get_pitch(t_cam *cam);
+void			cam_process_bob(t_cam *cam, float player_speed, float dtime);
 
-void	put_minimap(t_game *g);
+void			put_minimap(t_game *g);
 
 // Delta time
-uint64_t	get_time_in_ms(void);
-void		process_dtime(t_game *const game);
+uint64_t		get_time_in_ms(void);
+void			process_dtime(t_game *const game);
 
 // Handles
-void		handle_movement(t_game *const g);
+void			handle_movement(t_game *const g);
 
 // Hooks
-int			close_window_hook(void *mlx);
-int			main_loop(t_game *game);
-void		repetition_handle(t_game *const game);
-int			key_press_hook(int key, t_game *game);
-int			key_release_hook(int key, t_game *game);
-int			mouse_move_hook(int x, int y, t_game *game);
-void		process_mvkeys(t_game *const g, int key, bool pressed);
-void		process_keypress(t_game *const game, int key);
+int				close_window_hook(void *mlx);
+int				main_loop(t_game *game);
+void			repetition_handle(t_game *const game);
+int				key_press_hook(int key, t_game *game);
+int				key_release_hook(int key, t_game *game);
+int				mouse_move_hook(int x, int y, t_game *game);
+void			process_mvkeys(t_game *const g, int key, bool pressed);
+void			process_keypress(t_game *const game, int key);
 
 // Game
-void		start_game(t_game *game, const char *filename);
-void		exit_game(char *error, t_game *game);
+void			start_game(t_game *game, const char *filename);
+void			exit_game(char *error, t_game *game);
+void 			game_cleanup(t_game *game);
 
 // Cleanups
-void 		game_cleanup(t_game *game);
+void 			game_cleanup(t_game *game);
 
 // Utils
-void		toggle_bool(bool *flag);
-bool 		key_should_repeat(int key);
-bool		movement_key(int key);
+void			toggle_bool(bool *flag);
+bool 			key_should_repeat(int key);
+bool			movement_key(int key);
 
 // Parse
 

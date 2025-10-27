@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 09:39:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:04:29 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_input	init_input(void)
 	t_input	res;
 
 	ft_memset(&res, 0, sizeof (res));
+	res.pressed_keys = array_init(sizeof (int));
 	return (res);
 }
 

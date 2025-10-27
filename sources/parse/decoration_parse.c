@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 17:02:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:13:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	parse_normal_wall_decoration(t_game *g, char *fields[])
 	decor.pos = pos;
 	decor.texture_path = fields[2];
 	decor.direction = parse_direction(fields[3]);
-	decor.type = WALL;
-	array_push(&g->decorations, &decor);
+	decor.type = DECOR_WALL;
+	array_push(&g->map.decorations, &decor);
 }
 
 void	parse_door_decoration(t_game *g, char *fields[])
@@ -68,8 +68,8 @@ void	parse_door_decoration(t_game *g, char *fields[])
 	// }
 	decor.pos = pos;
 	decor.texture_path = fields[2];
-	decor.type = DOOR;
-	array_push(&g->decorations, &decor);
+	decor.type = DECOR_DOOR;
+	array_push(&g->map.decorations, &decor);
 } 
 
 void	parse_light_decoration(t_game *g, char *fields[])
@@ -81,6 +81,6 @@ void	parse_light_decoration(t_game *g, char *fields[])
 	decor.pos = pos;
 	decor.texture_path = fields[2];
 	decor.direction = parse_direction(fields[3]);
-	decor.type = LIGHT;
-	array_push(&g->decorations, &decor);
+	decor.type = DECOR_LIGHT;
+	array_push(&g->map.decorations, &decor);
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:51:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:18:43 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:14:26 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ size_t	array_size(t_array *arr);
 void	*array_get(t_array *arr, size_t idx);
 
 void	array_free(t_array *arr);
+
+void	array_remove(t_array *arr, size_t ind);
 
 #endif

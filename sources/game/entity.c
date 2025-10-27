@@ -6,49 +6,44 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:12:07 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 23:37:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:27:29 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	door_update(t_game *const g, t_entity *door)
+void	door_update(t_game *const g, t_decoration *door)
 {
+	(void)g;
 	uint64_t const	curr_time = get_time_in_ms();
 	t_frame *const	curr_frame
-		= door->anim->frames[door->anim->curr_frame_n];
+		= door->animation->frames[door->animation->curr_frame_n];
 	int const		frame_time = curr_frame->time;
 	int				step;
 
 	if (door->state == OPEN || door->state == CLOSED)
 		return ;
-	if (door->state == CLOSING || door->state == CLOSED)
+	if (door->state == CLOSING)
 		step = -1;
 	else
 		step = 1;
 	if (curr_time - frame_time > ANIMATION_DELAY)
 	{
-		door->anim->curr_frame_n = door->anim->curr_frame_n + step;
-		door->anim->frames[door->anim->curr_frame_n]->time = curr_time;
-		if (door->anim->curr_frame_n == door->anim->total_frames - 1)
-		{
+		door->animation->curr_frame_n += step;
+		door->animation->frames[door->animation->curr_frame_n]->time = curr_time;
+		if (door->animation->curr_frame_n + 1 == door->animation->total_frames)
 			door->state = OPEN;
-			g->map.tiles[door->pos.y][door->pos.x] = 'O';
-		}
-		else if (door->anim->curr_frame_n == 0)
+		else if (door->animation->curr_frame_n == 0)
 			door->state = CLOSED;
 	}
+	door->texture = animation_get_current_image(door->animation);
 }
 
-void	door_interact(t_game *const g, t_entity *door)
+void	door_interact(t_game *const g, t_decoration *door)
 {
+	(void)g;
 	if (door->state == OPEN || door->state == OPENING)
-	{
 		door->state = CLOSING;
-		g->map.tiles[door->pos.y][door->pos.x] = 'D';
-	}
 	else if (door->state == CLOSING || door->state == CLOSED)
-	{
 		door->state = OPENING;
-	}
 }

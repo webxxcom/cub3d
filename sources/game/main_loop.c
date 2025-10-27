@@ -6,24 +6,25 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/18 00:34:32 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:21:50 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static inline void	update_all_map_entities(t_game *g)
+static inline void	update_animations(t_game *g)
 {
-	t_entity	*tmp;
+	t_decoration	*tmp;
 	size_t		i;
 
 	i = 0;
-	while (i < array_size(&g->entities))
+	while (i < array_size(&g->map.decorations))
 	{
-		tmp = array_get(&g->entities, i);
+		tmp = array_get(&g->map.decorations, i);
 		if (!tmp)
 			continue ;
-		tmp->update(g, tmp);
+		if (tmp->update)
+			tmp->update(g, tmp);
 		++i;
 	}
 }
@@ -32,7 +33,7 @@ int	main_loop(t_game *g)
 {
 	g->player.speed = g->player.base_speed;
 	process_dtime(g);
-	update_all_map_entities(g);
+	update_animations(g);
 	repetition_handle(g);
 	game_render(g);
 	return (1);

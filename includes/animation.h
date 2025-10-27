@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:14:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 21:46:23 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:07:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_animation
 	t_frame	**frames;
 }	t_animation;
 
-t_animation		*init_animation(t_game *g, t_animation_types animation_type);
+t_animation		*init_animation(t_game *g, char *filename);
 
 /**
  * 	A hook function for mlx to loop it and animate the

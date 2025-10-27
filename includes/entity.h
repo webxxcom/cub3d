@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 22:20:26 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:30:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:06:10 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ typedef struct s_entity
 	void	(*update)(t_game *const, struct s_entity *);
 }	t_entity;
 
-void	door_update(t_game *const g, t_entity *door);
-void	door_interact(t_game *const g, t_entity *door);
+
 
 
 #endif

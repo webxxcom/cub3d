@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:21:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 21:43:19 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:06:59 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	sprite_to_frames(void *mlx, t_image *sprite, t_animation *anim)
 	}
 }
 
-t_animation	*init_animation(t_game *g, t_animation_types anim_type)
+t_animation	*init_animation(t_game *g, char *filename)
 {
 	t_animation	*animation;
 	t_image		*sprite;
@@ -76,7 +76,7 @@ t_animation	*init_animation(t_game *g, t_animation_types anim_type)
 	animation = ft_calloc(1, sizeof (t_animation));
 	if (!animation)
 		return (NULL);
-	sprite = g->animations[anim_type];
+	sprite = im_load_from_xpmfile(g->mlx, filename);
 	if (!sprite)
 		return (free(animation), NULL);
 	sprite_to_frames(g->mlx, sprite, animation);

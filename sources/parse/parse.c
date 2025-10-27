@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 13:31:10 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:10:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static size_t	find_longest(t_list *l)
 	return (longest);
 }
 
-static void	remove_nl_fill(char *l, int32_t len)
+void	remove_nl_fill(char *l, int32_t len)
 {
 	int32_t	i;
 	bool	nl_found;
@@ -53,25 +53,41 @@ static void	load_map(t_game *game, t_list *list)
 {
 	const size_t	longest = find_longest(list);
 	const size_t	map_height = ft_lstsize(list);
-	int				i;
+	size_t			i;
+	int				j;
 
 	if (!list)
 		exit_game(ERROR_EMPTY_FILE, game);
-	game->map.tiles = ft_calloc(map_height + 1, sizeof(char *));
+	game->map.tiles = ft_calloc(map_height, sizeof(t_tile *));
 	if (!game->map.tiles)
 	{
 		ft_lst_free(list);
 		exit_game(ERROR_PARSE_MAP_FAILED, game);
 	}
-	i = 0;
+	j = 0;
 	while (list)
 	{
-		game->map.tiles[i] = realloc(list->content, longest);
-		remove_nl_fill(game->map.tiles[i], longest);
+		char	*l = list->content;
+		i = 0;
+		game->map.tiles[j] = ft_calloc(longest, sizeof (t_tile));
+		if (!game->map.tiles[j])
+		{
+			printf("oops, malloc failed\n");
+			exit(1); // ! HARDCODED EXIT
+		}
+		while (l[i] && l[i] != '\n')
+		{
+			game->map.tiles[j][i].type = l[i];
+			++i;
+		}
+		while (i < longest)
+		{
+			game->map.tiles[j][i].type = ' ';
+			++i;
+		}
 		list = list->next;
-		++i;
+		++j;
 	}
-	game->map.tiles[map_height] = NULL;
 	game->map.size.x = longest;
 	game->map.size.y = map_height;
 }

@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 17:46:27 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:49:00 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	read_textures(t_game *game, int fd)
+static void	read_tiles(t_game *game, int fd)
 {
 	char	*line;
 	char	**elements;
@@ -24,14 +24,15 @@ static void	read_textures(t_game *game, int fd)
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] == '\n' || line[0] == '[')
-			continue ;
-		elements = ft_split(line, " ");
-		if (!elements)
-			break ;
-		if (elements[0][0] != '\n')
-			validate_element(game, elements, &element_count);
-		free(elements);
+		if (line[0] != '\n' && line[0] != '[')
+		{
+			elements = ft_split(line, " ");
+			if (!elements)
+				break ;
+			if (elements[0][0] != '\n')
+				validate_element(game, elements, &element_count);
+			free(elements);
+		}
 		free(line);
 	}
 	if (element_count)
@@ -86,7 +87,7 @@ static void	read_map(t_game *game, t_list **list, int fd)
 {
 	t_list	*new;
 	char	*line;
-	int		j;
+	int32_t	j;
 
 	new = NULL;
 	j = 0;
@@ -128,7 +129,6 @@ static void	read_decorations(t_game *g, int fd)
 {
 	char	*line;
 
-	ft_get_next_line(fd);
 	ft_get_next_line(fd);
 	while (1)
 	{
@@ -174,7 +174,7 @@ static void read_section_by_section(t_game *g, t_list **ls, int fd)
 		if (line_is_whitespace(l))
 			continue ;
 		if (ft_strcmp(l, "[TILES]\n") == 0)
-			read_textures(g, fd);
+			read_tiles(g, fd);
 		else if (ft_strcmp(l, "[MAP]\n") == 0)
 			read_map(g, ls, fd);
 		else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)

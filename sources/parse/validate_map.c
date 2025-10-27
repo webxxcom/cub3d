@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 16:44:28 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:29:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	validate_filename(t_game *game, const char *filename)
 		exit_game(ERROR_FILE_EXTENSION, game);
 }
 
-static void	validate_elements(t_game *game)
+static void	validate_elements(t_game *game, char **map)
 {
 	int		player_count;
 	int32_t	i;
@@ -40,20 +40,19 @@ static void	validate_elements(t_game *game)
 	while (j < game->map.size.y)
 	{
 		i = 0;
-		while (game->map.tiles[j][i])
+		while (i < game->map.size.x)
 		{
-			if (game->map.tiles[j][i] != '0' && game->map.tiles[j][i] != '1'
-				&& game->map.tiles[j][i] != 'N' && game->map.tiles[j][i] != 'S'
-				&& game->map.tiles[j][i] != 'E' && game->map.tiles[j][i] != 'W'
-				&& game->map.tiles[j][i] != ' ')
+			if (map[j][i] != '0' && map[j][i] != '1'
+				&& map[j][i] != 'N' && map[j][i] != 'S'
+				&& map[j][i] != 'E' && map[j][i] != 'W'
+				&& map[j][i] != ' ' && map[j][i] != TILE_DOOR) // ! SOMETHING
 			{
-				printf("%d, %d\n%s\n%c\n", i, j, game->map.tiles[j], game->map.tiles[j][i]);
 				exit_game(ERROR_UNKNOWN_ELEMENT_FOUND, game);
 			}
-			if (game->map.tiles[j][i] == 'N' || game->map.tiles[j][i] == 'S'
-				|| game->map.tiles[j][i] == 'E' || game->map.tiles[j][i] == 'W')
+			if (map[j][i] == 'N' || map[j][i] == 'S'
+				|| map[j][i] == 'E' || map[j][i] == 'W')
 			{
-				game->map.tiles[j][i] = '0';
+				map[j][i] = '0';
 				++player_count;
 			}
 			++i;
@@ -66,28 +65,22 @@ static void	validate_elements(t_game *game)
 		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game);
 }
 
-static void	validate_borders(t_game *game)
+static void	validate_borders(t_game *game, char **map)
 {
-	int32_t	i;
-	int32_t	j;
+	int32_t const	w = game->map.size.x;
+	int32_t const	h = game->map.size.y;
+	int32_t			i;
+	int32_t			j;
+	bool			is_border;
 
 	j = 0;
 	while (j < game->map.size.y)
 	{
 		i = 0;
-		while (game->map.tiles[j][i])
+		while (i < game->map.size.x)
 		{
-			if (j == 0
-				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
-				exit_game(ERROR_WALL, game);
-			else if (!game->map.tiles[j + 1]
-				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
-				exit_game(ERROR_WALL, game);
-			else if (i == 0
-				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
-				exit_game(ERROR_WALL, game);
-			else if (!game->map.tiles[j][i + 1]
-				&& game->map.tiles[j][i] != ' ' && game->map.tiles[j][i] != '1')
+			is_border = (j == 0 || j == h - 1 || i == 0 || i == w - 1);
+			if (is_border && map[j][i] != ' ' && map[j][i] != '1')
 				exit_game(ERROR_WALL, game);
 			++i;
 		}
@@ -95,37 +88,65 @@ static void	validate_borders(t_game *game)
 	}
 }
 
-static void	validate_walls(t_game *game)
+static void	validate_walls(t_game *game, char **map)
 {
-	char	**map;
-	int		i;
-	int		j;
-	int		len;
+	int32_t const	h = game->map.size.y;
+	int32_t	const	w = game->map.size.x;
+	int32_t			i;
+	int32_t			j;
 
-	map = game->map.tiles;
-	i = -1;
-	len = ft_strlen(map[0]);
-	while (map[++i])
+	j = 0;
+	while (j < h)
 	{
-		j = -1;
-		while (map[i][++j])
+		i = 0;
+		while (i < w)
 		{
-			if (map[i][j] != ' ' && map[i][j] != '1'
-				&& (j > len - 1
-				|| map[i - 1][j - 1] == ' ' || map[i - 1][j] == ' '
-				|| map[i - 1][j + 1] == ' ' || map[i + 1][j - 1] == ' '
-				|| map[i + 1][j] == ' ' || map[i + 1][j + 1] == ' '
-				|| map[i][j - 1] == ' ' || map[i][j + 1] == ' '
-				|| map[i - 1][j + 1] == '\0' || map[i + 1][j + 1] == '\0'))
-				exit_game(ERROR_WALL, game);
+			if (map[j][i] != ' ' && map[j][i] != '1')
+			{
+				if (i == 0 || j == 0 || i == w - 1 || j == h - 1)
+					exit_game(ERROR_WALL, game);
+				if (map[j - 1][i - 1] == ' ' || map[j - 1][i] == ' '
+					|| map[j - 1][i + 1] == ' ' || map[j][i - 1] == ' '
+					|| map[j][i + 1] == ' ' || map[j + 1][i - 1] == ' '
+					|| map[j + 1][i] == ' ' || map[j + 1][i + 1] == ' ')
+					exit_game(ERROR_WALL, game);
+			}
+			++i;
 		}
-		len = j;
+		++j;
 	}
+}
+
+char **get_chars_map(t_map *map)
+{
+	char	**map_chars;
+	int32_t	i;
+	int32_t	j;
+
+	map_chars = ft_calloc(map->size.y + 1, sizeof (char *));
+	j = 0;
+	while (j < map->size.y)
+	{
+		map_chars[j] = ft_calloc(map->size.x, sizeof (char));
+		i = 0;
+		while (i < map->size.x)
+		{
+			map_chars[j][i] = map->tiles[j][i].type;
+			++i;
+		}
+		++j;
+	}
+	map_chars[j] = NULL;
+	return (map_chars);
 }
 
 void	validate_map(t_game *game)
 {
-	validate_elements(game);
-	validate_borders(game);
-	validate_walls(game);
+	char	**map;
+
+	map = get_chars_map(&game->map);
+	validate_elements(game, map);
+	validate_borders(game, map);
+	validate_walls(game, map);
+	ft_free_matrix(map);
 }
