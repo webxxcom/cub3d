@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/27 16:10:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 21:15:25 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,6 @@ static size_t	find_longest(t_list *l)
 		l = l->next;
 	}
 	return (longest);
-}
-
-void	remove_nl_fill(char *l, int32_t len)
-{
-	int32_t	i;
-	bool	nl_found;
-
-	i = 0;
-	nl_found = false;
-	while (!nl_found)
-	{
-		if (l[i] == '\n')
-		{
-			l[i] = ' ';
-			nl_found = true;
-		}
-		++i;
-	}
-	while (i < len)
-		l[i++] = ' ';
-	l[i - 1] = '\0';
 }
 
 static void	load_map(t_game *game, t_list *list)

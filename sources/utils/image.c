@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 17:27:45 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:15:00 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_image	*im_load_from_xpmfile(void *mlx, char *filename)
 {
 	t_image	*im;
 
+	if (!filename || !mlx)
+		return (NULL);
 	im = ft_calloc(1, sizeof (t_image));
 	if (!im)
 		return (NULL);
@@ -33,6 +35,8 @@ t_image	*im_get_empty(void *mlx, const int width, const int height)
 {
 	t_image	*res;
 
+	if (!mlx)
+		return (NULL);
 	res = ft_calloc(1, sizeof (t_image));
 	if (!res)
 		return (NULL);

@@ -6,20 +6,46 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:41:34 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 17:47:37 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:17:56 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void map_cleanup(t_map *m)
+static void	decoration_cleanup(void *mlx, void *decor)
+{
+	t_decoration *const	tmp = decor;
+
+	if (tmp->type != DECOR_WALL)
+	{
+		animation_cleanup(mlx, tmp->animation);
+		tmp->animation = NULL;
+	}
+	else
+		im_cleanup(mlx, tmp->texture);
+}
+
+static void map_cleanup(void *mlx, t_map *m)
 {
 	int32_t	j;
 
 	j = 0;
 	while (j < m->size.y)
-		free(m->tiles[j++]);
-	free(m->tiles);
+	{
+		if (m->tiles[j])
+			free(m->tiles[j]);
+		m->tiles[j] = NULL;
+		++j;
+	}
+	if (m->tiles)
+		free(m->tiles);
+	m->tiles = NULL;
+	j = 0;
+	while (j < (int)array_size(&m->decorations))
+	{
+		decoration_cleanup(mlx, array_get(&m->decorations, j));
+		++j;
+	}
 	array_free(&m->decorations);
 }
 
@@ -33,18 +59,19 @@ static void map_cleanup(t_map *m)
 	free(g->textures);
 }
 
-void game_cleanup(t_game *game)
+void game_cleanup(t_game *g)
 {
-	array_free(&game->input.pressed_keys);
-	//textures_cleanup(game);
-	map_cleanup(&game->map);
-	free(game->rays);
-	if (game->mlx && game->buffer_image)
+	array_free(&g->input.pressed_keys);
+	textures_cleanup(g);
+	map_cleanup(g->mlx, &g->map);
+	free(g->rays);
+	if (g->mlx && g->buffer_image)
 	{
-		if (game->buffer_image)
-			im_cleanup(game->mlx, game->buffer_image);
-		if (game->win)
-			mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
+		if (g->buffer_image)
+			im_cleanup(g->mlx, g->buffer_image);
+		if (g->win)
+			mlx_destroy_window(g->mlx, g->win);
+		mlx_destroy_display(g->mlx);
+		free(g->mlx);
 	}
 }

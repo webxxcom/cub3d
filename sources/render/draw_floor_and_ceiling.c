@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 11:21:37 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:52:13 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,20 @@ static inline void	draw_textured_fac(
 		t_game *g, t_fac *facd, t_vec2i tex_pos, int32_t x)
 {
 	uint32_t	col;
+	t_colorf	lit_bonus;
 
+	lit_bonus = get_light_bonus(g, facd->shade, facd->floor_pos);
 	if (facd->floor_y < g->h)
 	{
 		col = im_get_pixel(g->textures[TEXTR_FLOOR],
 				tex_pos.x, tex_pos.y);
-		im_set_pixel(g->buffer_image, x, facd->floor_y, im_scale_pixel(col, facd->shade)
-			// compute_lit_color(&g->lights, colorf_from_uint(col),
-			// 	facd->shade, facd->floor_pos)
-			);
+		im_set_pixel(g->buffer_image, x, facd->floor_y, im_scale_pixel_rgbf(col, lit_bonus));
 	}
 	if (facd->ceiling_y > 0)
 	{
 		col = im_get_pixel(g->textures[TEXTR_CEILING],
 				tex_pos.x, tex_pos.y);
-		im_set_pixel(g->buffer_image, x, facd->ceiling_y, im_scale_pixel(col, facd->shade)
-			// compute_lit_color(&g->lights, colorf_from_uint(col),
-			// 	facd->shade, facd->floor_pos)
-			);
+		im_set_pixel(g->buffer_image, x, facd->ceiling_y, im_scale_pixel_rgbf(col, lit_bonus));
 	}
 }
 

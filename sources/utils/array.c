@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:54:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:25:34 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:10:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ void	array_push(t_array *arr, void *data)
 {
 	if (arr->size >= arr->capacity)
 	{
-		arr->capacity <<= 2;
+		arr->capacity <<= 1;
 		arr->data = ft_realloc(arr->data,
 				arr->size * arr->elem_size,
 				arr->capacity * arr->elem_size);
 	}
-	ft_memcpy(arr->data + arr->size * arr->elem_size, data, arr->elem_size);
+	ft_memcpy((char *)arr->data + arr->size * arr->elem_size,
+		data, arr->elem_size);
 	++arr->size;
 }
 
@@ -45,12 +46,13 @@ void	*array_get(t_array *arr, size_t idx)
 {
 	if (idx >= arr->size)
 		return (NULL);
-	return (arr->data + idx * arr->elem_size);
+	return ((char *)arr->data + idx * arr->elem_size);
 }
 
 void	array_free(t_array *arr)
 {
-	free(arr->data);
+	if (arr->data)
+		free(arr->data);
 	arr->data = NULL;
 	arr->capacity = 0;
 	arr->size = 0;

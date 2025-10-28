@@ -6,45 +6,63 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 19:01:02 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 19:12:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:52:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static inline void	process_light(t_light *l, t_vec2f obs_pos, t_colorf *acc)
+/**
+ * Light bonus is get using formula I = S / (d^2), where S - is the light's strength
+ * 	and d - is the distance to the point.
+ * To avoid division by zero we add small constant at denominator
+ */
+static inline t_colorf	process_light(t_decoration *l, t_vec2f obs_pos)
 {
 	float const	dx = l->pos.x - obs_pos.x;
 	float const	dy = l->pos.y - obs_pos.y;
-	float const	dist2 = dx * dx + dy * dy;
 	float		light_bonus;
+	t_colorf	res;
 
-	if (dist2 < l->intensity * l->intensity)
+	res = colorf_init();
+	light_bonus = l->light.strength / (1.f + dx * dx + dy * dy);
+	if (light_bonus > 0.1f)
 	{
-		light_bonus = l->strength / (1.f + dist2);
-		acc->r += l->color.r * light_bonus;
-		acc->g += l->color.g * light_bonus;
-		acc->b += l->color.b * light_bonus;
+		res.r += l->light.color.r * light_bonus;
+		res.g += l->light.color.g * light_bonus;
+		res.b += l->light.color.b * light_bonus;
 	}
+	return (res);
 }
 
-uint32_t	compute_lit_color(
-		t_array *lights, t_colorf base, float base_shade, t_vec2f obs_pos)
+static inline t_colorf	compute_light_bonus(
+		t_decoration *l, t_vec2f obs_pos, t_colorf base)
 {
-	size_t		i;
 	t_colorf	acc;
 
-	i = 0;
-	acc = colorf_init();
-	while (i < array_size(lights))
-	{
-		process_light(array_get(lights, i), obs_pos, &acc);
-		++i;
-	}
-	return (colorf_from_rgbf_to_uint(
-			base.r * fminf(1.0f, base_shade + acc.r),
-			base.g * fminf(1.0f, base_shade + acc.g),
-			base.b * fminf(1.0f, base_shade + acc.b)
+	acc = process_light(l, obs_pos);
+	return (colorf_from_rgbf(
+			fminf(1.0f, base.r + acc.r),
+			fminf(1.0f, base.g + acc.g),
+			fminf(1.0f, base.b + acc.b)
 		)
 	);
+}
+
+t_colorf	get_light_bonus(t_game *g, float base_shade, t_vec2f obs_pos)
+{
+	t_decoration	*tmp;
+	size_t			i;
+	t_colorf		lit_col;
+
+	i = 0;
+	lit_col = colorf_from_rgbf(base_shade, base_shade, base_shade);
+	while (i < array_size(&g->map.decorations))
+	{
+		tmp = array_get(&g->map.decorations, i);
+		if (tmp && tmp->type == DECOR_LIGHT)
+			lit_col = compute_light_bonus(tmp, obs_pos, lit_col);
+		++i;
+	}
+	return (lit_col);
 }

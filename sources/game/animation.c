@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:21:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 16:06:59 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:50:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_animation	*init_animation(t_game *g, char *filename)
 	return (animation);
 }
 
-void	animation_clean(void *mlx, t_animation *anim)
+void	animation_cleanup(void *mlx, t_animation *anim)
 {
 	size_t	i;
 

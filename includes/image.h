@@ -6,12 +6,14 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/17 22:18:53 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:55:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IMAGE_H
 # define IMAGE_H
+
+# include "cub3D.h"
 
 # define TRANSPARENT_COLOR 0xFF000000
 
@@ -62,6 +64,13 @@ void			im_set_pixel(t_image *img, int x, int y, unsigned int color);
  * Pixel becomes brighter if factor > 1 and darker if 0 < factor < 1
  */
 uint32_t		im_scale_pixel(uint32_t pixel, float const factor);
+
+/**
+ * Scales each pixel's channel by factor descripted in rgbf
+ * NOTE that the factors must be in range [0, 1] either way 
+ * 	the function's behaviour is undefined
+ */
+uint32_t		im_scale_pixel_rgbf(uint32_t pixel, t_colorf rgbf);
 
 
 /**

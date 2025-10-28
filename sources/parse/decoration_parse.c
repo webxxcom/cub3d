@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 14:13:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:26:44 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	parse_normal_wall_decoration(t_game *g, char *fields[])
 
 	ft_memset(&decor, 0, sizeof (t_decoration));
 	decor.pos = pos;
-	decor.texture_path = fields[2];
+	decor.texture_path = ft_strdup(fields[2]);
 	decor.direction = parse_direction(fields[3]);
 	decor.type = DECOR_WALL;
 	array_push(&g->map.decorations, &decor);
@@ -67,7 +67,7 @@ void	parse_door_decoration(t_game *g, char *fields[])
 	// 	exit(1);
 	// }
 	decor.pos = pos;
-	decor.texture_path = fields[2];
+	decor.texture_path = ft_strdup(fields[2]);
 	decor.type = DECOR_DOOR;
 	array_push(&g->map.decorations, &decor);
 } 
@@ -76,11 +76,17 @@ void	parse_light_decoration(t_game *g, char *fields[])
 {
 	const t_vec2i	pos = extract_pos(g, fields);
 	t_decoration	decor;
+	char			**colors;
 
 	ft_memset(&decor, 0, sizeof (t_decoration));
 	decor.pos = pos;
-	decor.texture_path = fields[2];
+	decor.texture_path = ft_strdup(fields[2]);
 	decor.direction = parse_direction(fields[3]);
+	decor.light.intensity = ft_atoi(fields[4]);
+	decor.light.strength = ft_atoi(fields[5]);
+	colors = ft_split(fields[6], ",");
+	decor.light.color = colorf_from_uint(RGB(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2])));
+	ft_free_matrix(colors);
 	decor.type = DECOR_LIGHT;
 	array_push(&g->map.decorations, &decor);
 }

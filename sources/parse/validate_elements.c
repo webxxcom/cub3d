@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 16:44:07 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 21:42:23 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void	validate_element(t_game *game, char **elements, int *element_count)
 	else
 		errno = 0;
 	if (!ft_strcmp(elements[0], "NO") && !game->paths.north)
-		game->paths.north = remove_nl(elements[1]);
+		game->paths.north = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "SO") && !game->paths.south)
-		game->paths.south = remove_nl(elements[1]);
+		game->paths.south = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "WE") && !game->paths.west)
-		game->paths.west = remove_nl(elements[1]);
+		game->paths.west = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "EA") && !game->paths.east)
-		game->paths.east = remove_nl(elements[1]);
+		game->paths.east = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "F") && !game->paths.floor)
-		game->paths.floor = remove_nl(elements[1]);
+		game->paths.floor = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "C") && !game->paths.ceiling)
-		game->paths.ceiling = remove_nl(elements[1]);
+		game->paths.ceiling = ft_strdup(remove_nl(elements[1]));
 	else
 		exit_game(ERROR_INVALID_IDENTIFIER, game);
 	--*element_count;

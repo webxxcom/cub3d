@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/27 17:42:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 21:26:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "colors.h"
 # include "error.h"
 # include "frame.h"
+# include "colorf.h"
 # include "image.h"
 # include "key_codes.h"
 # include "render.h"
@@ -37,7 +38,7 @@
 # include "sprite.h"
 # include "entity.h"
 # include "array.h"
-# include "colorf.h"
+# include "decorations.h"
 # include "raycaster.h"
 
 #ifndef M_PI
@@ -97,26 +98,6 @@ typedef struct s_minimap
 	uint32_t	dcol;
 }	t_minimap;
 
-typedef enum
-{
-	DECOR_WALL = 0,
-	DECOR_LIGHT,
-	DECOR_DOOR
-}	t_decor_types;
-
-typedef struct s_decoration
-{
-	t_decor_types	type;
-	t_vec2i			pos;
-	t_txtres_sides	direction;
-	char			*texture_path;
-	t_image			*texture;
-	t_animation		*animation;
-	int				state;
-	void	(*interact)(t_game *const,struct s_decoration *);
-	void	(*update)(t_game *const, struct s_decoration *);
-}	t_decoration;
-
 typedef enum e_tile_type {
 	TILE_VOID = ' ',
 	TILE_WALL = '1',
@@ -143,6 +124,9 @@ typedef struct s_map
 }	t_map;
 void	door_update(t_game *const g, t_decoration *door);
 void	door_interact(t_game *const g, t_decoration *door);
+void	light_interact(t_game *const g, t_decoration *light);
+void	light_update(t_game *const g, t_decoration *light);
+
 /**
  * The input structure which describes current keyboard input.
  * 	To revised: mouse keys.
@@ -160,15 +144,6 @@ typedef struct s_input
 }	t_input;
 
 typedef struct s_dda_ray t_dda_ray;
-
-typedef struct s_light
-{
-	t_vec2f		pos;
-	float		intensity;
-	float 		strength;
-	t_colorf		color;
-}	t_light;
-
 
 /**
  * The struct s_game describes global game's state.
@@ -200,7 +175,7 @@ typedef struct s_game
 	bool			show_dbg;
 	bool			show_keys;
 	double			dtime;
-	double			last_time;
+	uint64_t		last_time;
 	
 	t_map			map;
 	t_player		player;
@@ -224,6 +199,8 @@ t_player		player_init(void);
 t_decoration 	*find_decoration_at(t_game *const g, t_vec2i pos);
 float			cam_get_pitch(t_cam *cam);
 void			cam_process_bob(t_cam *cam, float player_speed, float dtime);
+void			load_decorations(t_game *g);
+t_colorf	get_light_bonus(t_game *g, float base_shade, t_vec2f obs_pos);
 
 void			put_minimap(t_game *g);
 
@@ -256,6 +233,7 @@ void 			game_cleanup(t_game *game);
 void			toggle_bool(bool *flag);
 bool 			key_should_repeat(int key);
 bool			movement_key(int key);
+bool			line_is_whitespace(char *l);
 
 // Parse
 

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/27 17:49:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 21:42:31 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	read_tiles(t_game *game, int fd)
 				break ;
 			if (elements[0][0] != '\n')
 				validate_element(game, elements, &element_count);
-			free(elements);
+			ft_free_matrix(elements);
 		}
 		free(line);
 	}
@@ -114,15 +114,16 @@ static void	read_map(t_game *game, t_list **list, int fd)
 
 static void	parse_decoration(t_game *g, char *line)
 {
-	char			**fields;
+	char	**fields;
 
 	fields = ft_split(line, " \t");
-	if (ft_strcmp(fields[0], "WALL") == 0)
+	if (!ft_strcmp(fields[0], "WALL"))
 		parse_normal_wall_decoration(g, fields + 1);
-	else if (ft_strcmp(fields[0], "DOOR") == 0)
+	else if (!ft_strcmp(fields[0], "DOOR"))
 		parse_door_decoration(g, fields + 1);
-	else if (ft_strcmp(fields[0], "LIGHT") == 0)
+	else if (!ft_strcmp(fields[0], "LIGHT"))
 		parse_light_decoration(g, fields + 1);
+	ft_free_matrix(fields);
 }
 
 static void	read_decorations(t_game *g, int fd)
@@ -135,26 +136,13 @@ static void	read_decorations(t_game *g, int fd)
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] == '\n')
-			continue ;
-		remove_nl(line);
-		parse_decoration(g, line);
+		if (!line_is_whitespace(line))
+		{
+			remove_nl(line);
+			parse_decoration(g, line);
+		}
 		free(line);
 	}
-}
-
-static bool	line_is_whitespace(char *l)
-{
-	size_t	i;
-
-	i = 0;
-	while (l[i])
-	{
-		if (!ft_isspace(l[i]))
-			return (false);
-		++i;
-	}
-	return (true);
 }
 
 static void read_section_by_section(t_game *g, t_list **ls, int fd)

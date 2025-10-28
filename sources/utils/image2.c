@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:45 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 10:04:16 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:55:25 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ inline uint32_t	im_get_pixel(t_image *img, int x, int y)
 	if (y < 0 || y >= img->height || x < 0 || x >= img->width)
 		return (0);
 	return (*(unsigned int *)
-		(img->data + y * img->size_line + x * (img->bpp / 8)));
+		((char *)img->data + y * img->size_line + x * (img->bpp / 8)));
 }
 
 inline void	im_set_pixel(t_image *img, int x, int y, unsigned int color)
@@ -25,7 +25,7 @@ inline void	im_set_pixel(t_image *img, int x, int y, unsigned int color)
 	if (y < 0 || y >= img->height || x < 0 || x >= img->width)
 		return ;
 	*(unsigned int *)
-		(img->data + y * img->size_line + x * (img->bpp / 8)) = color;
+		((char *)img->data + y * img->size_line + x * (img->bpp / 8)) = color;
 }
 
 inline uint32_t	im_scale_pixel(uint32_t pixel, float factor)
@@ -62,29 +62,37 @@ void	im_move_pixels(t_image *dest, int off_x, int off_y, t_image *src)
 	}
 }
 
-t_image	*image_scale(void *mlx, t_image *src, int trgt_w, int trgt_h)
+inline uint32_t	im_scale_pixel_rgbf(uint32_t pixel, t_colorf rgbf)
 {
-	const float		scale = (float)src->width / trgt_w;
-	int				i;
-	int				j;
-	t_image			*res;
-	unsigned int	col;
-
-	res = im_get_empty(mlx, trgt_w, trgt_h);
-	i = 0;
-	while (i < trgt_w)
-	{
-		j = 0;
-		while (j < trgt_h)
-		{
-			col = im_get_pixel(src, (int)(i * scale), (int)(j * scale));
-			if (col != TRANSPARENT_COLOR)
-				im_set_pixel(res, i, j, col);
-			++j;
-		}
-		++i;
-	}
-	im_cleanup(mlx, src);
-	src = res;
-	return (src);
+	return (RGB(
+			(uint8_t)((pixel >> 16 & 0xFF) * rgbf.r),
+			(uint8_t)((pixel >> 8 & 0xFF) * rgbf.g),
+			(uint8_t)((pixel & 0xFF) * rgbf.b)));
 }
+
+// t_image	*image_scale(void *mlx, t_image *src, int trgt_w, int trgt_h)
+// {
+// 	const float		scale = (float)src->width / trgt_w;
+// 	int				i;
+// 	int				j;
+// 	t_image			*res;
+// 	unsigned int	col;
+
+// 	res = im_get_empty(mlx, trgt_w, trgt_h);
+// 	i = 0;
+// 	while (i < trgt_w)
+// 	{
+// 		j = 0;
+// 		while (j < trgt_h)
+// 		{
+// 			col = im_get_pixel(src, (int)(i * scale), (int)(j * scale));
+// 			if (col != TRANSPARENT_COLOR)
+// 				im_set_pixel(res, i, j, col);
+// 			++j;
+// 		}
+// 		++i;
+// 	}
+// 	im_cleanup(mlx, src);
+// 	src = res;
+// 	return (src);
+// }

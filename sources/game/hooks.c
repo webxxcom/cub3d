@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/26 10:09:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:09:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	cam_rotate(t_game *const g, const float dx, float const dy)
 {
 	const t_vec2f	dir_vec = g->cam.dir;
 	const t_vec2f	plane_vec = g->cam.plane;
-	const double	rot = -dx * g->cam.sensitivity;
+	const float		rot = -dx * g->cam.sensitivity;
 
-	g->cam.dir.x = dir_vec.x * cos(rot) - dir_vec.y * sin(rot);
-	g->cam.dir.y = dir_vec.x * sin(rot) + dir_vec.y * cos(rot);
-	g->cam.plane.x = plane_vec.x * cos(rot) - plane_vec.y * sin(rot);
-	g->cam.plane.y = plane_vec.x * sin(rot) + plane_vec.y * cos(rot);
+	g->cam.dir.x = dir_vec.x * cosf(rot) - dir_vec.y * sinf(rot);
+	g->cam.dir.y = dir_vec.x * sinf(rot) + dir_vec.y * cosf(rot);
+	g->cam.plane.x = plane_vec.x * cosf(rot) - plane_vec.y * sinf(rot);
+	g->cam.plane.y = plane_vec.x * sinf(rot) + plane_vec.y * cosf(rot);
 	if ((dy < 0 && g->cam.pitch < g->h * 2)
 		|| (dy > 0 && - g->cam.pitch < g->h * 2))
 		g->cam.pitch -= dy * g->cam.sensitivity * g->h;
@@ -29,7 +29,7 @@ static void	cam_rotate(t_game *const g, const float dx, float const dy)
 
 int	mouse_move_hook(int x, int y, t_game *g)
 {
-	const t_vec2i	center = vec2i_construct(g->w / 2, g->h / 2);
+	const t_vec2f	center = vec2f_construct(g->w / 2.f, g->h / 2.f);
 
 	cam_rotate(g, center.x - x, y - center.y);
 	mlx_mouse_move(g->mlx, g->win, center.x, center.y);

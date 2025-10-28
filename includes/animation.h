@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:14:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 16:07:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:50:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ t_image		*animation_get_current_image(t_animation *anim);
 /**
  * 	Free all resources allocated by s_animation structure and pointer itself
  */
-void			animation_clean(void *mlx, t_animation *anim);
+void			animation_cleanup(void *mlx, t_animation *anim);
 
 #endif

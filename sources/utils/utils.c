@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:40:28 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 00:05:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 21:26:47 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,18 @@ inline void	toggle_bool(bool *flag)
 		*flag = false;
 	else
 		*flag = true;
+}
+
+bool	line_is_whitespace(char *l)
+{
+	size_t	i;
+
+	i = 0;
+	while (l[i])
+	{
+		if (!ft_isspace(l[i]))
+			return (false);
+		++i;
+	}
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 16:33:40 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:35:22 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_dda_ray	perform_dda(t_game *const g, double const screen_x)
 		if (g->map.tiles[dda.map_pos.y][dda.map_pos.x].type == TILE_DOOR)
 		{
 			const size_t	idx = dda_res.count++;
+			dda_res.crossed_textures[idx].pos = vec2f_construct(g->player.pos.x + dda_res.ray_dir.x * wall_data.dist, g->player.pos.y + dda_res.ray_dir.y * wall_data.dist);
 			dda_res.crossed_textures[idx].dist = wall_data.dist;
 			dda_res.crossed_textures[idx].side = wall_data.side;
 			dda_res.crossed_textures[idx].map_pos = dda.map_pos;
@@ -110,6 +111,7 @@ t_dda_ray	perform_dda(t_game *const g, double const screen_x)
 		wall_data.side = SOUTH;
 	wall_data.obs = g->map.tiles[dda.map_pos.y][dda.map_pos.x].type;
 	wall_data.map_pos = dda.map_pos;
+	wall_data.pos = vec2f_construct(g->player.pos.x + dda_res.ray_dir.x * wall_data.dist, g->player.pos.y + dda_res.ray_dir.y * wall_data.dist);
 	dda_res.crossed_textures[dda_res.count++] = wall_data;
 	return (dda_res);
 }

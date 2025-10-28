@@ -3,3 +3,4 @@ cub3D
 *.json
 mlx/
 *.a
+*.log
