@@ -16,7 +16,7 @@ SRCS		= main.c \
 			  	$(SRC_FLDR)/parse/validate_elements.c $(SRC_FLDR)/parse/decoration_parse.c \
 			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c $(SRC_FLDR)/render/perform_dda.c \
 			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/draw_floor_and_ceiling.c  \
-				$(SRC_FLDR)/render/compute_lit_color.c \
+				$(SRC_FLDR)/render/compute_lit_color.c $(SRC_FLDR)/render/perform_dda2.c \
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
 			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c $(SRC_FLDR)/utils/array.c $(SRC_FLDR)/utils/draw_utils.c \
 				$(SRC_FLDR)/utils/colorf.c $(SRC_FLDR)/utils/array2.c

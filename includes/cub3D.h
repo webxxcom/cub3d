@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 10:46:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 12:00:41 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@
 # include "colorf.h"
 # include "image.h"
 # include "key_codes.h"
-# include "render.h"
 # include "textures.h"
 # include "vectors.h"
+# include "raycaster.h"
+# include "render.h"
 # include "sprite.h"
 # include "entity.h"
 # include "array.h"
 # include "decorations.h"
-# include "raycaster.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
