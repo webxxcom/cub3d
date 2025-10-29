@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/28 21:15:25 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:07:47 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	load_map(t_game *game, t_list *list)
 	game->map.tiles = ft_calloc(map_height, sizeof(t_tile *));
 	if (!game->map.tiles)
 	{
-		ft_lst_free(list);
+		ft_lstclear(&list, free);
 		exit_game(ERROR_PARSE_MAP_FAILED, game);
 	}
 	j = 0;
@@ -79,6 +79,6 @@ void	parse(t_game *game, const char *map_file)
 	validate_filename(game, map_file);
 	read_file(game, &list, map_file);
 	load_map(game, list);
-	ft_lst_free(list);
+	ft_lstclear(&list, free);
 	validate_map(game);
 }

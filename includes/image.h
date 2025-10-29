@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:06:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 17:55:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:01:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,6 @@ uint32_t		im_scale_pixel(uint32_t pixel, float const factor);
  * 	the function's behaviour is undefined
  */
 uint32_t		im_scale_pixel_rgbf(uint32_t pixel, t_colorf rgbf);
-
-
-/**
- * 	Move all pixels from 'src' t_image to 'dest' t_image
- * offsetting the 'dest' by (off_x * 32, off_y * 32)
- * 	The moving is performed on internal t_image->data raw byte array
- */
-void			im_move_pixels(t_image *dest, int off_x,
-					int off_y, t_image *src);
 
 /**
  * 	Scale image by width to the desired width and height.

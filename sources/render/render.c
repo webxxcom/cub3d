@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/26 09:54:24 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:09:19 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,12 @@ static void	render_debug_info(t_game *g)
 void	draw_keybindings(t_game *g)
 {
 	const int	dbg_x = 10;
-	const int	dbg_y = g->h / 3;
 	const int	dbg_line_h = 20;
 	int			y;
 
 	if (!g->show_keys)
 		return ;
-	y = dbg_y;
+	y = g->h / 3;
 	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
 		"W / ARROW_UP : Move forward");
 	y += dbg_line_h;
@@ -112,68 +111,14 @@ void	draw_keybindings(t_game *g)
 
 static void	put_lines(t_game *const g)
 {
-	int			screen_x;
+	int32_t	screen_x;
 
 	draw_floor_and_ceiling(g);
 	screen_x = 0;
 	while (screen_x < g->w)
 	{
-		draw_vert_line(g, screen_x, g->rays[screen_x]);
-		++screen_x;
-	}
-}
-
-#if THREADS
-
-typedef struct a{
-	t_game *g;
-	int i;
-}	thr;
-
-#include <pthread.h>
-static void	*calculate_each_ray(void *a)
-{
-	const thr *const	t = a;
-	const int parts = t->g->w / 8;
-	int32_t	screen_x;
-
-	screen_x = t->i * parts;
-	while (screen_x < t->i * parts + parts)
-	{
-		t->g->rays[screen_x] = perform_dda(t->g, screen_x);
-		++screen_x;
-	}
-	return (NULL);
-}
-
-static void	put_buffer(t_game *const game)
-{
-	im_clear(game->buffer_image);
-
-	static pthread_t	threads[8];
-	static thr thrs[8];
-
-	for(int i = 0; i < 8; ++i)
-	{
-		thrs[i] = (thr){.g = game, .i = i};
-		pthread_create(threads + i, NULL, calculate_each_ray, thrs + i);
-	}
-	put_lines(game);
-	put_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win,
-		game->buffer_image->image, 0, 0);
-}
-
-#else
-
-static void	calculate_each_ray(t_game *g)
-{
-	int32_t	screen_x;
-
-	screen_x = 0;
-	while (screen_x < g->w)
-	{
 		g->rays[screen_x] = perform_dda(g, screen_x);
+		draw_vert_line(g, screen_x, g->rays[screen_x]);
 		++screen_x;
 	}
 }
@@ -181,15 +126,11 @@ static void	calculate_each_ray(t_game *g)
 static void	put_buffer(t_game *const g)
 {
 	im_clear(g->buffer_image);
-	calculate_each_ray(g);
 	put_lines(g);
-	//draw_sprite(g, g->sprites);
 	put_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win,
 		g->buffer_image->image, 0, 0);
 }
-
-#endif
 
 void	game_render(t_game *g)
 {

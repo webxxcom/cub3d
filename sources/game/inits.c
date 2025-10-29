@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 17:04:29 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:22:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_player	player_init(void)
 		.speed = 3.f,
 		.base_speed = 3.f,
 		.sprint_speed = 6.f,
-		.radius = 6.f 
+		.radius = 6.f
 	});
 }
 

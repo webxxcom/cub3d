@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:14:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 20:50:53 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:09:32 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ typedef struct s_animation
 }	t_animation;
 
 t_animation		*init_animation(t_game *g, char *filename);
-
-/**
- * 	A hook function for mlx to loop it and animate the
- * animation anim passed to the function.
- * 	To use properly the animation's argument must
- * be passed to mlx_loop_hook when called
- */
-int			animation_update(t_game *g, t_animation *anim, int anim_state);
 
 /**
  * 	Get current animation's frame.

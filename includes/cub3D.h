@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/28 21:26:54 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:46:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
+
+#define freenull(p) { free(*(p)); *(p) = NULL; }
 
 # define TILE_SIZE 64
 # define WINDOW_WIDTH 1000

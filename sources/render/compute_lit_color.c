@@ -6,15 +6,15 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 19:01:02 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 18:52:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:55:37 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 /**
- * Light bonus is get using formula I = S / (d^2), where S - is the light's strength
- * 	and d - is the distance to the point.
+ * Light bonus is get using formula I = S / (d^2), where
+ * 	S - is the light's strength and d - is the distance to the point.
  * To avoid division by zero we add small constant at denominator
  */
 static inline t_colorf	process_light(t_decoration *l, t_vec2f obs_pos)

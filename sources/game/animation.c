@@ -6,18 +6,18 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:21:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 20:50:53 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:47:12 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 static t_frame	*extract_frame_from_sprite(
-	int curr_frame, t_frame *frame, t_image *sprite)
+	int32_t curr_frame, t_frame *frame, t_image *sprite)
 {
-	int		i;
-	int		j;
-	int		z;
+	int32_t	i;
+	int32_t	j;
+	int32_t	z;
 
 	if (!frame)
 		return (NULL);
@@ -80,6 +80,7 @@ t_animation	*init_animation(t_game *g, char *filename)
 	if (!sprite)
 		return (free(animation), NULL);
 	sprite_to_frames(g->mlx, sprite, animation);
+	im_cleanup(g->mlx, sprite);
 	return (animation);
 }
 
@@ -90,6 +91,6 @@ void	animation_cleanup(void *mlx, t_animation *anim)
 	i = 0;
 	while (i < anim->total_frames)
 		frame_clean(mlx, anim->frames[i++]);
-	free(anim->frames);
-	free(anim);
+	freenull(&anim->frames);
+	freenull(&anim);
 }

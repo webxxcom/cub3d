@@ -1,155 +1,72 @@
-==83008== Memcheck, a memory error detector
-==83008== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==83008== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==83008== Command: ./cub3D maps/map1.cub
-==83008== Parent PID: 4338
-==83008== 
-==83008== Syscall param writev(vector[0]) points to uninitialised byte(s)
-==83008==    at 0x4BD1894: writev (writev.c:26)
-==83008==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==83008==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==83008==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==83008==    by 0x48C30B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x48C8148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x48C852B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x1187E5: mlx_int_wait_first_expose (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x1184F5: mlx_new_window (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x110D12: init_mlx (start_game.c:56)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008==  Address 0x4dcdd8c is 28 bytes inside a block of size 16,384 alloc'd
-==83008==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x48B242D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x1182A6: mlx_init (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x110CC5: init_mlx (start_game.c:53)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008==  Uninitialised value was created by a stack allocation
-==83008==    at 0x1186F0: mlx_int_anti_resize_win (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008== 
-==83008== 
-==83008== HEAP SUMMARY:
-==83008==     in use at exit: 232,791 bytes in 432 blocks
-==83008==   total heap usage: 3,579 allocs, 3,147 frees, 1,797,583 bytes allocated
-==83008== 
-==83008== 176 bytes in 2 blocks are indirectly lost in loss record 45 of 69
-==83008==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x1189FB: mlx_int_new_xshm_image (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x118D40: mlx_new_image (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x119709: mlx_int_parse_xpm (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x119B23: mlx_xpm_file_to_image (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x116433: im_load_from_xpmfile (image.c:24)
-==83008==    by 0x1115A3: init_animation (animation.c:79)
-==83008==    by 0x111D71: load_door (load_decorations.c:22)
-==83008==    by 0x111F86: load_decorations (load_decorations.c:68)
-==83008==    by 0x110D7F: init_mlx (start_game.c:62)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== 176 bytes in 2 blocks are indirectly lost in loss record 46 of 69
-==83008==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x1189FB: mlx_int_new_xshm_image (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x118D40: mlx_new_image (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x119709: mlx_int_parse_xpm (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x119B23: mlx_xpm_file_to_image (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x116433: im_load_from_xpmfile (image.c:24)
-==83008==    by 0x1115A3: init_animation (animation.c:79)
-==83008==    by 0x111E2C: load_light (load_decorations.c:36)
-==83008==    by 0x111FD8: load_decorations (load_decorations.c:70)
-==83008==    by 0x110D7F: init_mlx (start_game.c:62)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== 528 (80 direct, 448 indirect) bytes in 2 blocks are definitely lost in loss record 54 of 69
-==83008==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x117E55: ft_calloc (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x1163FE: im_load_from_xpmfile (image.c:21)
-==83008==    by 0x1115A3: init_animation (animation.c:79)
-==83008==    by 0x111D71: load_door (load_decorations.c:22)
-==83008==    by 0x111F86: load_decorations (load_decorations.c:68)
-==83008==    by 0x110D7F: init_mlx (start_game.c:62)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== 528 (80 direct, 448 indirect) bytes in 2 blocks are definitely lost in loss record 55 of 69
-==83008==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x117E55: ft_calloc (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x1163FE: im_load_from_xpmfile (image.c:21)
-==83008==    by 0x1115A3: init_animation (animation.c:79)
-==83008==    by 0x111E2C: load_light (load_decorations.c:36)
-==83008==    by 0x111FD8: load_decorations (load_decorations.c:70)
-==83008==    by 0x110D7F: init_mlx (start_game.c:62)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== 10,000 bytes in 1 blocks are definitely lost in loss record 67 of 69
-==83008==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x117FB9: ft_get_next_line (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x112848: read_decorations (input.c:133)
-==83008==    by 0x112990: read_section_by_section (input.c:169)
-==83008==    by 0x112A23: read_file (input.c:186)
-==83008==    by 0x11230D: parse (parse.c:80)
-==83008==    by 0x110FD3: init_game (start_game.c:88)
-==83008==    by 0x111076: start_game (start_game.c:95)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== 50,000 bytes in 5 blocks are definitely lost in loss record 68 of 69
-==83008==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x117FB9: ft_get_next_line (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x1128CE: read_section_by_section (input.c:156)
-==83008==    by 0x112A23: read_file (input.c:186)
-==83008==    by 0x11230D: parse (parse.c:80)
-==83008==    by 0x110FD3: init_game (start_game.c:88)
-==83008==    by 0x111076: start_game (start_game.c:95)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== 140,000 bytes in 14 blocks are definitely lost in loss record 69 of 69
-==83008==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x117FB9: ft_get_next_line (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x1126C4: read_map (input.c:96)
-==83008==    by 0x112963: read_section_by_section (input.c:167)
-==83008==    by 0x112A23: read_file (input.c:186)
-==83008==    by 0x11230D: parse (parse.c:80)
-==83008==    by 0x110FD3: init_game (start_game.c:88)
-==83008==    by 0x111076: start_game (start_game.c:95)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008== 
-==83008== LEAK SUMMARY:
-==83008==    definitely lost: 200,160 bytes in 24 blocks
-==83008==    indirectly lost: 352 bytes in 4 blocks
-==83008==      possibly lost: 0 bytes in 0 blocks
-==83008==    still reachable: 0 bytes in 0 blocks
-==83008==         suppressed: 32,279 bytes in 404 blocks
-==83008== 
-==83008== ERROR SUMMARY: 8 errors from 6 contexts (suppressed: 0 from 0)
-==83008== 
-==83008== 3 errors in context 1 of 6:
-==83008== Syscall param writev(vector[0]) points to uninitialised byte(s)
-==83008==    at 0x4BD1894: writev (writev.c:26)
-==83008==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==83008==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==83008==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==83008==    by 0x48C30B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x48C8148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x48C852B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x1187E5: mlx_int_wait_first_expose (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x1184F5: mlx_new_window (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x110D12: init_mlx (start_game.c:56)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008==  Address 0x4dcdd8c is 28 bytes inside a block of size 16,384 alloc'd
-==83008==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83008==    by 0x48B242D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==83008==    by 0x1182A6: mlx_init (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008==    by 0x110CC5: init_mlx (start_game.c:53)
-==83008==    by 0x111082: start_game (start_game.c:96)
-==83008==    by 0x10FC52: main (main.c:24)
-==83008==  Uninitialised value was created by a stack allocation
-==83008==    at 0x1186F0: mlx_int_anti_resize_win (in /home/webxxcom/Projects/cub3d/cub3D)
-==83008== 
---83008-- 
---83008-- used_suppression:     53 leak name3 mlx.supp:26 suppressed: 27,334 bytes in 388 blocks
---83008-- used_suppression:      7 leak name2 mlx.supp:15 suppressed: 4,401 bytes in 12 blocks
---83008-- used_suppression:      2 leak name1 mlx.supp:3 suppressed: 544 bytes in 4 blocks
-==83008== 
-==83008== ERROR SUMMARY: 8 errors from 6 contexts (suppressed: 0 from 0)
+==25694== Memcheck, a memory error detector
+==25694== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==25694== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==25694== Command: ./cub3D maps/map1.cub
+==25694== Parent PID: 4755
+==25694== 
+==25694== Syscall param writev(vector[0]) points to uninitialised byte(s)
+==25694==    at 0x4BD1894: writev (writev.c:26)
+==25694==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==25694==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==25694==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==25694==    by 0x48C30B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x48C8148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x48C852B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x1160D5: mlx_int_wait_first_expose (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694==    by 0x115DE5: mlx_new_window (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694==    by 0x1105EB: init_mlx (start_game.c:51)
+==25694==    by 0x1105EB: start_game (start_game.c:90)
+==25694==    by 0x10FB0A: main (main.c:24)
+==25694==  Address 0x4dcdd8c is 28 bytes inside a block of size 16,384 alloc'd
+==25694==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25694==    by 0x48B242D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x115B96: mlx_init (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694==    by 0x1105CA: init_mlx (start_game.c:48)
+==25694==    by 0x1105CA: start_game (start_game.c:90)
+==25694==    by 0x10FB0A: main (main.c:24)
+==25694==  Uninitialised value was created by a stack allocation
+==25694==    at 0x115FE0: mlx_int_anti_resize_win (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694== 
+==25694== 
+==25694== HEAP SUMMARY:
+==25694==     in use at exit: 31,735 bytes in 400 blocks
+==25694==   total heap usage: 3,810 allocs, 3,410 frees, 1,803,883 bytes allocated
+==25694== 
+==25694== LEAK SUMMARY:
+==25694==    definitely lost: 0 bytes in 0 blocks
+==25694==    indirectly lost: 0 bytes in 0 blocks
+==25694==      possibly lost: 0 bytes in 0 blocks
+==25694==    still reachable: 0 bytes in 0 blocks
+==25694==         suppressed: 31,735 bytes in 400 blocks
+==25694== 
+==25694== ERROR SUMMARY: 3 errors from 1 contexts (suppressed: 0 from 0)
+==25694== 
+==25694== 3 errors in context 1 of 1:
+==25694== Syscall param writev(vector[0]) points to uninitialised byte(s)
+==25694==    at 0x4BD1894: writev (writev.c:26)
+==25694==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==25694==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==25694==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==25694==    by 0x48C30B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x48C8148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x48C852B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x1160D5: mlx_int_wait_first_expose (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694==    by 0x115DE5: mlx_new_window (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694==    by 0x1105EB: init_mlx (start_game.c:51)
+==25694==    by 0x1105EB: start_game (start_game.c:90)
+==25694==    by 0x10FB0A: main (main.c:24)
+==25694==  Address 0x4dcdd8c is 28 bytes inside a block of size 16,384 alloc'd
+==25694==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25694==    by 0x48B242D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==25694==    by 0x115B96: mlx_init (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694==    by 0x1105CA: init_mlx (start_game.c:48)
+==25694==    by 0x1105CA: start_game (start_game.c:90)
+==25694==    by 0x10FB0A: main (main.c:24)
+==25694==  Uninitialised value was created by a stack allocation
+==25694==    at 0x115FE0: mlx_int_anti_resize_win (in /home/webxxcom/Projects/cub3d/cub3D)
+==25694== 
+--25694-- 
+--25694-- used_suppression:     53 leak name3 mlx.supp:26 suppressed: 27,334 bytes in 388 blocks
+--25694-- used_suppression:      7 leak name2 mlx.supp:15 suppressed: 4,401 bytes in 12 blocks
+==25694== 
+==25694== ERROR SUMMARY: 3 errors from 1 contexts (suppressed: 0 from 0)

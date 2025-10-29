@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 19:09:37 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 22:26:07 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:51:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void load_door(t_game *g, t_decoration *door, t_tile *tile)
+static void	load_door(t_game *g, t_decoration *door, t_tile *tile)
 {
 	tile->type = TILE_DOOR;
 	tile->sides[0] = door;
@@ -21,39 +21,34 @@ static void load_door(t_game *g, t_decoration *door, t_tile *tile)
 	tile->sides[3] = door;
 	door->animation = init_animation(g, door->texture_path);
 	if (!door->animation)
-	{
-		printf("Texture was not loaded %s\n", door->texture_path);
-		exit(1);
-	}
-	door->texture = animation_get_current_image(door->animation); // ! REVISE
+		exit_game("load_door", g);
+	door->texture = animation_get_current_image(door->animation);
 	door->update = door_update;
 	door->interact = door_interact;
 }
 
-static void load_light(t_game *g, t_decoration *light, t_tile *tile)
+static void	load_light(t_game *g, t_decoration *light, t_tile *tile)
 {
 	tile->sides[light->direction] = light;
 	light->animation = init_animation(g, light->texture_path);
 	if (!light->animation)
-	{
-		printf("Texture was not loaded %s\n", light->texture_path);
-		exit(1);
-	}
-	light->texture = animation_get_current_image(light->animation); // ! REVISE
+		exit_game("load_light", g);
+	light->texture = animation_get_current_image(light->animation);
 	light->update = light_update;
 	light->interact = light_interact;
 }
 
-void load_wall_decor(t_game *g, t_decoration *wall, t_tile *tile)
+void	load_wall_decor(t_game *g, t_decoration *wall, t_tile *tile)
 {
 	(void)g;
-	//wall->animation = init_animation(g, wall->texture_path);
-	wall->texture = im_load_from_xpmfile(g->mlx, wall->texture_path);
-	//	animation_get_current_image(wall->animation);
+	wall->animation = init_animation(g, wall->texture_path);
+	if (!wall->animation)
+		exit_game("load_wall_decor", g);
+	wall->texture = animation_get_current_image(wall->animation);
 	tile->sides[wall->direction] = wall;
 }
 
-void load_decorations(t_game *g)
+void	load_decorations(t_game *g)
 {
 	t_decoration	*tmp;
 	t_vec2i			pos;
@@ -71,7 +66,7 @@ void load_decorations(t_game *g)
 		else
 			load_wall_decor(g, tmp, &g->map.tiles[pos.y][pos.x]);
 		++i;
-		free(tmp->texture_path);
+		freenull(&tmp->texture_path);
 		tmp->texture_path = NULL;
 	}
 }

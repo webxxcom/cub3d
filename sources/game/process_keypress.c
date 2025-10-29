@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:39:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 16:17:42 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:24:45 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,14 @@ void	process_mvkeys(t_game *const g, int key, bool pressed)
 		g->input.moving_keys[MOVING_RGHT] = pressed;
 }
 
-t_decoration *find_decoration_at(t_game *const g, t_vec2i pos)
-{
-	t_decoration	*tmp;
-	size_t			i;
-
-	i = 0;
-	while (i < array_size(&g->map.decorations))
-	{
-		tmp = array_get(&g->map.decorations, i);
-		if (vec2i_equals(tmp->pos, pos))
-			return (tmp);
-		++i;
-	}
-	return (NULL);
-}
-
 static void	player_interact(t_game *const g)
 {
-	const t_vec2i	dir = vec2i_construct(
-		g->player.pos.x + g->cam.dir.x, g->player.pos.y + g->cam.dir.y);
-	t_decoration 	*decor;
+	t_vec2i const	dir = vec2i_construct(
+			g->player.pos.x + g->cam.dir.x, g->player.pos.y + g->cam.dir.y);
+	t_decoration	*decor;
 
 	decor = find_decoration_at(g, dir);
-	if (decor)
+	if (decor && decor->interact)
 		decor->interact(g, decor);
 }
 

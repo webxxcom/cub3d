@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:21 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 22:15:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:51:25 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	im_cleanup(void *mlx, t_image *image)
 		return ;
 	if (image->image)
 		mlx_destroy_image(mlx, image->image);
-	free(image);
+	freenull(&image);
 	image = NULL;
 }

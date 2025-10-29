@@ -6,37 +6,37 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:12:07 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 19:35:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:13:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	door_update(t_game *const g, t_decoration *door)
+void	door_update(t_game *const g, t_decoration *d)
 {
-	(void)g;
 	uint64_t const	curr_time = get_time_in_ms();
 	t_frame *const	curr_frame
-		= door->animation->frames[door->animation->curr_frame_n];
-	int const		frame_time = curr_frame->time;
-	int				step;
+		= d->animation->frames[d->animation->curr_frame_n];
+	int32_t const	frame_time = curr_frame->time;
+	int32_t			step;
 
-	if (door->state == OPEN || door->state == CLOSED)
+	(void)g;
+	if (d->state == OPEN || d->state == CLOSED)
 		return ;
-	if (door->state == CLOSING)
+	if (d->state == CLOSING)
 		step = -1;
 	else
 		step = 1;
 	if (curr_time - frame_time > ANIMATION_DELAY)
 	{
-		door->animation->curr_frame_n += step;
-		door->animation->frames[door->animation->curr_frame_n]->time = curr_time;
-		if (door->animation->curr_frame_n + 1 == door->animation->total_frames)
-			door->state = OPEN;
-		else if (door->animation->curr_frame_n == 0)
-			door->state = CLOSED;
+		d->animation->curr_frame_n += step;
+		d->animation->frames[d->animation->curr_frame_n]->time = curr_time;
+		if (d->animation->curr_frame_n + 1 == d->animation->total_frames)
+			d->state = OPEN;
+		else if (d->animation->curr_frame_n == 0)
+			d->state = CLOSED;
 	}
-	door->texture = animation_get_current_image(door->animation);
+	d->texture = animation_get_current_image(d->animation);
 }
 
 void	door_interact(t_game *const g, t_decoration *door)
@@ -48,21 +48,21 @@ void	door_interact(t_game *const g, t_decoration *door)
 		door->state = OPENING;
 }
 
-void	light_update(t_game *const g, t_decoration *light)
+void	light_update(t_game *const g, t_decoration *l)
 {
 	uint64_t const	curr_time = get_time_in_ms();
 	t_frame *const	curr_frame
-	= light->animation->frames[light->animation->curr_frame_n];
+		= l->animation->frames[l->animation->curr_frame_n];
 	int const		frame_time = curr_frame->time;
-	(void)g;
 
+	(void)g;
 	if (curr_time - frame_time > ANIMATION_DELAY)
 	{
-		light->animation->curr_frame_n = (light->animation->curr_frame_n + 1)
-			% light->animation->total_frames;
-		light->animation->frames[light->animation->curr_frame_n]->time = curr_time;
+		l->animation->curr_frame_n = (l->animation->curr_frame_n + 1)
+			% l->animation->total_frames;
+		l->animation->frames[l->animation->curr_frame_n]->time = curr_time;
 	}
-	light->texture = animation_get_current_image(light->animation);
+	l->texture = animation_get_current_image(l->animation);
 }
 
 void	light_interact(t_game *const g, t_decoration *light)

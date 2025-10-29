@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g -O0 -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
+CFLAGS		= -Wall -Wextra -Werror -O3 -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
 
 SRC_FLDR	= sources
 
@@ -10,13 +10,13 @@ SRCS		= main.c \
 			  	$(SRC_FLDR)/game/key_release_hook.c $(SRC_FLDR)/game/process_keypress.c \
 				$(SRC_FLDR)/game/main_loop.c $(SRC_FLDR)/game/mvement_handle.c $(SRC_FLDR)/game/start_game.c \
 				$(SRC_FLDR)/game/minimap.c $(SRC_FLDR)/game/inits.c $(SRC_FLDR)/game/frame.c \
-				$(SRC_FLDR)/game/camera.c $(SRC_FLDR)/game/animation.c $(SRC_FLDR)/game/animation_move.c \
+				$(SRC_FLDR)/game/camera.c $(SRC_FLDR)/game/animation.c $(SRC_FLDR)/game/utils.c \
 				$(SRC_FLDR)/game/decoration.c $(SRC_FLDR)/game/game_cleanup.c $(SRC_FLDR)/game/load_decorations.c \
 			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/input.c $(SRC_FLDR)/parse/validate_map.c \
 			  	$(SRC_FLDR)/parse/validate_elements.c $(SRC_FLDR)/parse/decoration_parse.c \
 			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c $(SRC_FLDR)/render/perform_dda.c \
-			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/sprite.c \
-				$(SRC_FLDR)/render/draw_floor_and_ceiling.c $(SRC_FLDR)/render/compute_lit_color.c \
+			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/draw_floor_and_ceiling.c  \
+				$(SRC_FLDR)/render/compute_lit_color.c \
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
 			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c $(SRC_FLDR)/utils/array.c $(SRC_FLDR)/utils/draw_utils.c \
 				$(SRC_FLDR)/utils/colorf.c $(SRC_FLDR)/utils/array2.c

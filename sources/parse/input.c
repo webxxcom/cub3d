@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/28 21:42:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:47:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	read_tiles(t_game *game, int fd)
 				validate_element(game, elements, &element_count);
 			ft_free_matrix(elements);
 		}
-		free(line);
+		freenull(&line);
 	}
 	if (element_count)
 	{
@@ -107,7 +107,10 @@ static void	read_map(t_game *game, t_list **list, int fd)
 		find_and_set_player_pos(game, line, j++);
 		new = ft_lstnew(line);
 		if (!new)
+		{
+			free(line);
 			break ;
+		}
 		ft_lstadd_back(list, new);
 	}
 }
@@ -130,7 +133,7 @@ static void	read_decorations(t_game *g, int fd)
 {
 	char	*line;
 
-	ft_get_next_line(fd);
+	free(ft_get_next_line(fd));
 	while (1)
 	{
 		line = ft_get_next_line(fd);
@@ -159,20 +162,22 @@ static void read_section_by_section(t_game *g, t_list **ls, int fd)
 			printf(".cub misses some configurations\n");
 			exit(1);// ! HARDCODED EXIT
 		}
-		if (line_is_whitespace(l))
-			continue ;
-		if (ft_strcmp(l, "[TILES]\n") == 0)
-			read_tiles(g, fd);
-		else if (ft_strcmp(l, "[MAP]\n") == 0)
-			read_map(g, ls, fd);
-		else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)
-			read_decorations(g, fd);
-		else
+		if (!line_is_whitespace(l))
 		{
-			printf(".cub misses some configurations\n");
-			exit(1);// ! HARDCODED EXIT
+			if (ft_strcmp(l, "[TILES]\n") == 0)
+				read_tiles(g, fd);
+			else if (ft_strcmp(l, "[MAP]\n") == 0)
+				read_map(g, ls, fd);
+			else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)
+				read_decorations(g, fd);
+			else
+			{
+				printf(".cub misses some configurations\n");
+				exit(1);// ! HARDCODED EXIT
+			}
+			--sect_count;
 		}
-		--sect_count;
+		free(l);
 	}
 }
 
@@ -187,7 +192,7 @@ void	read_file(t_game *game, t_list **list, const char *map_file)
 	close(fd);
 	if (errno)
 	{
-		ft_lst_free(*list);
+		ft_lstclear(list, free);
 		exit_game(ERROR_READ_FILE_FAILED, game);
 	}
 }
