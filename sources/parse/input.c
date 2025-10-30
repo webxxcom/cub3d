@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 18:11:35 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/30 21:48:13 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,38 @@ static int	save_line(t_list **list, char *line, t_list *new)
 	return (1);
 }
 
+static void	set_player_start_pos(t_game *g, int x, int y, char dir)
+{
+	g->player.pos = (t_vec2f){.x = x + 0.5f, .y = y + 0.5f};
+	if (dir == 'N')
+	{
+		g->player.dir = vec2f_construct(0, -1);
+		g->player.plane = vec2f_construct(CAMERA_FOV, 0);
+	}
+	else if (dir == 'W')
+	{
+		g->cam.dir = vec2f_construct(-1, 0);
+		g->cam.plane = vec2f_construct(0, -0.66);
+	}
+	else if (dir == 'S')
+	{
+		g->cam.dir = vec2f_construct(0, 1);
+		g->cam.plane = vec2f_construct(-0.66, 0);
+	}
+	else 
+	{
+		g->cam.dir = vec2f_construct(1, 0);
+		g->cam.plane = vec2f_construct(0, 0.66);
+	}
+}
+
 static void	read_map(t_game *game, t_list **list, int fd)
 {
 	t_list	*new;
 	char	*line;
 	int32_t	j;
 
+	(void)game;
 	new = NULL;
 	j = 0;
 	while (1)

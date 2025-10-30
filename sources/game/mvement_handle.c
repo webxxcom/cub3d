@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 10:21:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:03:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ void	handle_movement(t_game *const g)
 		move(g, vec2f_normalize(mv_dir));
 	else
 		g->cam.bob_phase *= 1 - g->dtime;
+	g->cam.pos = g->player.pos;
 }

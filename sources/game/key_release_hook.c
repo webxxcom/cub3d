@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:44:26 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 17:17:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:03:57 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	remove_repeating_key(t_game *g, int key)
 
 int	key_release_hook(int key, t_game *game)
 {
+	if (game->state != GAME_STATE_ON)
+		return (1);
 	if (movement_key(key))
 		process_mvkeys(game, key, false);
 	else

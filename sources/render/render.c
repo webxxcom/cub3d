@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 12:02:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:25:13 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,36 @@ static void	render_debug_info(t_game *g)
 {
 	if (g->show_dbg)
 	{
-		char	buf[128];
+		char	buf[256];
 		int		y = 10;
 
 		// Player pos
-		snprintf(buf, sizeof(buf), "Player: x=%.2f y=%.2f",
+		snprintf(buf, sizeof(buf), "Player Pos: x=%.2f y=%.2f",
 			g->player.pos.x, g->player.pos.y);
+		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
+		y += 15;
+
+		// Player Direction
+		snprintf(buf, sizeof(buf), "Player Dir: x=%.2f y=%.2f",
+			g->player.dir.x, g->player.dir.y);
+		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
+		y += 15;
+
+		// Player Plane
+		snprintf(buf, sizeof(buf), "Player Plane: x=%.2f y=%.2f",
+			g->player.plane.x, g->player.plane.y);
 		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
 		y += 15;
 
 		// Player speed and radius
 		snprintf(buf, sizeof(buf), "Speed: %.2f Radius: %.2f",
 			g->player.speed, g->player.radius);
+		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
+		y += 15;
+
+		// Camera pos
+		snprintf(buf, sizeof(buf), "Cam Pos: x=%.2f y=%.2f",
+			g->cam.pos.x, g->cam.pos.y);
 		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
 		y += 15;
 

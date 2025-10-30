@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 10:54:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:31:54 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,53 @@ static void	init_mlx(t_game *g)
 	mlx_mouse_hide(g->mlx, g->win);
 }
 
+t_cutscene init_start_cutscene(t_game *g)
+{
+	t_camera_keyframe keyframes[4] = {
+		// Start farther away, facing the player
+		{ .pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 4.f),
+		  .dir = vec2f_normalize(vec2f_translate(g->player.dir, -0.2f, -0.2f)) },
+	
+		// Slowly zoom in, start rotating a bit
+		{ .pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 2.f),
+		  .dir = vec2f_normalize(vec2f_translate(g->player.dir, -0.1f, -0.1f)) },
+	
+		// Close to the player, straight view
+		{ .pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 0.5f),
+		  .dir = vec2f_normalize(vec2f_translate(g->player.dir, -0.2f, -0.2f)) },
+	
+		// Optional: slight overshoot, like a cinematic “push past and return”
+		{ .pos = vec2f_construct(g->player.pos.x, g->player.pos.y + 1.f),
+		  .dir = vec2f_normalize(vec2f_translate(g->player.dir, 0.05f, 0.05f)) },
+	};
+	t_cutscene	res;
+
+	ft_memset(&res, 0, sizeof (t_cutscene));
+	res.cam_keyframes = array_init(sizeof (t_camera_keyframe));
+	for(int i = 0; i < 3; ++i)
+		array_push(&res.cam_keyframes, keyframes + i);
+	res.speed = 0.3f;
+	res.dtime = get_time_in_ms();
+	res.is_going = true;
+	res.curve.p0 = vec2f_construct(g->player.pos.x, g->player.pos.y - 5.f);
+    res.curve.p1 = vec2f_construct(g->player.pos.x + 2.f, g->player.pos.y - 2.f); // control point
+    res.curve.p2 = g->player.pos;
+	g->cam.pos = keyframes[0].pos;
+	g->cam.dir = keyframes[0].dir;
+	g->cam.plane = vec2f_construct(-g->cam.dir.y * CAMERA_FOV, g->cam.dir.x * CAMERA_FOV);
+	g->show_dbg = true;
+	return (res);
+}
+
+static void	init_cutscenes(t_game *g)
+{
+	t_cutscene tmp;
+
+	g->cutscenes = array_init(sizeof (t_cutscene));
+	tmp = init_start_cutscene(g);
+	array_push(&g->cutscenes, &tmp);
+}
+
 static void	init_game(t_game *g, const char *filename)
 {
 	g->w = WINDOW_WIDTH;
@@ -77,6 +124,8 @@ static void	init_game(t_game *g, const char *filename)
 	g->map.decorations = array_init(sizeof (t_decoration));
 	parse(g, filename);
 	g->minimap = minimap_init(g);
+	g->state = GAME_STATE_CUTSCENE;
+	init_cutscenes(g);
 }
 
 void	start_game(t_game *game, const char *filename)

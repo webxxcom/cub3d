@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:55:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 12:01:28 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:02:00 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@ static void	init_startvals(t_game *const game,
 	if (ray_dir.x < 0)
 	{
 		dda_d->map_step.x = -1;
-		dda_d->side_dist.x = (game->player.pos.x - (int)game->player.pos.x)
+		dda_d->side_dist.x = (game->cam.pos.x - (int)game->cam.pos.x)
 			* dda_d->unit_step.x;
 	}
 	else
 	{
 		dda_d->map_step.x = 1;
-		dda_d->side_dist.x = ((int)game->player.pos.x + 1 - game->player.pos.x)
+		dda_d->side_dist.x = ((int)game->cam.pos.x + 1 - game->cam.pos.x)
 			* dda_d->unit_step.x;
 	}
 	if (ray_dir.y < 0)
 	{
 		dda_d->map_step.y = -1;
-		dda_d->side_dist.y = (game->player.pos.y - (int)game->player.pos.y)
+		dda_d->side_dist.y = (game->cam.pos.y - (int)game->cam.pos.y)
 			* dda_d->unit_step.y;
 	}
 	else
 	{
 		dda_d->map_step.y = 1;
-		dda_d->side_dist.y = ((int)game->player.pos.y + 1 - game->player.pos.y)
+		dda_d->side_dist.y = ((int)game->cam.pos.y + 1 - game->cam.pos.y)
 			* dda_d->unit_step.y;
 	}
 }
@@ -53,7 +53,7 @@ t_dda_d	get_dda_start_data(t_game *const g, int const screen_x)
 		.ray_dir = ray_dir,
 		.unit_step
 		= vec2f_construct(fabs(1. / ray_dir.x), fabs(1. / ray_dir.y)),
-		.map_pos = vec2i_construct(g->player.pos.x, g->player.pos.y)
+		.map_pos = vec2i_construct(g->cam.pos.x, g->cam.pos.y)
 	};
 	init_startvals(g, ray_dir, &dda_d);
 	return (dda_d);
@@ -84,8 +84,8 @@ inline void	add_crossed_texture(
 		= g->map.tiles[dda->map_pos.y][dda->map_pos.x].type;
 	dda_res->crossed_textures[idx].map_pos = dda->map_pos;
 	dda_res->crossed_textures[idx].pos = vec2f_construct(
-			g->player.pos.x + dda_res->ray_dir.x * wall_data->dist,
-			g->player.pos.y + dda_res->ray_dir.y * wall_data->dist);
+			g->cam.pos.x + dda_res->ray_dir.x * wall_data->dist,
+			g->cam.pos.y + dda_res->ray_dir.y * wall_data->dist);
 	dda_res->crossed_textures[idx].dist = wall_data->dist;
 	dda_res->crossed_textures[idx].side = wall_data->side;
 }
