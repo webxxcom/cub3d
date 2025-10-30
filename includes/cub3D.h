@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 12:00:41 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 19:21:18 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,27 @@ typedef struct s_dda_ray t_dda_ray;
  *  ::dtime		- delta time between two frames
  *  ::show_dbg	- debug information triggered on F1
  */
+typedef struct s_camera_keyframe
+{
+	t_vec2f	pos;
+	t_vec2f	dir;
+}	t_camera_keyframe;
+
+typedef struct s_cutscene
+{
+	t_array		cam_keyframes;
+	float		speed;
+	uint32_t	curr_frame;
+	double		dtime;
+	bool		is_going;
+}	t_cutscene;
+
+typedef enum	e_game_state
+{
+	GAME_STATE_CUTSCENE = 0,
+	GAME_STATE_ON
+}	t_game_state;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -178,7 +199,9 @@ typedef struct s_game
 	bool			show_keys;
 	double			dtime;
 	uint64_t		last_time;
-	
+	t_game_state	state;
+	t_array			cutscenes;
+
 	t_map			map;
 	t_player		player;
 	t_minimap		minimap;

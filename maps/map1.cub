@@ -30,5 +30,4 @@ WALL					25	5	textures/hitler_picture_transparent.xpm		        SOUTH
 WALL					23	0	textures/nazi_eagle_picture.xpm			            SOUTH
 DOOR					26	5	textures/lab_metal_white_door_sprite.xpm
 DOOR					19	3	textures/lab_metal_grey_tiles_hexdoor_animation.xpm
-LIGHT					25	13	textures/1.xpm	                        	        NORTH               7   2  255,215,0
 LIGHT					27	5	textures/1.xpm	                        	        SOUTH               7   2  0,0,255

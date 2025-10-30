@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/27 17:17:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 19:00:42 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	process_repetition_key(t_game *g, int k)
 
 int	key_press_hook(int key, t_game *game)
 {
+	if (game->state != GAME_STATE_ON)
+		return (1);
 	if (movement_key(key))
 		process_mvkeys(game, key, true);
 	else if (key_should_repeat(key))

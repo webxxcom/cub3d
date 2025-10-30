@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 10:54:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 19:14:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,35 @@ static void	init_mlx(t_game *g)
 	mlx_mouse_hide(g->mlx, g->win);
 }
 
+t_cutscene init_start_cutscene(t_game *g)
+{
+	t_camera_keyframe	keyframes[3] = {
+		(t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 3.f), .dir = g->cam.dir},
+		(t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 1.f), .dir = g->cam.dir},
+		(t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y), .dir = g->cam.dir},
+	};
+	t_cutscene	res;
+
+	ft_memset(&res, 0, sizeof (t_cutscene));
+	res.cam_keyframes = array_init(sizeof (t_camera_keyframe));
+	for(int i = 0; i < 3; ++i)
+		array_push(&res.cam_keyframes, keyframes + i);
+	res.speed = 0.05f;
+	res.dtime = get_time_in_ms();
+	res.is_going = true;
+	g->player.pos.y -= 3;
+	return (res);
+}
+
+static void	init_cutscenes(t_game *g)
+{
+	t_cutscene tmp;
+
+	g->cutscenes = array_init(sizeof (t_cutscene));
+	tmp = init_start_cutscene(g);
+	array_push(&g->cutscenes, &tmp);
+}
+
 static void	init_game(t_game *g, const char *filename)
 {
 	g->w = WINDOW_WIDTH;
@@ -77,6 +106,8 @@ static void	init_game(t_game *g, const char *filename)
 	g->map.decorations = array_init(sizeof (t_decoration));
 	parse(g, filename);
 	g->minimap = minimap_init(g);
+	g->state = GAME_STATE_CUTSCENE;
+	init_cutscenes(g);
 }
 
 void	start_game(t_game *game, const char *filename)
