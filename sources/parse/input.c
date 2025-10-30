@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 16:41:53 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/30 18:07:41 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ static void	read_tiles(t_game *game, int fd, int element_count)
 	}
 }
 
-static int	save_line(t_list **list, char *line)
+static int	save_line(t_list **list, char *line, t_list *new)
 {
-	new = ft_lstnew(line);
 	if (!new)
 	{
 		free(line);
@@ -74,7 +73,8 @@ static void	read_map(t_game *game, t_list **list, int fd)
 				break ;
 		}
 		find_and_set_player_pos(game, line, j++);
-		if (!save_line(list, line))
+		new = ft_lstnew(line);
+		if (!save_line(list, line, new))
 			break ;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 15:26:15 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/30 18:07:05 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static size_t	find_longest(t_list *l)
 	return (longest);
 }
 
-static void	save_map(t_game *game, t_list *list, connt size_t longest)
+static void	save_map(t_game *game, t_list *list, const size_t longest)
 {
 	size_t			i;
 	int				j;

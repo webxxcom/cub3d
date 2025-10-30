@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 16:03:31 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/30 18:05:52 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,6 @@ void	parse_door_decoration(t_game *g, char *fields[])
 	t_decoration	decor;
 
 	ft_memset(&decor, 0, sizeof (t_decoration));
-	// if (g->map.tiles[pos.y][pos.x] != '0')
-	// {
-	// 	// ! HARDCODE
-	// 	printf("The door can only be placed on void tile '0' and not on '%c'\n", g->map.tiles[pos.y][pos.x]);
-	// 	exit(1);
-	// }
 	decor.pos = pos;
 	decor.texture_path = ft_strdup(fields[2]);
 	decor.type = DECOR_DOOR;
@@ -86,8 +80,8 @@ void	parse_light_decoration(t_game *g, char *fields[])
 	decor.light.intensity = ft_atoi(fields[4]);
 	decor.light.strength = ft_atoi(fields[5]);
 	colors = ft_split(fields[6], ",");
-	decor.light.color = colorf_from_uint(RGB(ft_atoi(colors[0]),
-				ft_atoi(colors[1]), ft_atoi(colors[2])));
+	decor.light.color = colorf_from_uint(
+			RGB(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2])));
 	ft_free_matrix(colors);
 	decor.type = DECOR_LIGHT;
 	array_push(&g->map.decorations, &decor);
