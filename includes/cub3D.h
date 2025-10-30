@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:58:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:56:09 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define M_PI 3.14159265358979323846
 #endif
 
-#define freenull(p) { free(*(p)); *(p) = NULL; }
+#define freenull(p) free(*(p)), *(p) = NULL;
 
 # define TILE_SIZE 64
 # define WINDOW_WIDTH 1000
@@ -172,25 +172,16 @@ typedef struct s_dda_ray t_dda_ray;
  *  ::dtime		- delta time between two frames
  *  ::show_dbg	- debug information triggered on F1
  */
-typedef struct s_camera_keyframe
-{
-	t_vec2f	pos;
-	t_vec2f	dir;
-}	t_camera_keyframe;
-
 typedef struct s_camera_curve
 {
-    t_vec2f p0; // start
-    t_vec2f p1; // control (curvature)
-    t_vec2f p2; // end (player position)
+    t_vec2f p0;
+    t_vec2f p1;
+    t_vec2f p2;
 } t_camera_curve;
-
 
 typedef struct s_cutscene
 {
-	t_array		cam_keyframes;
 	float		speed;
-	uint32_t	curr_frame;
 	double		dtime;
 	bool		is_going;
 	float		lerp_t;
