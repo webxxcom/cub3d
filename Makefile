@@ -13,7 +13,7 @@ SRCS		= main.c \
 				$(SRC_FLDR)/game/camera.c $(SRC_FLDR)/game/animation.c $(SRC_FLDR)/game/utils.c \
 				$(SRC_FLDR)/game/decoration.c $(SRC_FLDR)/game/game_cleanup.c $(SRC_FLDR)/game/load_decorations.c \
 			  $(SRC_FLDR)/parse/parse.c $(SRC_FLDR)/parse/input.c $(SRC_FLDR)/parse/validate_map.c \
-			  	$(SRC_FLDR)/parse/validate_elements.c $(SRC_FLDR)/parse/decoration_parse.c \
+			  	$(SRC_FLDR)/parse/validate_elements.c $(SRC_FLDR)/parse/decoration_parse.c $(SRC_FLDR)/parse/utils.c \
 			  $(SRC_FLDR)/render/render.c $(SRC_FLDR)/render/put_minimap.c $(SRC_FLDR)/render/perform_dda.c \
 			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/draw_floor_and_ceiling.c  \
 				$(SRC_FLDR)/render/compute_lit_color.c $(SRC_FLDR)/render/perform_dda2.c \

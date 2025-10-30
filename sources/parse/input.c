@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 10:47:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:41:53 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	read_tiles(t_game *game, int fd)
+static void	read_tiles(t_game *game, int fd, int element_count)
 {
 	char	*line;
 	char	**elements;
-	int		element_count;
 
-	element_count = 6;
 	while (element_count)
 	{
 		line = ft_get_next_line(fd);
@@ -42,45 +40,16 @@ static void	read_tiles(t_game *game, int fd)
 	}
 }
 
-static void	set_player_start_pos(t_game *g, int x, int y, char dir)
+static int	save_line(t_list **list, char *line)
 {
-	g->player.pos = (t_vec2f){.x = x, .y = y};
-	if (dir == 'N')
+	new = ft_lstnew(line);
+	if (!new)
 	{
-		g->cam.dir = vec2f_construct(0, -1);
-		g->cam.plane = vec2f_construct(0.66, 0);
+		free(line);
+		return (0);
 	}
-	else if (dir == 'W')
-	{
-		g->cam.dir = vec2f_construct(-1, 0);
-		g->cam.plane = vec2f_construct(0, -0.66);
-	}
-	else if (dir == 'S')
-	{
-		g->cam.dir = vec2f_construct(0, 1);
-		g->cam.plane = vec2f_construct(-0.66, 0);
-	}
-	else 
-	{
-		g->cam.dir = vec2f_construct(1, 0);
-		g->cam.plane = vec2f_construct(0, 0.66);
-	}
-}
-
-static void	find_and_set_player_pos(t_game *g, char *l, int j)
-{
-	size_t	i;
-
-	i = 0;
-	while (l[i])
-	{
-		if (l[i] == 'N' || l[i] == 'S' || l[i] == 'E' || l[i] == 'W')
-		{
-			set_player_start_pos(g, i, j, l[i]);
-			return ;
-		}
-		++i;
-	}
+	ft_lstadd_back(list, new);
+	return (1);
 }
 
 static void	read_map(t_game *game, t_list **list, int fd)
@@ -105,54 +74,16 @@ static void	read_map(t_game *game, t_list **list, int fd)
 				break ;
 		}
 		find_and_set_player_pos(game, line, j++);
-		new = ft_lstnew(line);
-		if (!new)
-		{
-			free(line);
+		if (!save_line(list, line))
 			break ;
-		}
-		ft_lstadd_back(list, new);
 	}
 }
 
-static void	parse_decoration(t_game *g, char *line)
-{
-	char	**fields;
-
-	fields = ft_split(line, " \t");
-	if (!ft_strcmp(fields[0], "WALL"))
-		parse_normal_wall_decoration(g, fields + 1);
-	else if (!ft_strcmp(fields[0], "DOOR"))
-		parse_door_decoration(g, fields + 1);
-	else if (!ft_strcmp(fields[0], "LIGHT"))
-		parse_light_decoration(g, fields + 1);
-	ft_free_matrix(fields);
-}
-
-static void	read_decorations(t_game *g, int fd)
-{
-	char	*line;
-
-	free(ft_get_next_line(fd));
-	while (1)
-	{
-		line = ft_get_next_line(fd);
-		if (!line)
-			break ;
-		if (!line_is_whitespace(line))
-		{
-			remove_nl(line);
-			parse_decoration(g, line);
-		}
-		free(line);
-	}
-}
-
-static void read_section_by_section(t_game *g, t_list **ls, int fd)
+static void	read_section_by_section(t_game *g, t_list **ls, int fd)
 {
 	char	*l;
 	int32_t	sect_count;
-	
+
 	sect_count = 3;
 	while (sect_count)
 	{
@@ -165,7 +96,7 @@ static void read_section_by_section(t_game *g, t_list **ls, int fd)
 		if (!line_is_whitespace(l))
 		{
 			if (ft_strcmp(l, "[TILES]\n") == 0)
-				read_tiles(g, fd);
+				read_tiles(g, fd, 6);
 			else if (ft_strcmp(l, "[MAP]\n") == 0)
 				read_map(g, ls, fd);
 			else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)

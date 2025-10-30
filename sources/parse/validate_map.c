@@ -3,30 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/27 17:29:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:10:06 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	validate_filename(t_game *game, const char *filename)
+static void	validate_player(t_game *game, int count)
 {
-	char	*basename;
-	int		len;
-
-	basename = ft_strrchr(filename, '/');
-	if (!basename)
-		basename = (char *)filename;
-	if (*basename == '/')
-		basename++;
-	len = ft_strlen(basename);
-	if (len == 4 && !ft_strcmp(basename + len - 4, ".cub"))
-		exit_game(ERROR_INVALID_FILE, game);
-	if (len < 4 || ft_strcmp(basename + len - 4, ".cub"))
-		exit_game(ERROR_FILE_EXTENSION, game);
+	if (count == 0)
+		exit_game(ERROR_PLAYER_NOT_FOUND, game);
+	if (count > 1)
+		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game);
 }
 
 static void	validate_elements(t_game *game, char **map)
@@ -36,33 +27,25 @@ static void	validate_elements(t_game *game, char **map)
 	int32_t	j;	
 
 	player_count = 0;
-	j = 0;
-	while (j < game->map.size.y)
+	j = -1;
+	while (++j < game->map.size.y)
 	{
-		i = 0;
-		while (i < game->map.size.x)
+		i = -1;
+		while (++i < game->map.size.x)
 		{
-			if (map[j][i] != '0' && map[j][i] != '1'
-				&& map[j][i] != 'N' && map[j][i] != 'S'
-				&& map[j][i] != 'E' && map[j][i] != 'W'
-				&& map[j][i] != ' ' && map[j][i] != TILE_DOOR) // ! SOMETHING
-			{
+			if (map[j][i] != '0' && map[j][i] != '1' && map[j][i] != 'N'
+				&& map[j][i] != 'S' && map[j][i] != 'E' && map[j][i] != 'W'
+				&& map[j][i] != ' ' && map[j][i] != TILE_DOOR)
 				exit_game(ERROR_UNKNOWN_ELEMENT_FOUND, game);
-			}
 			if (map[j][i] == 'N' || map[j][i] == 'S'
 				|| map[j][i] == 'E' || map[j][i] == 'W')
 			{
 				map[j][i] = '0';
 				++player_count;
 			}
-			++i;
 		}
-		++j;
 	}
-	if (player_count == 0)
-		exit_game(ERROR_PLAYER_NOT_FOUND, game);
-	if (player_count > 1)
-		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game);
+	validate_player(game, player_count);
 }
 
 static void	validate_borders(t_game *game, char **map)
@@ -91,7 +74,7 @@ static void	validate_borders(t_game *game, char **map)
 static void	validate_walls(t_game *game, char **map)
 {
 	int32_t const	h = game->map.size.y;
-	int32_t	const	w = game->map.size.x;
+	int32_t const	w = game->map.size.x;
 	int32_t			i;
 	int32_t			j;
 
@@ -115,29 +98,6 @@ static void	validate_walls(t_game *game, char **map)
 		}
 		++j;
 	}
-}
-
-char **get_chars_map(t_map *map)
-{
-	char	**map_chars;
-	int32_t	i;
-	int32_t	j;
-
-	map_chars = ft_calloc(map->size.y + 1, sizeof (char *));
-	j = 0;
-	while (j < map->size.y)
-	{
-		map_chars[j] = ft_calloc(map->size.x, sizeof (char));
-		i = 0;
-		while (i < map->size.x)
-		{
-			map_chars[j][i] = map->tiles[j][i].type;
-			++i;
-		}
-		++j;
-	}
-	map_chars[j] = NULL;
-	return (map_chars);
 }
 
 void	validate_map(t_game *game)

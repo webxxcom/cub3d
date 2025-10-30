@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoration_parse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 22:26:44 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:03:31 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static t_vec2i	extract_pos(t_game *g, char *fields[])
 	pos = vec2i_construct(ft_atoi(fields[0]), ft_atoi(fields[1]));
 	if (pos.x < 0 || pos.y < 0)
 	{
-		printf("ERRROR OUT OF BOUNDS WHILE PARSING POS (%d, %d)\n", pos.x, pos.y);
+		printf("ERRROR OUT OF BOUNDS WHILE PARSING POS (%d, %d)\n",
+			pos.x, pos.y);
 		exit(1);
 	}
 	return (pos);
@@ -70,7 +71,7 @@ void	parse_door_decoration(t_game *g, char *fields[])
 	decor.texture_path = ft_strdup(fields[2]);
 	decor.type = DECOR_DOOR;
 	array_push(&g->map.decorations, &decor);
-} 
+}
 
 void	parse_light_decoration(t_game *g, char *fields[])
 {
@@ -85,7 +86,8 @@ void	parse_light_decoration(t_game *g, char *fields[])
 	decor.light.intensity = ft_atoi(fields[4]);
 	decor.light.strength = ft_atoi(fields[5]);
 	colors = ft_split(fields[6], ",");
-	decor.light.color = colorf_from_uint(RGB(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2])));
+	decor.light.color = colorf_from_uint(RGB(ft_atoi(colors[0]),
+				ft_atoi(colors[1]), ft_atoi(colors[2])));
 	ft_free_matrix(colors);
 	decor.type = DECOR_LIGHT;
 	array_push(&g->map.decorations, &decor);
