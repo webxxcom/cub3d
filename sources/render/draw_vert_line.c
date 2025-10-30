@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 19:39:47 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:02:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ static inline void	init_startvals(t_game *g, t_dvl *dvl, int32_t i)
 	else
 		dvl->cube_side = g->textures[dvl->obs_data.side];
 	if ((dvl->obs_data.side == EAST || dvl->obs_data.side == WEST))
-		dvl->wall_x = g->player.pos.y + dvl->ray_dir.y * dvl->obs_data.dist;
+		dvl->wall_x = g->cam.pos.y + dvl->ray_dir.y * dvl->obs_data.dist;
 	else
-		dvl->wall_x = g->player.pos.x + dvl->ray_dir.x * dvl->obs_data.dist;
+		dvl->wall_x = g->cam.pos.x + dvl->ray_dir.x * dvl->obs_data.dist;
 	dvl->wall_x = dvl->wall_x - floor(dvl->wall_x);
 }
 

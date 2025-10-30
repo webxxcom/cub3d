@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 19:00:42 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:04:45 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	repetition_handle(t_game *const g)
 	int		*tmp;
 	size_t	i;
 
+	if (g->state != GAME_STATE_ON)
+		return ;
 	i = 0;
 	while (i < array_size(&g->input.pressed_keys))
 	{

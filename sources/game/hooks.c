@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 19:01:05 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 20:59:02 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	cam_rotate(t_game *const g, const float dx, float const dy)
+void	cam_rotate(t_game *const g, const float dx, float const dy)
 {
 	const t_vec2f	dir_vec = g->cam.dir;
 	const t_vec2f	plane_vec = g->cam.plane;

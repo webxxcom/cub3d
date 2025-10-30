@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 11:05:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:02:20 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	draw_floor_and_ceiling(t_game *g)
 				facd.rowDist * (facd.rayDir2.x - facd.rayDir1.x) / g->w,
 				facd.rowDist * (facd.rayDir2.y - facd.rayDir1.y) / g->w);
 		facd.floor_pos = vec2f_construct(
-				g->player.pos.x + facd.rowDist * facd.rayDir1.x,
-				g->player.pos.y + facd.rowDist * facd.rayDir1.y);
+				g->cam.pos.x + facd.rowDist * facd.rayDir1.x,
+				g->cam.pos.y + facd.rowDist * facd.rayDir1.y);
 		facd.shade = 1 / facd.rowDist;
 		draw_horizontal_line(g, &facd);
 		++facd.floor_y;
