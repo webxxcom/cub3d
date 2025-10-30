@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 18:07:05 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/30 18:11:06 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,26 @@ static size_t	find_longest(t_list *l)
 	return (longest);
 }
 
-static void	save_map(t_game *game, t_list *list, const size_t longest)
+static void	save_map(t_game *game, int j, char *l, const size_t longest)
 {
-	size_t			i;
-	int				j;
-	char			*l;
+	size_t	i;
 
-	j = -1;
-	while (list)
+	i = 0;
+	game->map.tiles[j] = ft_calloc(longest, sizeof (t_tile));
+	if (!game->map.tiles[j])
 	{
-		l = list->content;
-		i = 0;
-		game->map.tiles[++j] = ft_calloc(longest, sizeof (t_tile));
-		if (!game->map.tiles[j])
-		{
-			printf("oops, malloc failed\n");
-			exit(1);// ! HARDCODED EXIT
-		}
-		while (l[++i] && l[i] != '\n')
-			game->map.tiles[j][i].type = l[i];
-		while (++i < longest)
-			game->map.tiles[j][i].type = ' ';
-		list = list->next;
+		printf("oops, malloc failed\n");
+		exit(1); // ! HARDCODED EXIT
+	}
+	while (l[i] && l[i] != '\n')
+	{
+		game->map.tiles[j][i].type = l[i];
+		++i;
+	}
+	while (i < longest)
+	{
+		game->map.tiles[j][i].type = ' ';
+		++i;
 	}
 }
 
@@ -74,6 +72,8 @@ static void	load_map(t_game *game, t_list *list)
 {
 	const size_t	longest = find_longest(list);
 	const size_t	map_height = ft_lstsize(list);
+	int				j;
+	char			*l;
 
 	if (!list)
 		exit_game(ERROR_EMPTY_FILE, game);
@@ -83,7 +83,14 @@ static void	load_map(t_game *game, t_list *list)
 		ft_lstclear(&list, free);
 		exit_game(ERROR_PARSE_MAP_FAILED, game);
 	}
-	save_map(game, list, longest);
+	j = 0;
+	while (list)
+	{
+		l = list->content;
+		save_map(game, j, l, longest);
+		list = list->next;
+		++j;
+	}
 	game->map.size.x = longest;
 	game->map.size.y = map_height;
 }

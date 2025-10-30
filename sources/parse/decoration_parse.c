@@ -6,7 +6,7 @@
 /*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 18:05:52 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/30 18:11:24 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_vec2i	extract_pos(t_game *g, char *fields[])
 	{
 		printf("ERRROR OUT OF BOUNDS WHILE PARSING POS (%d, %d)\n",
 			pos.x, pos.y);
-		exit(1);
+		exit(1);// HARDCODED EXIT
 	}
 	return (pos);
 }
