@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:31:22 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:01:15 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,6 @@ static t_vec2f bezier_quad(t_vec2f p0, t_vec2f p1, t_vec2f p2, float t)
     res.y = u*u*p0.y + 2*u*t*p1.y + t*t*p2.y;
     return res;
 }
-// Rebuild camera plane for raycasting
-void update_cam_plane(t_game *g, float fov)
-{
-    // Plane is perpendicular to dir
-    g->cam.plane.x = -g->cam.dir.y * fov;
-    g->cam.plane.y =  g->cam.dir.x * fov;
-}
-
 
 void update_cutscene(t_game *g, size_t idx)
 {
@@ -74,22 +66,16 @@ void update_cutscene(t_game *g, size_t idx)
     g->cam.dir.x = (1-blend)*to_player.x + blend*g->player.dir.x;
     g->cam.dir.y = (1-blend)*to_player.y + blend*g->player.dir.y;
     g->cam.dir = vec2f_normalize(g->cam.dir);
-
-    // rebuild plane
-    update_cam_plane(g, 0.66f);
-
+    g->cam.plane = cam_get_plane_vec(g->cam.dir);
     if (cs->lerp_t >= 1.f)
     {
         cs->is_going = false;
         g->state = GAME_STATE_ON;
         g->cam.pos = g->player.pos;
         g->cam.dir = g->player.dir;
-        update_cam_plane(g, 0.66f);
+		g->cam.plane = cam_get_plane_vec(g->cam.dir);
     }
 }
-
-
-
 
 int	main_loop(t_game *g)
 {

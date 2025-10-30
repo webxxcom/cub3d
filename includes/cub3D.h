@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:29:10 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:58:31 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ void			cam_process_bob(t_cam *cam, float player_speed, float dtime);
 void			load_decorations(t_game *g);
 t_colorf		get_light_bonus(t_game *g, float base_shade, t_vec2f obs_pos);
 void			cam_rotate(t_game *const g, const float dx, float const dy);
+t_vec2f			cam_get_plane_vec(t_vec2f dir_vec);
 
 void			put_minimap(t_game *g);
 

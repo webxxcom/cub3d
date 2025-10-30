@@ -6,22 +6,27 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:16:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 20:59:02 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:58:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+t_vec2f	cam_get_plane_vec(t_vec2f dir_vec)
+{
+	return (vec2f_construct(-dir_vec.y * CAMERA_FOV, dir_vec.x * CAMERA_FOV));
+}
+
 void	cam_rotate(t_game *const g, const float dx, float const dy)
 {
-	const t_vec2f	dir_vec = g->cam.dir;
-	const t_vec2f	plane_vec = g->cam.plane;
-	const float		rot = -dx * g->cam.sensitivity;
+	t_vec2f const	dir_vec = g->cam.dir;
+	float const		rot = -dx * g->cam.sensitivity;
+	float const		sin_res = sinf(rot);
+	float const		cos_res = cosf(rot);
 
-	g->cam.dir.x = dir_vec.x * cosf(rot) - dir_vec.y * sinf(rot);
-	g->cam.dir.y = dir_vec.x * sinf(rot) + dir_vec.y * cosf(rot);
-	g->cam.plane.x = plane_vec.x * cosf(rot) - plane_vec.y * sinf(rot);
-	g->cam.plane.y = plane_vec.x * sinf(rot) + plane_vec.y * cosf(rot);
+	g->cam.dir.x = dir_vec.x * cos_res - dir_vec.y * sin_res;
+	g->cam.dir.y = dir_vec.x * sin_res + dir_vec.y * cos_res;
+	g->cam.plane = cam_get_plane_vec(g->cam.dir);
 	if ((dy < 0 && g->cam.pitch < g->h * 2)
 		|| (dy > 0 && - g->cam.pitch < g->h * 2))
 		g->cam.pitch -= dy * g->cam.sensitivity * g->h;
