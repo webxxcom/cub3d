@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:49:33 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:11:20 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static size_t	find_longest(t_list *l)
 	}
 	return (longest);
 }
-
-
 
 static void	save_map(t_game *game, int j, char *l, const size_t longest)
 {

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:50:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:12:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	validate_elements(t_game *game, char **map)
 			if (map[j][i] == 'N' || map[j][i] == 'S'
 				|| map[j][i] == 'E' || map[j][i] == 'W')
 			{
-				map[j][i] = '0';
+				game->map.tiles[j][i].type = '0';
 				++player_count;
 			}
 		}

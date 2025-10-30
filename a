@@ -1,0 +1,115 @@
+sources/game/main_loop.c: In function ‘update_cutscene’:
+sources/game/main_loop.c:43:47: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   43 |                         g->cam.pos = g->player.pos;
+      |                                               ^
+sources/game/process_keypress.c: In function ‘player_interact’:
+sources/game/process_keypress.c:43:34: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   43 |                         g->player.pos.x + g->cam.dir.x, g->player.pos.y + g->cam.dir.y);
+      |                                  ^
+sources/game/process_keypress.c:43:66: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   43 |                         g->player.pos.x + g->cam.dir.x, g->player.pos.y + g->cam.dir.y);
+      |                                                                  ^
+sources/game/start_game.c: In function ‘init_start_cutscene’:
+sources/game/start_game.c:68:70: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   68 |                 (t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 3.f), .dir = g->cam.dir},
+      |                                                                      ^
+sources/game/start_game.c:68:87: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   68 |                 (t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 3.f), .dir = g->cam.dir},
+      |                                                                                       ^
+sources/game/start_game.c:69:70: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   69 |                 (t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 1.f), .dir = g->cam.dir},
+      |                                                                      ^
+sources/game/start_game.c:69:87: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   69 |                 (t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y - 1.f), .dir = g->cam.dir},
+      |                                                                                       ^
+sources/game/start_game.c:70:70: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   70 |                 (t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y), .dir = g->cam.dir},
+      |                                                                      ^
+sources/game/start_game.c:70:87: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   70 |                 (t_camera_keyframe) {.pos = vec2f_construct(g->player.pos.x, g->player.pos.y), .dir = g->cam.dir},
+      |                                                                                       ^
+sources/game/mvement_handle.c: In function ‘move’:
+sources/game/mvement_handle.c:46:30: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   46 |         if (is_walkable(g, pl->pos.x + delta.x * pl->radius * 2, pl->pos.y))
+      |                              ^~
+sources/game/mvement_handle.c:46:68: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   46 |         if (is_walkable(g, pl->pos.x + delta.x * pl->radius * 2, pl->pos.y))
+      |                                                                    ^~
+sources/game/mvement_handle.c:47:19: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   47 |                 pl->pos.x += delta.x * pl->speed;
+      |                   ^~
+sources/game/mvement_handle.c:48:30: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   48 |         if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius * 2))
+      |                              ^~
+sources/game/mvement_handle.c:48:41: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   48 |         if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius * 2))
+      |                                         ^~
+sources/game/mvement_handle.c:49:19: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   49 |                 pl->pos.y += delta.y * pl->speed;
+      |                   ^~
+make: *** [Makefile:45: obj/sources/game/start_game.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Makefile:45: obj/sources/game/process_keypress.o] Error 1
+make: *** [Makefile:45: obj/sources/game/main_loop.o] Error 1
+make: *** [Makefile:45: obj/sources/game/mvement_handle.o] Error 1
+sources/parse/input.c: In function ‘set_player_start_pos’:
+sources/parse/input.c:47:18: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   47 |         g->player.pos = (t_vec2f){.x = x, .y = y};
+      |                  ^
+make: *** [Makefile:44: obj/sources/parse/input.o] Error 1
+sources/render/put_minimap.c: In function ‘draw_player’:
+sources/render/put_minimap.c:77:40: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   77 |                         round(g->player.pos.x * scale.x) + g->minimap.pos.x,
+      |                                        ^
+sources/render/put_minimap.c:78:40: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   78 |                         round(g->player.pos.y * scale.y)
+      |                                        ^
+sources/render/perform_dda.c: In function ‘init_startvals’:
+sources/render/perform_dda.c:21:51: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   21 |                 dda_d->side_dist.x = (game->player.pos.x - (int)game->player.pos.x)
+      |                                                   ^
+sources/render/perform_dda.c:21:77: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   21 |                 dda_d->side_dist.x = (game->player.pos.x - (int)game->player.pos.x)
+      |                                                                             ^
+sources/render/perform_dda.c:27:56: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   27 |                 dda_d->side_dist.x = ((int)game->player.pos.x + 1 - game->player.pos.x)
+      |                                                        ^
+sources/render/perform_dda.c:27:81: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   27 |                 dda_d->side_dist.x = ((int)game->player.pos.x + 1 - game->player.pos.x)
+      |                                                                                 ^
+sources/render/perform_dda.c:33:51: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   33 |                 dda_d->side_dist.y = (game->player.pos.y - (int)game->player.pos.y)
+      |                                                   ^
+sources/render/perform_dda.c:33:77: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   33 |                 dda_d->side_dist.y = (game->player.pos.y - (int)game->player.pos.y)
+      |                                                                             ^
+sources/render/perform_dda.c:39:56: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   39 |                 dda_d->side_dist.y = ((int)game->player.pos.y + 1 - game->player.pos.y)
+      |                                                        ^
+sources/render/perform_dda.c:39:81: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   39 |                 dda_d->side_dist.y = ((int)game->player.pos.y + 1 - game->player.pos.y)
+      |                                                                                 ^
+sources/render/perform_dda.c: In function ‘get_dda_start_data’:
+sources/render/perform_dda.c:56:53: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   56 |                 .map_pos = vec2i_construct(g->player.pos.x, g->player.pos.y)
+      |                                                     ^
+sources/render/perform_dda.c:56:70: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   56 |                 .map_pos = vec2i_construct(g->player.pos.x, g->player.pos.y)
+      |                                                                      ^
+sources/render/perform_dda.c: In function ‘add_crossed_texture’:
+sources/render/perform_dda.c:87:34: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   87 |                         g->player.pos.x + dda_res->ray_dir.x * wall_data->dist,
+      |                                  ^
+sources/render/perform_dda.c:88:34: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   88 |                         g->player.pos.y + dda_res->ray_dir.y * wall_data->dist);
+      |                                  ^
+make: *** [Makefile:44: obj/sources/render/put_minimap.o] Error 1
+make: *** [Makefile:44: obj/sources/render/perform_dda.o] Error 1
+sources/render/render.c: In function ‘render_debug_info’:
+sources/render/render.c:27:34: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   27 |                         g->player.pos.x, g->player.pos.y);
+      |                                  ^
+sources/render/render.c:27:51: error: ‘t_player’ {aka ‘struct s_player’} has no member named ‘pos’
+   27 |                         g->player.pos.x, g->player.pos.y);
+      |                                                   ^
+make: *** [Makefile:44: obj/sources/render/render.o] Error 1
