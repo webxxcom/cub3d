@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:25:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:59:11 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ static void	put_lines(t_game *const g)
 	{
 		g->rays[screen_x] = perform_dda(g, screen_x);
 		draw_vert_line(g, screen_x, g->rays[screen_x]);
+		g->z_buffer[screen_x] = g->rays[screen_x].crossed_textures[0].dist;
 		++screen_x;
 	}
 }
@@ -145,6 +146,7 @@ static void	put_buffer(t_game *const g)
 {
 	im_clear(g->buffer_image);
 	put_lines(g);
+	put_sprites(g);
 	put_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win,
 		g->buffer_image->image, 0, 0);

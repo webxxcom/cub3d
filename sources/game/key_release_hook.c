@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:44:26 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 21:03:57 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 12:27:19 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,27 @@ static void	remove_repeating_key(t_game *g, int key)
 	}
 }
 
-int	key_release_hook(int key, t_game *game)
+static inline void	update_released_fields(t_game *g)
 {
-	if (game->state != GAME_STATE_ON)
-		return (1);
-	if (movement_key(key))
-		process_mvkeys(game, key, false);
-	else
+	g->player.speed = g->player.base_speed;
+}
+
+int	key_release_hook(int key, t_game *g)
+{
+	if (g->state == GAME_STATE_ON)
 	{
-		if (key_should_repeat(key))
-			remove_repeating_key(game, key);
+		if (movement_key(key))
+			process_mvkeys(g, key, false);
 		else
-			process_keypress(game, key);
+		{
+			if (key_should_repeat(key))
+			{
+				remove_repeating_key(g, key);
+				update_released_fields(g);
+			}
+			else
+				process_keypress(g, key);
+		}
 	}
 	return (1);
 }

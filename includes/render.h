@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:54:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 12:00:12 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 13:37:03 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ t_dda_d	get_dda_start_data(t_game *const g, int const screen_x);
 void	move_by_x(t_dda_d *const dda, t_obs_data *const walld);
 void	move_by_y(t_dda_d *const dda, t_obs_data *const walld);
 void	add_crossed_texture(t_game *g, t_dda_d *dda, t_obs_data *wall_data, t_dda_ray *dda_res);
+void	put_sprites(t_game *const g);
+void	put_minimap(t_game *g);
 
 #endif

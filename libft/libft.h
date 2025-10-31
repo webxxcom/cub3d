@@ -47,6 +47,7 @@ int			ft_isspace(int c);
 int			ft_toupper(int ch);
 int			ft_tolower(int ch);
 int			ft_atoi(const char *str);
+float		ft_atof(char *str);
 char		*ft_itoa(int num);
 
 // String

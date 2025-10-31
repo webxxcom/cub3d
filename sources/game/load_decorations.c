@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 19:09:37 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 10:51:07 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:20:47 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	load_light(t_game *g, t_decoration *light, t_tile *tile)
 	if (!light->animation)
 		exit_game("load_light", g);
 	light->texture = animation_get_current_image(light->animation);
-	light->update = light_update;
+	light->update = anim_def_update;
 	light->interact = light_interact;
 }
 
@@ -46,6 +46,27 @@ void	load_wall_decor(t_game *g, t_decoration *wall, t_tile *tile)
 		exit_game("load_wall_decor", g);
 	wall->texture = animation_get_current_image(wall->animation);
 	tile->sides[wall->direction] = wall;
+}
+
+void	load_sprite(t_game *g, t_sprite *sprite)
+{
+	sprite->animation = init_animation(g, sprite->texture_path);
+	if (!sprite->animation)
+		exit_game("load_sprite", g);
+	sprite->texture = animation_get_current_image(sprite->animation);
+	sprite->update = sprite_update_anim;
+}
+
+void	load_sprites(t_game *g)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < array_size(&g->sprites))
+	{
+		load_sprite(g, array_get(&g->sprites, i));
+		++i;
+	}
 }
 
 void	load_decorations(t_game *g)

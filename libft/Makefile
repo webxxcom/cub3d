@@ -5,7 +5,7 @@ CFLAGS		= -Wall -Wextra -Werror -O3
 
 SRCS 		= \
 			char/ft_isalpha.c char/ft_isdigit.c char/ft_isalnum.c char/ft_isascii.c char/ft_isprint.c char/ft_isspace.c \
-			conversion/ft_toupper.c conversion/ft_tolower.c conversion/ft_atoi.c conversion/ft_itoa.c \
+			conversion/ft_toupper.c conversion/ft_tolower.c conversion/ft_atoi.c conversion/ft_itoa.c conversion/ft_atof.c \
 			string/ft_strlen.c string/ft_strlcpy.c string/ft_strlcat.c string/ft_strncmp.c \
 				string/ft_strchr.c string/ft_strrchr.c string/ft_strnstr.c string/ft_strcmp.c \
 				string/ft_strdup.c string/ft_substr.c string/ft_strjoin.c string/ft_strtrim.c \

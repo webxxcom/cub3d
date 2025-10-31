@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:05:45 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:53:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 13:33:00 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	parse_decoration(t_game *g, char *line)
 		parse_door_decoration(g, fields + 1);
 	else if (!ft_strcmp(fields[0], "LIGHT"))
 		parse_light_decoration(g, fields + 1);
+	else if (!ft_strcmp(fields[0], "SPRITE"))
+		parse_sprite_decoration(g, fields + 1);
 	ft_free_matrix(fields);
 }
 

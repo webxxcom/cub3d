@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoration_parse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 18:11:24 by phutran          ###   ########.fr       */
+/*   Updated: 2025/10/31 14:23:28 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_txtres_sides	parse_direction(char *dir)
 	if (ft_strcmp(dir, "NORTH") == 0)
 		return (NORTH);
 	printf("INCORRECT DECORATION DIRECTION %s\n", dir);
-	exit(1);
+	exit(1); // NOTE if decoration direction is incorrect it's better to exit?
 }
 
 static t_vec2i	extract_pos(t_game *g, char *fields[])
@@ -41,7 +41,20 @@ static t_vec2i	extract_pos(t_game *g, char *fields[])
 	return (pos);
 }
 
-// x	y	path	direction
+static t_vec2f	extract_posf(char *fields[])
+{
+	t_vec2f	pos;
+
+	pos = vec2f_construct(ft_atof(fields[0]), ft_atof(fields[1]));
+	if (pos.x < 0 || pos.y < 0)
+	{
+		printf("ERRROR OUT OF BOUNDS WHILE PARSING POS (%.2f, %.2f)\n",
+			pos.x, pos.y); // NOTE revise for checking if position might be greater than map pos
+		exit(1);// ! HARDCODED EXIT
+	}
+	return (pos);
+}
+
 void	parse_normal_wall_decoration(t_game *g, char *fields[])
 {
 	const t_vec2i	pos = extract_pos(g, fields);
@@ -65,6 +78,17 @@ void	parse_door_decoration(t_game *g, char *fields[])
 	decor.texture_path = ft_strdup(fields[2]);
 	decor.type = DECOR_DOOR;
 	array_push(&g->map.decorations, &decor);
+}
+
+void	parse_sprite_decoration(t_game *g, char *fields[])
+{
+	t_sprite	sprite;
+
+	ft_memset(&sprite, 0, sizeof (sprite));
+	sprite.pos = extract_posf(fields);
+	sprite.texture_path = ft_strdup(fields[2]);
+	sprite.type = SPRITE_STATIC;
+	array_push(&g->sprites, &sprite);
 }
 
 void	parse_light_decoration(t_game *g, char *fields[])

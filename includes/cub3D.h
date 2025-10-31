@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 22:56:09 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:01:42 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "entity.h"
 # include "array.h"
 # include "decorations.h"
+# include "sprite.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -131,7 +132,8 @@ typedef struct s_map
 void	door_update(t_game *const g, t_decoration *door);
 void	door_interact(t_game *const g, t_decoration *door);
 void	light_interact(t_game *const g, t_decoration *light);
-void	light_update(t_game *const g, t_decoration *light);
+void	anim_def_update(t_game *const g, t_decoration *light);
+void	sprite_update_anim(t_game *const g, t_sprite *self);
 
 /**
  * The input structure which describes current keyboard input.
@@ -194,6 +196,7 @@ typedef enum	e_game_state
 	GAME_STATE_ON
 }	t_game_state;
 
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -206,6 +209,9 @@ typedef struct s_game
 	uint64_t		last_time;
 	t_game_state	state;
 	t_array			cutscenes;
+	t_array			sprites;
+	float			*z_buffer;
+	
 
 	t_map			map;
 	t_player		player;
@@ -230,11 +236,12 @@ t_decoration 	*find_decoration_at(t_game *const g, t_vec2i pos);
 float			cam_get_pitch(t_cam *cam);
 void			cam_process_bob(t_cam *cam, float player_speed, float dtime);
 void			load_decorations(t_game *g);
+void			load_sprites(t_game *g);
 t_colorf		get_light_bonus(t_game *g, float base_shade, t_vec2f obs_pos);
 void			cam_rotate(t_game *const g, const float dx, float const dy);
 t_vec2f			cam_get_plane_vec(t_vec2f dir_vec);
-
-void			put_minimap(t_game *g);
+void 			cutscene_update(t_game *g, t_cutscene *cs);
+void			update_animations(t_game *g);
 
 // Delta time
 uint64_t		get_time_in_ms(void);

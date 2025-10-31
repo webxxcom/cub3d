@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:12:07 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 10:13:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:20:30 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,38 @@ void	door_interact(t_game *const g, t_decoration *door)
 		door->state = OPENING;
 }
 
-void	light_update(t_game *const g, t_decoration *l)
+void	anim_def_update(t_game *const g, t_decoration *self)
 {
 	uint64_t const	curr_time = get_time_in_ms();
 	t_frame *const	curr_frame
-		= l->animation->frames[l->animation->curr_frame_n];
+		= self->animation->frames[self->animation->curr_frame_n];
 	int const		frame_time = curr_frame->time;
 
 	(void)g;
 	if (curr_time - frame_time > ANIMATION_DELAY)
 	{
-		l->animation->curr_frame_n = (l->animation->curr_frame_n + 1)
-			% l->animation->total_frames;
-		l->animation->frames[l->animation->curr_frame_n]->time = curr_time;
+		self->animation->curr_frame_n = (self->animation->curr_frame_n + 1)
+			% self->animation->total_frames;
+		self->animation->frames[self->animation->curr_frame_n]->time = curr_time;
 	}
-	l->texture = animation_get_current_image(l->animation);
+	self->texture = animation_get_current_image(self->animation);
+}
+
+void	sprite_update_anim(t_game *const g, t_sprite *self)
+{
+	uint64_t const	curr_time = get_time_in_ms();
+	t_frame *const	curr_frame
+		= self->animation->frames[self->animation->curr_frame_n];
+	int const		frame_time = curr_frame->time;
+
+	(void)g;
+	if (curr_time - frame_time > ANIMATION_DELAY)
+	{
+		self->animation->curr_frame_n = (self->animation->curr_frame_n + 1)
+			% self->animation->total_frames;
+		self->animation->frames[self->animation->curr_frame_n]->time = curr_time;
+	}
+	self->texture = animation_get_current_image(self->animation);
 }
 
 void	light_interact(t_game *const g, t_decoration *light)
