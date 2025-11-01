@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:41:34 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 10:50:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 17:07:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ static void	decoration_cleanup(void *mlx, void *decor)
 	}
 	if (tmp->texture_path)
 		freenull(&tmp->texture_path);
+	if (tmp->interact_text)
+		freenull(&tmp->interact_text);
+	if (tmp->looking_at_text)
+		freenull(&tmp->looking_at_text);
 }
 
 static void	map_cleanup(void *mlx, t_map *m)
@@ -77,12 +81,37 @@ static void	paths_cleanup(t_game *g)
 		freenull(&g->paths.east);
 }
 
+void	sprites_cleanup(t_game *g, t_array *sprites)
+{
+	t_sprite	*tmp;
+	size_t		i;
+
+	i = 0;
+	while (i < array_size(sprites))
+	{
+		tmp = array_get(sprites, i);
+		if (tmp->animation)
+			animation_cleanup(g->mlx, tmp->animation);
+		if (tmp->interact_text)
+			free(tmp->interact_text);
+		if (tmp->looking_at_text)
+			free(tmp->looking_at_text);
+		++i;
+	}
+	array_free(sprites);
+}
+
 void	game_cleanup(t_game *g)
 {
 	array_free(&g->input.pressed_keys);
+	array_free(&g->lights);
+	array_free(&g->cutscenes);
+	sprites_cleanup(g, &g->sprites);
 	textures_cleanup(g);
 	map_cleanup(g->mlx, &g->map);
 	paths_cleanup(g);
+	if (g->z_buffer)
+		freenull(&g->z_buffer);
 	if (g->rays)
 		free(g->rays);
 	if (g->mlx && g->buffer_image)

@@ -6,38 +6,39 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 21:51:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:03:25 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	read_tiles(t_game *game, int fd, int element_count)
+static bool	read_tiles(t_game *game, int fd, int el_count)
 {
 	char	*line;
-	char	**elements;
+	char	**els;
+	bool	flag;
 
-	while (element_count)
+	flag = true;
+	while (el_count && flag)
 	{
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] != '\n' && line[0] != '[')
+		if (!line_is_whitespace(line) && line[0] != '[')
 		{
-			elements = ft_split(line, " ");
-			if (!elements)
+			els = ft_split(line, " ");
+			if (!els)
+			{
+				flag = false;
 				break ;
-			if (elements[0][0] != '\n')
-				validate_element(game, elements, &element_count);
-			ft_free_matrix(elements);
+			}
+			if (els[0][0] != '\n')
+				validate_element(game, els, &el_count);
+			ft_free_matrix(els);
 		}
 		freenull(&line);
 	}
-	if (element_count)
-	{
-		close(fd);
-		exit_game(ERROR_MISSING_TEXTURE, game);
-	}
+	return (el_count == 0 && flag);
 }
 
 static int	save_line(t_list **list, char *line, t_list *new)
@@ -92,7 +93,7 @@ static void	read_section_by_section(t_game *g, t_list **ls, int fd)
 		if (!l)
 		{
 			printf(".cub misses some configurations\n");
-			exit(1);// ! HARDCODED EXIT
+			exit(1); // HARDCODE
 		}
 		if (!line_is_whitespace(l))
 		{
@@ -104,12 +105,12 @@ static void	read_section_by_section(t_game *g, t_list **ls, int fd)
 				read_decorations(g, fd);
 			else
 			{
-				printf(".cub misses some configurations\n");
-				exit(1);// ! HARDCODED EXIT
+				printf("unknown configuration occured in .cub file: %s\n", l);
+				exit(1); // HARDCODE
 			}
 			--sect_count;
 		}
-		free(l);
+		freenull(&l);
 	}
 }
 

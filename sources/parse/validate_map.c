@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 22:12:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:21:31 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	validate_player(t_game *game, int count)
 	if (count == 0)
 		exit_game(ERROR_PLAYER_NOT_FOUND, game);
 	if (count > 1)
-		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game);
+		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game); // ! LEAKS FOUND, check allocated pointers in stack trace
 }
 
 static void	validate_elements(t_game *game, char **map)

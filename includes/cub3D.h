@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/31 15:01:42 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:10:52 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # include "mlx.h"
 # include "libft.h"
+# include "array.h"
 # include "parse.h"
 # include "animation.h"
 # include "colors.h"
@@ -34,11 +35,10 @@
 # include "key_codes.h"
 # include "textures.h"
 # include "vectors.h"
+# include "sprite.h"
 # include "raycaster.h"
 # include "render.h"
-# include "sprite.h"
 # include "entity.h"
-# include "array.h"
 # include "decorations.h"
 # include "sprite.h"
 
@@ -134,6 +134,7 @@ void	door_interact(t_game *const g, t_decoration *door);
 void	light_interact(t_game *const g, t_decoration *light);
 void	anim_def_update(t_game *const g, t_decoration *light);
 void	sprite_update_anim(t_game *const g, t_sprite *self);
+void	decor_interact(t_game *const g, t_decoration *decor);
 
 /**
  * The input structure which describes current keyboard input.
@@ -210,8 +211,8 @@ typedef struct s_game
 	t_game_state	state;
 	t_array			cutscenes;
 	t_array			sprites;
+	t_array			lights;
 	float			*z_buffer;
-	
 
 	t_map			map;
 	t_player		player;
@@ -228,11 +229,8 @@ typedef struct s_game
 	t_image			*floor;
 }	t_game;
 
-t_minimap   	minimap_init(t_game *g);
-t_cam			cam_init(void);
-t_input			init_input(void);
-t_player		player_init(void);
 t_decoration 	*find_decoration_at(t_game *const g, t_vec2i pos);
+t_sprite		*find_sprite_at(t_game *const g, t_vec2f pos);
 float			cam_get_pitch(t_cam *cam);
 void			cam_process_bob(t_cam *cam, float player_speed, float dtime);
 void			load_decorations(t_game *g);
@@ -242,6 +240,15 @@ void			cam_rotate(t_game *const g, const float dx, float const dy);
 t_vec2f			cam_get_plane_vec(t_vec2f dir_vec);
 void 			cutscene_update(t_game *g, t_cutscene *cs);
 void			update_animations(t_game *g);
+void 			update(t_game *g);
+
+// Inits
+void			cutscenes_init(t_game *g);
+t_input			input_init(void);
+t_player		player_init(void);
+t_cam			cam_init(void);
+t_minimap   	minimap_init(t_game *g);
+
 
 // Delta time
 uint64_t		get_time_in_ms(void);

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 21:02:14 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 11:22:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static inline bool	decor_is_wall_decoration(t_decoration *decor)
 {
-	return (decor->type == DECOR_WALL || decor->type == DECOR_LIGHT);
+	return (decor->type == DECOR_WALL);
 }
 
 static inline void	put_pixel_on_the_wall(t_game *g, t_dvl *dvl)

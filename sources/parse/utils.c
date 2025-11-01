@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:05:45 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/31 13:33:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:02:19 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	parse_decoration(t_game *g, char *line)
 	char	**fields;
 
 	fields = ft_split(line, " \t");
+	if (!fields)
+		return ;
 	if (!ft_strcmp(fields[0], "WALL"))
 		parse_normal_wall_decoration(g, fields + 1);
 	else if (!ft_strcmp(fields[0], "DOOR"))
@@ -53,20 +55,17 @@ void	parse_decoration(t_game *g, char *line)
 
 void	read_decorations(t_game *g, int fd)
 {
-	char	*line;
+	char	*l;
 
 	free(ft_get_next_line(fd));
 	while (1)
 	{
-		line = ft_get_next_line(fd);
-		if (!line)
+		l = ft_get_next_line(fd);
+		if (!l)
 			break ;
-		if (!line_is_whitespace(line))
-		{
-			remove_nl(line);
-			parse_decoration(g, line);
-		}
-		free(line);
+		if (!line_is_whitespace(l))
+			parse_decoration(g, remove_nl(l));
+		freenull(&l);
 	}
 }
 

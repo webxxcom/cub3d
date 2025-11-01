@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 10:24:25 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 14:36:23 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:24:42 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,20 @@ typedef struct s_decoration
 	t_image			*texture;
 	t_animation		*animation;
 	int				state;
+	char			*interact_text;
+	char			*looking_at_text;
 	void			(*interact)(t_game *const, struct s_decoration *);
 	void			(*update)(t_game *const, struct s_decoration *);
-
-	union
-	{
-		struct s_light
-		{
-			float		intensity;
-			float		strength;
-			t_colorf	color;
-		}	light;
-	};
 }	t_decoration;
+
+typedef struct s_light
+{
+	t_vec2f		pos;
+	float		intensity;
+	float		strength;
+	t_colorf	color;
+	char		*interact_text;
+}	t_light;
+
 
 #endif

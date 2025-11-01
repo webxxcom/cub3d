@@ -6,15 +6,15 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/31 14:59:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:06:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-#pragma region DEBUG
 // ! Debug function is not complient with shitty
 //		norminette so need to comment it for release
+#pragma region DEBUG
 static void	render_debug_info(t_game *g)
 {
 	if (g->show_dbg)
@@ -85,47 +85,11 @@ static void	render_debug_info(t_game *g)
 			g->input.moving_keys[0], g->input.moving_keys[1],
 			g->input.moving_keys[2], g->input.moving_keys[3]);
 
-		// Textures loaded check
-		int loaded = 1;
-		for (int i = 0; i < 2; i++)
-			if (!g->textures[i])
-				loaded = 0;
-
-		snprintf(buf, sizeof(buf),
-			"Textures: %s", loaded ? "ALL LOADED" : "MISSING");
 		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
 	}
 }
 
 #pragma endregion
-
-void	draw_keybindings(t_game *g)
-{
-	const int	dbg_x = 10;
-	const int	dbg_line_h = 20;
-	int			y;
-
-	if (!g->show_keys)
-		return ;
-	y = g->h / 3;
-	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
-		"W / ARROW_UP : Move forward");
-	y += dbg_line_h;
-	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
-		"S / ARROW_DOWN : Move backward");
-	y += dbg_line_h;
-	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
-		"A / ARROW_LEFT : Move left");
-	y += dbg_line_h;
-	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
-		"D / ARROW_RIGHT : Move right");
-	y += dbg_line_h;
-	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
-		"Left Shift : Sprint");
-	y += dbg_line_h;
-	mlx_string_put(g->mlx, g->win, dbg_x, y, COLOR_WHITE,
-		"F1 : Toggle debug info");
-}
 
 static void	put_lines(t_game *const g)
 {
@@ -142,6 +106,42 @@ static void	put_lines(t_game *const g)
 	}
 }
 
+static bool	decor_direction_matches(t_game *g, t_decoration *d)
+{
+	t_vec2f const	dir = g->player.dir;
+
+	return (d->type == DECOR_DOOR
+		|| (d->direction == NORTH && dir.y > 0)
+		|| (d->direction == SOUTH && dir.y < 0)
+		|| (d->direction == WEST && dir.x < 0)
+		|| (d->direction == EAST && dir.x > 0));
+}
+
+static void	put_interact_text(t_game *g)
+{
+	t_vec2f const	dir = vec2f_construct(
+			g->player.pos.x + g->cam.dir.x, g->player.pos.y + g->cam.dir.y);
+	t_decoration	*decor;
+	t_sprite		*sprite;
+
+	decor = find_decoration_at(g, vec2i_construct(dir.x, dir.y));
+	if (decor && decor_direction_matches(g, decor))
+	{
+		if (decor->interact)
+			put_ui_text(g, decor->interact_text, COLOR_WHITE);
+		else
+			put_ui_text(g, decor->looking_at_text, COLOR_WHITE);
+	}
+	sprite = find_sprite_at(g, dir);
+	if (sprite)
+	{
+		if (sprite->interact)
+			put_ui_text(g, sprite->interact_text, COLOR_WHITE);
+		else
+			put_ui_text(g, sprite->looking_at_text, COLOR_WHITE);
+	}
+}
+
 static void	put_buffer(t_game *const g)
 {
 	im_clear(g->buffer_image);
@@ -150,6 +150,7 @@ static void	put_buffer(t_game *const g)
 	put_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win,
 		g->buffer_image->image, 0, 0);
+	put_interact_text(g);
 }
 
 void	game_render(t_game *g)

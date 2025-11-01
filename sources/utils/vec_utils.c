@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 16:51:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/10 17:01:29 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:06:59 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ inline t_vec2f	vec2f_construct(float x, float y)
 inline t_vec2i	vec2i_construct(int x, int y)
 {
 	return ((t_vec2i){.x = x, .y = y});
+}
+
+inline bool	vec2f_equals(t_vec2f left, t_vec2f right)
+{
+	static const float	epsilon = 0.001f;
+
+	return (left.x - right.x < epsilon && left.y - right.y < epsilon);
 }

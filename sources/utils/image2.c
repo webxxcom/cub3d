@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:07:45 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 20:29:58 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:07:08 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ inline uint32_t	im_scale_pixel_rgbf(uint32_t pixel, t_colorf rgbf)
 {
 	return (RGB(
 			(uint8_t)fminf(255.f, ((pixel >> 16 & 0xFF) * rgbf.r)),
-		(uint8_t)fminf(255.f, ((pixel >> 8 & 0xFF) * rgbf.g)),
-		(uint8_t)fminf(255.f, ((pixel & 0xFF) * rgbf.b)))
+			(uint8_t)fminf(255.f, ((pixel >> 8 & 0xFF) * rgbf.g)),
+			(uint8_t)fminf(255.f, ((pixel & 0xFF) * rgbf.b)))
 	);
 }

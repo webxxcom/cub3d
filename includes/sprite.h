@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:48:25 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 14:42:58 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:24:11 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_sprite
 	t_image			*texture;
 	t_animation		*animation;
 	float			dist;
+	char			*interact_text;
+	char			*looking_at_text;
 	void			(*interact)(t_game *const, struct s_sprite *);
 	void			(*update)(t_game *const, struct s_sprite *);
 }	t_sprite;

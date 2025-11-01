@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:12:07 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 14:20:30 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:12:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	anim_def_update(t_game *const g, t_decoration *self)
 	{
 		self->animation->curr_frame_n = (self->animation->curr_frame_n + 1)
 			% self->animation->total_frames;
-		self->animation->frames[self->animation->curr_frame_n]->time = curr_time;
+		self->animation->frames[self->animation->curr_frame_n]
+			->time = curr_time;
 	}
 	self->texture = animation_get_current_image(self->animation);
 }
@@ -77,7 +78,8 @@ void	sprite_update_anim(t_game *const g, t_sprite *self)
 	{
 		self->animation->curr_frame_n = (self->animation->curr_frame_n + 1)
 			% self->animation->total_frames;
-		self->animation->frames[self->animation->curr_frame_n]->time = curr_time;
+		self->animation->frames[self->animation->curr_frame_n]
+			->time = curr_time;
 	}
 	self->texture = animation_get_current_image(self->animation);
 }

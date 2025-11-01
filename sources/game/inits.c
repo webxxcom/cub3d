@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:53:48 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 12:19:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:10:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_player	player_init(void)
 	});
 }
 
-t_input	init_input(void)
+t_input	input_init(void)
 {
 	t_input	res;
 
@@ -39,4 +39,3 @@ t_cam	cam_init(void)
 		.bob_phase = 0
 	});
 }
-//cube = {NORTH, WEST, SOUTH, EAST}

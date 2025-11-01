@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/31 15:01:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:10:40 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,6 @@ static void	init_mlx(t_game *g)
 	mlx_mouse_hide(g->mlx, g->win);
 }
 
-t_cutscene init_start_cutscene(t_game *g)
-{
-	t_cutscene	res;
-
-	ft_memset(&res, 0, sizeof (t_cutscene));
-	res.speed = 0.1f;
-	res.dtime = get_time_in_ms();
-	res.is_going = false;
-	res.curve.p0 = vec2f_construct(g->player.pos.x - 0.8f, g->player.pos.y - 9.f);
-    res.curve.p1 = vec2f_construct(g->player.pos.x + 2.f, g->player.pos.y - 2.f);
-    res.curve.p2 = g->player.pos;
-	g->show_dbg = true;
-	return (res);
-}
-
-static void	init_cutscenes(t_game *g)
-{
-	t_cutscene tmp;
-
-	g->cutscenes = array_init(sizeof (t_cutscene));
-	tmp = init_start_cutscene(g);
-	array_push(&g->cutscenes, &tmp);
-}
-
 static void	init_game(t_game *g, const char *filename)
 {
 	g->w = WINDOW_WIDTH;
@@ -96,18 +72,19 @@ static void	init_game(t_game *g, const char *filename)
 	g->dtime = 0;
 	g->last_time = get_time_in_ms();
 	g->cam = cam_init();
-	g->input = init_input();
+	g->input = input_init();
 	g->rays = ft_calloc(g->w, sizeof (t_dda_ray));
 	g->z_buffer = ft_calloc(g->w, sizeof (float));
 	g->player = player_init();
 	g->sprites = array_init(sizeof (t_sprite));
+	g->lights = array_init(sizeof (t_light));
 	g->map.decorations = array_init(sizeof (t_decoration));
 	parse(g, filename);
 	g->minimap = minimap_init(g);
 	g->state = GAME_STATE_ON; // ! CUTSCENE SET
 	g->cam.dir = g->player.dir;
 	g->cam.plane = g->player.plane;
-	init_cutscenes(g);
+	cutscenes_init(g);
 }
 
 void	start_game(t_game *game, const char *filename)

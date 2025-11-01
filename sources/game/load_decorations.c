@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 19:09:37 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 14:20:47 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 21:11:14 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,7 @@ static void	load_door(t_game *g, t_decoration *door, t_tile *tile)
 	door->texture = animation_get_current_image(door->animation);
 	door->update = door_update;
 	door->interact = door_interact;
-}
-
-static void	load_light(t_game *g, t_decoration *light, t_tile *tile)
-{
-	tile->sides[light->direction] = light;
-	light->animation = init_animation(g, light->texture_path);
-	if (!light->animation)
-		exit_game("load_light", g);
-	light->texture = animation_get_current_image(light->animation);
-	light->update = anim_def_update;
-	light->interact = light_interact;
+	door->interact_text = ft_strdup("Press F to open or close the door");
 }
 
 void	load_wall_decor(t_game *g, t_decoration *wall, t_tile *tile)
@@ -45,14 +35,20 @@ void	load_wall_decor(t_game *g, t_decoration *wall, t_tile *tile)
 	if (!wall->animation)
 		exit_game("load_wall_decor", g);
 	wall->texture = animation_get_current_image(wall->animation);
+	wall->update = anim_def_update;
 	tile->sides[wall->direction] = wall;
+	wall->looking_at_text = ft_strdup("What an interesting decoration..");
 }
 
 void	load_sprite(t_game *g, t_sprite *sprite)
 {
 	sprite->animation = init_animation(g, sprite->texture_path);
 	if (!sprite->animation)
+	{
+		ft_printf("unable to load: %s\n", sprite->texture_path);
 		exit_game("load_sprite", g);
+	}
+	freenull(&sprite->texture_path);
 	sprite->texture = animation_get_current_image(sprite->animation);
 	sprite->update = sprite_update_anim;
 }
@@ -82,8 +78,6 @@ void	load_decorations(t_game *g)
 		pos = tmp->pos;
 		if (tmp->type == DECOR_DOOR)
 			load_door(g, tmp, &g->map.tiles[pos.y][pos.x]);
-		else if (tmp->type == DECOR_LIGHT)
-			load_light(g, tmp, &g->map.tiles[pos.y][pos.x]);
 		else
 			load_wall_decor(g, tmp, &g->map.tiles[pos.y][pos.x]);
 		++i;

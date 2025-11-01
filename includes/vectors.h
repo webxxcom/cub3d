@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:44:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:25:54 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:10:28 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,9 @@ t_vec2f	vec2f_neg(t_vec2f const vec2f);
  * Check whether two t_vec2i object ahve the same (x, y) coordinates
  */
 bool	vec2i_equals(t_vec2i left, t_vec2i right);
+
+/**
+ * Check whether two t_vec2f object's coordinates subtraction
+ * 	does not exceed predefined epsilon value 
+ */
+bool	vec2f_equals(t_vec2f left, t_vec2f right);

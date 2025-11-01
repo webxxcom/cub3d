@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 10:10:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 19:32:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 21:58:57 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ t_dda_d		get_dda_start_data(t_game *const g, int const screen_x);
 t_dda_ray	perform_dda(t_game *const g, double const screen_x);
 void		draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd);
 void		draw_floor_and_ceiling(t_game *g);
+void		sort_sprites(t_game *g, t_array *sprites);
+
+
+// Helper structures to avoid norminette complains..
 
 typedef struct s_fac
 {
@@ -84,5 +88,17 @@ typedef struct s_dvl
 	float		base_shade;
 }	t_dvl;
 
+typedef struct s_put_sprite
+{
+	t_sprite	*sprt;
+	t_vec2f		sprite_relcam_pos;
+	t_vec2f		transform_vec;
+	int32_t		sprite_screen_x;
+	t_vec2f		sprite_size;
+	t_vec2f		draw_start;
+	t_vec2f		draw_end;
+	t_vec2f		tex_pos;
+	t_colorf	lit_bonus;
+}	t_ps;
 
 #endif

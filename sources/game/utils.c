@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:48:47 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/29 10:54:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:04:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,22 @@ t_decoration	*find_decoration_at(t_game *const g, t_vec2i pos)
 	{
 		tmp = array_get(&g->map.decorations, i);
 		if (vec2i_equals(tmp->pos, pos))
+			return (tmp);
+		++i;
+	}
+	return (NULL);
+}
+
+t_sprite	*find_sprite_at(t_game *const g, t_vec2f pos)
+{
+	t_sprite	*tmp;
+	size_t		i;
+
+	i = 0;
+	while (i < array_size(&g->sprites))
+	{
+		tmp = array_get(&g->sprites, i);
+		if (vec2f_equals(tmp->pos, pos))
 			return (tmp);
 		++i;
 	}
