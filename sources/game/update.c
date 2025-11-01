@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 12:19:02 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 12:21:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:30:27 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 static inline void	update_vals(t_game *const g)
 {
-	g->player.dir = g->cam.dir;
-	g->player.plane = g->cam.plane;
+	if (g->state == GAME_STATE_ON)
+	{
+		g->player.dir = g->cam.dir;
+		g->player.plane = g->cam.plane;
+	}
 }
 
 static inline void	update_cutscenes(t_game *g)

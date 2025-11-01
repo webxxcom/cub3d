@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:39:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 22:14:01 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/01 22:29:07 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static inline t_cutscene	init_start_cutscene(t_game *g)
 	ft_memset(&res, 0, sizeof (t_cutscene));
 	res.speed = 0.1f;
 	res.dtime = get_time_in_ms();
-	res.is_going = false;
+	res.is_going = true;
 	res.curve.p0 = vec2f_construct(
 			g->player.pos.x - 0.8f, g->player.pos.y - 9.f);
 	res.curve.p1 = vec2f_construct(
