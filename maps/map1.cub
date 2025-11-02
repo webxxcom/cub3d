@@ -41,14 +41,14 @@ SPRITE					        31.8	4.8	    textures/toilet.xpm
 SPRITE					        25.8	12.5	textures/bust_hitler.xpm
 SPRITE					        25.3	12.5	textures/bust_lenin.xpm
 SPRITE					        21.5	4.5	    textures/animations/nazi_military_flag.xpm
-LIGHT					        20.5	3.5	7	2	125,125,100
-LIGHT					        26.5	10	7	2	125,125,0
+SPRITE					        26.5	10.5	textures/animations/fan_ceiling.xpm
+LIGHT					        20.5	3.5	    7	2	125,125,100
+LIGHT					        26.5	10.5	7	2	125,125,0
 LIGHT					        29	0.5	7	2	255,147,41
 
 WALL					        23	    0	    textures/nazi_eagle_picture.xpm			            SOUTH
 
 SPRITE					        27.5	12.5	textures/table2_chairs.xpm
-SPRITE					        26.5	10.5	textures/animations/fan_ceiling.xpm
 
 # Side wall banners for symmetry
 WALL					        27	    3	    textures/animations/flag_nazi.xpm		                EAST

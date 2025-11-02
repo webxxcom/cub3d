@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:49:54 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 11:22:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 17:40:43 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static inline void	init_startvals(t_game *g, t_dvl *dvl, int32_t i)
 		dvl->wall_x = g->cam.pos.y + dvl->ray_dir.y * dvl->obs_data.dist;
 	else
 		dvl->wall_x = g->cam.pos.x + dvl->ray_dir.x * dvl->obs_data.dist;
-	dvl->wall_x = dvl->wall_x - floor(dvl->wall_x);
+	dvl->wall_x = dvl->wall_x - (int)(dvl->wall_x);
 }
 
 void	draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd)
@@ -99,6 +99,7 @@ void	draw_vert_line(t_game *const g, int screen_x, t_dda_ray rayd)
 	{
 		init_startvals(g, &dvl, i);
 		draw_wall(g, &dvl);
+		dvl.decor = NULL;
 		--i;
 	}
 }

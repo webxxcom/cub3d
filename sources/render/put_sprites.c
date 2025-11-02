@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 13:36:05 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 22:02:13 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 17:49:05 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static inline void	init_startvals(t_game *g, t_ps *ps, t_sprite *sprt)
 	ps->draw_end.y = g->h / 2 + ps->sprite_size.y / 2 + cam_get_pitch(&g->cam);
 	if (ps->draw_end.y + 1 > g->h)
 		ps->draw_end.y = g->h - 1;
-	ps->sprite_size.x = abs((int)(g->h / ps->transform_vec.y));
+	ps->sprite_size.x = ps->sprite_size.y;
 	ps->draw_start.x = ps->sprite_screen_x - ps->sprite_size.x / 2;
 	if (ps->draw_start.x < 0)
 		ps->draw_start.x = 0;
@@ -59,7 +59,7 @@ static void	draw_sprite_vertical_line(t_game *g, t_ps *ps, int32_t stripe)
 					- (-ps->sprite_size.x / 2 + ps->sprite_screen_x))
 				* ps->sprt->texture->width / ps->sprite_size.x) / 256);
 	if (ps->transform_vec.y > 0 && stripe > 0
-		&& stripe < g->w && g->z_buffer[stripe] > ps->sprt->dist)
+		&& stripe < g->w && g->z_buffer[stripe] > ps->transform_vec.y)
 	{
 		y = ps->draw_start.y;
 		while (y < ps->draw_end.y)

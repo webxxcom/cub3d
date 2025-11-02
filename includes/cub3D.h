@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/01 22:10:52 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 17:16:38 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ void	door_interact(t_game *const g, t_decoration *door);
 void	light_interact(t_game *const g, t_decoration *light);
 void	anim_def_update(t_game *const g, t_decoration *light);
 void	sprite_update_anim(t_game *const g, t_sprite *self);
-void	decor_interact(t_game *const g, t_decoration *decor);
 
 /**
  * The input structure which describes current keyboard input.
@@ -196,7 +195,6 @@ typedef enum	e_game_state
 	GAME_STATE_CUTSCENE = 0,
 	GAME_STATE_ON
 }	t_game_state;
-
 
 typedef struct s_game
 {

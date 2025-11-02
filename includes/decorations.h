@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 10:24:25 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 12:24:42 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 16:44:43 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ typedef struct s_light
 	t_colorf	color;
 	char		*interact_text;
 }	t_light;
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/28 21:42:23 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 16:25:21 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*remove_nl(char *el)
 
 void	validate_element(t_game *game, char **elements, int *element_count)
 {
-	if (!elements[1] || access(elements[1], F_OK | R_OK) == 0)
+	if (!elements[1] || access(elements[1], F_OK | R_OK) == 0) // ! ACCESS is forbidden
 		exit_game(ERROR_TEXTURE_PATH, game);
 	else
 		errno = 0;

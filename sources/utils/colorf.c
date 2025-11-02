@@ -6,13 +6,13 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 18:23:09 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 19:11:18 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 16:33:04 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_colorf	colorf_from_uint(uint32_t color)
+inline t_colorf	colorf_from_uint(uint32_t color)
 {
 	return ((t_colorf){
 		.r = ((color >> 16) & 0xFF) / 255.f,
@@ -21,7 +21,7 @@ t_colorf	colorf_from_uint(uint32_t color)
 	});
 }
 
-uint32_t	colorf_to_uint(t_colorf colorf)
+inline uint32_t	colorf_to_uint(t_colorf colorf)
 {
 	return (RGB((int)(fminf(1.f, colorf.r) * 255),
 		(int)(fminf(1.f, colorf.g) * 255),
@@ -29,7 +29,7 @@ uint32_t	colorf_to_uint(t_colorf colorf)
 	));
 }
 
-t_colorf	colorf_from_rgbf(float r, float g, float b)
+inline t_colorf	colorf_from_rgbf(float r, float g, float b)
 {
 	return ((t_colorf){
 		.r = r,
@@ -38,7 +38,7 @@ t_colorf	colorf_from_rgbf(float r, float g, float b)
 	});
 }
 
-t_colorf	colorf_init(void)
+inline t_colorf	colorf_init(void)
 {
 	return ((t_colorf){
 		.r = 0,
@@ -47,7 +47,7 @@ t_colorf	colorf_init(void)
 	});
 }
 
-uint32_t	colorf_from_rgbf_to_uint(float r, float g, float b)
+inline uint32_t	colorf_from_rgbf_to_uint(float r, float g, float b)
 {
 	return (RGB((int)(r * 255.f), (int)(g * 255.f), (int)(b * 255.f)));
 }

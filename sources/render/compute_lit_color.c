@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 19:01:02 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 21:53:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 17:32:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ static inline t_colorf	process_light(t_light *l, t_vec2f obs_pos)
 	float const	dx = l->pos.x - obs_pos.x;
 	float const	dy = l->pos.y - obs_pos.y;
 	float		light_bonus;
+	float		is_active;
 	t_colorf	res;
 
 	res = colorf_init();
 	light_bonus = l->strength / (1.f + dx * dx + dy * dy);
-	if (light_bonus > 0.05f)
-	{
-		res.r += l->color.r * light_bonus;
-		res.g += l->color.g * light_bonus;
-		res.b += l->color.b * light_bonus;
-	}
+	is_active = light_bonus > 0.05f;
+	res.r += l->color.r * light_bonus * is_active;
+	res.g += l->color.g * light_bonus * is_active;
+	res.b += l->color.b * light_bonus * is_active;
 	return (res);
 }
 
