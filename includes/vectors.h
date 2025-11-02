@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:44:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 12:10:28 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/02 19:32:06 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,8 @@ bool	vec2i_equals(t_vec2i left, t_vec2i right);
  * 	does not exceed predefined epsilon value 
  */
 bool	vec2f_equals(t_vec2f left, t_vec2f right);
+
+/**
+ * Finds the distance between two vectors
+ */
+float	vec2f_dist2(t_vec2f v1, t_vec2f v2);

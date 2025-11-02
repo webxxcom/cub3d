@@ -20,7 +20,7 @@ SRCS		= main.c \
 				$(SRC_FLDR)/render/draw_keybindings.c \
 			  $(SRC_FLDR)/utils/vec_utils.c $(SRC_FLDR)/utils/image.c $(SRC_FLDR)/utils/image2.c $(SRC_FLDR)/utils/vec_ops.c \
 			  	$(SRC_FLDR)/utils/time.c $(SRC_FLDR)/utils/utils.c $(SRC_FLDR)/utils/array.c $(SRC_FLDR)/utils/draw_utils.c \
-				$(SRC_FLDR)/utils/colorf.c $(SRC_FLDR)/utils/array2.c $(SRC_FLDR)/utils/draw_utils2.c
+				$(SRC_FLDR)/utils/colorf.c $(SRC_FLDR)/utils/array2.c $(SRC_FLDR)/utils/draw_utils2.c $(SRC_FLDR)/utils/vec_ops3.c
 
 OBJ_DIR		= obj
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
