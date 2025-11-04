@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/01 18:03:25 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:58:37 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,12 @@ void	read_file(t_game *game, t_list **list, const char *map_file)
 
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
-		exit_game(ERROR_OPEN_FILE_FAILED, game);
+		exit_game(ERROR_OPEN_FILE_FAILED, game, NULL);
 	read_section_by_section(game, list, fd);
 	close(fd);
 	if (errno)
 	{
 		ft_lstclear(list, free);
-		exit_game(ERROR_READ_FILE_FAILED, game);
+		exit_game(ERROR_READ_FILE_FAILED, game, NULL);
 	}
 }

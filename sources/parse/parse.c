@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/30 22:11:20 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:58:56 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	validate_filename(t_game *game, const char *filename)
 		basename++;
 	len = ft_strlen(basename);
 	if (len == 4 && !ft_strcmp(basename + len - 4, ".cub"))
-		exit_game(ERROR_INVALID_FILE, game);
+		exit_game(ERROR_INVALID_FILE, game, NULL);
 	if (len < 4 || ft_strcmp(basename + len - 4, ".cub"))
-		exit_game(ERROR_FILE_EXTENSION, game);
+		exit_game(ERROR_FILE_EXTENSION, game, NULL);
 }
 
 static size_t	find_longest(t_list *l)
@@ -76,12 +76,12 @@ static void	load_map(t_game *game, t_list *list)
 	char			*l;
 
 	if (!list)
-		exit_game(ERROR_EMPTY_FILE, game);
+		exit_game(ERROR_EMPTY_FILE, game, NULL);
 	game->map.tiles = ft_calloc(map_height, sizeof(t_tile *));
 	if (!game->map.tiles)
 	{
 		ft_lstclear(&list, free);
-		exit_game(ERROR_PARSE_MAP_FAILED, game);
+		exit_game(ERROR_PARSE_MAP_FAILED, game, NULL);
 	}
 	j = 0;
 	while (list)

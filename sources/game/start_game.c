@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/02 17:34:55 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:58:07 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	load_texture(t_game *g, char *path, size_t i)
 {
 	g->textures[i] = im_load_from_xpmfile(g->mlx, path);
 	if (!g->textures[i])
-		exit_game("load_texture", g);
+		exit_game("load_texture", g, NULL);
 }
 
 static void	load_textures(t_game *g)
@@ -28,7 +28,7 @@ static void	load_textures(t_game *g)
 	i = 0;
 	g->textures = ft_calloc(tex_count + 1, sizeof (t_image *));
 	if (!g->textures)
-		exit_game("load_textures", g);
+		exit_game("load_textures", g, NULL);
 	load_texture(g, g->paths.north, i++);
 	load_texture(g, g->paths.west, i++);
 	load_texture(g, g->paths.south, i++);
@@ -47,10 +47,10 @@ static void	init_mlx(t_game *g)
 {
 	g->mlx = mlx_init();
 	if (!g->mlx)
-		exit_game(ERROR_MLX_INIT, g);
+		exit_game(ERROR_MLX_INIT, g, NULL);
 	g->win = mlx_new_window(g->mlx, g->w, g->h, "cub3D");
 	if (!g->win)
-		exit_game(ERROR_MLX_WIN, g);
+		exit_game(ERROR_MLX_WIN, g, NULL);
 	g->buffer_image = im_get_empty(g->mlx, g->w, g->h);
 	load_textures(g);
 	load_decorations(g);

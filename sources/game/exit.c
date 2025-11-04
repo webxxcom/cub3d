@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:50 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/29 10:26:47 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:57:36 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	exit_game(char *error, t_game *game)
+void	exit_game(char *error, t_game *game, char **map)
 {
+	if (map)
+		ft_free_matrix(map);
 	game_cleanup(game);
 	if (error)
 	{

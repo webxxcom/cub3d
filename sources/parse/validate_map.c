@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/01 22:21:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:01:41 by phutran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	validate_player(t_game *game, int count)
+static void	validate_player(t_game *game, int count, char **map)
 {
 	if (count == 0)
-		exit_game(ERROR_PLAYER_NOT_FOUND, game);
+		exit_game(ERROR_PLAYER_NOT_FOUND, game, map);
 	if (count > 1)
-		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game); // ! LEAKS FOUND, check allocated pointers in stack trace
+		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game, map); // ! LEAKS FOUND, check allocated pointers in stack trace
 }
 
 static void	validate_elements(t_game *game, char **map)
@@ -36,7 +36,7 @@ static void	validate_elements(t_game *game, char **map)
 			if (map[j][i] != '0' && map[j][i] != '1' && map[j][i] != 'N'
 				&& map[j][i] != 'S' && map[j][i] != 'E' && map[j][i] != 'W'
 				&& map[j][i] != ' ' && map[j][i] != TILE_DOOR)
-				exit_game(ERROR_UNKNOWN_ELEMENT_FOUND, game);
+				exit_game(ERROR_UNKNOWN_ELEMENT_FOUND, game, map);
 			if (map[j][i] == 'N' || map[j][i] == 'S'
 				|| map[j][i] == 'E' || map[j][i] == 'W')
 			{
@@ -45,7 +45,7 @@ static void	validate_elements(t_game *game, char **map)
 			}
 		}
 	}
-	validate_player(game, player_count);
+	validate_player(game, player_count, map);
 }
 
 static void	validate_borders(t_game *game, char **map)
@@ -64,7 +64,7 @@ static void	validate_borders(t_game *game, char **map)
 		{
 			is_border = (j == 0 || j == h - 1 || i == 0 || i == w - 1);
 			if (is_border && map[j][i] != ' ' && map[j][i] != '1')
-				exit_game(ERROR_WALL, game);
+				exit_game(ERROR_WALL, game, map);
 			++i;
 		}
 		++j;
@@ -87,12 +87,12 @@ static void	validate_walls(t_game *game, char **map)
 			if (map[j][i] != ' ' && map[j][i] != '1')
 			{
 				if (i == 0 || j == 0 || i == w - 1 || j == h - 1)
-					exit_game(ERROR_WALL, game);
+					exit_game(ERROR_WALL, game, map);
 				if (map[j - 1][i - 1] == ' ' || map[j - 1][i] == ' '
 					|| map[j - 1][i + 1] == ' ' || map[j][i - 1] == ' '
 					|| map[j][i + 1] == ' ' || map[j + 1][i - 1] == ' '
 					|| map[j + 1][i] == ' ' || map[j + 1][i + 1] == ' ')
-					exit_game(ERROR_WALL, game);
+					exit_game(ERROR_WALL, game, map);
 			}
 			++i;
 		}
