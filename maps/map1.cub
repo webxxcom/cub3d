@@ -25,15 +25,18 @@ C textures/ceiling_angles6.xpm
 11111111 1111111 111111111111
 
 [DECORATIONS]
-Type{WALL, DOOR, LIGHT, SPRITE}	x	    y	Path to texture							            Optional params
-
+# Door type requires integer x, y coordinates, path to texture
+# Wall type requires integer x, y coordinates, path to texture and direction it faces
+# Sprite type requires floating point coordinates, path to texture
+# Light requires floating point coordinates, intensity, strength and color
+# Type                        	x	    y	    Optional params
 DOOR					        26	    5	    textures/animations/lab_metal_white_door.xpm
 DOOR					        19	    3	    textures/animations/lab_metal_grey_tiles_hexdoor.xpm
-WALL					        25	    5	    textures/wall_portrait_hitler0.xpm		        SOUTH
-WALL					        27	    5	    textures/wall_flag_nazi.xpm		                SOUTH
-WALL					        24	    5	    textures/wall_decor_swastika_gold.xpm		        NORTH
+WALL					        25	    5	    textures/wall_portrait_hitler0.xpm		                SOUTH
+WALL					        27	    5	    textures/wall_flag_nazi.xpm		                        SOUTH
+WALL					        24	    5	    textures/wall_decor_swastika_gold.xpm		            NORTH
 WALL					        28	    5	    textures/wall_decor_sickle_communist.xpm		        NORTH
-WALL					        28	    0	    textures/animations/fireplace_burn.xpm		        SOUTH
+WALL					        28	    0	    textures/animations/fireplace_burn.xpm		            SOUTH
 SPRITE					        23.5	6.5	    textures/animal_stupid.xpm
 SPRITE					        20.5	1.5	    textures/animations/flag_nazi.xpm
 SPRITE					        31.3	1.7	    textures/wooden_barrels.xpm
@@ -45,21 +48,11 @@ SPRITE					        26.5	10.5	textures/animations/fan_ceiling.xpm
 LIGHT					        20.5	3.5	    7	2	125,125,100
 LIGHT					        26.5	10.5	7	2	125,125,0
 LIGHT					        29	0.5	7	2	255,147,41
-
-WALL					        23	    0	    textures/nazi_eagle_picture.xpm			            SOUTH
-
+WALL					        23	    0	    textures/nazi_eagle_picture.xpm			                SOUTH
 SPRITE					        27.5	12.5	textures/table2_chairs.xpm
-
-# Side wall banners for symmetry
 WALL					        27	    3	    textures/animations/flag_nazi.xpm		                EAST
 WALL					        25	    3	    textures/animations/flag_nazi.xpm		                WEST
-
-# Central eagle as a focal wall art
-WALL					        26	    11	    textures/nazi_eagle_picture.xpm		                SOUTH
-
-# Corridor banner
+WALL					        26	    11	    textures/nazi_eagle_picture.xpm		                    SOUTH
 WALL					        24	    5	    textures/animations/flag_nazi.xpm		                SOUTH
-
-# Extra decorative flags in big hall
 WALL					        25	    12	    textures/animations/flag_nazi.xpm		                SOUTH
 WALL					        28	    12	    textures/animations/flag_nazi.xpm		                SOUTH

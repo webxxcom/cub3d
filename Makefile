@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g -O3 -ftree-vectorize -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
+CFLAGS		= -Wall -Wextra -Werror -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
 
 SRC_FLDR	= sources
 
@@ -34,6 +34,13 @@ MLX_FLAGS	= -lXext -lX11 -lm
 
 INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(MLX_DIR)
 
+# Release build 
+RELEASE_FLAGS := -O3 -march=native -ffast-math
+
+# Debug build
+DEBUG_FLAGS := -g -O1 -fsanitize=address -fno-omit-frame-pointer
+DEBUG_LDFLAGS := -fsanitize=address
+
 RM			= rm -rf
 
 all: $(NAME)
@@ -50,6 +57,13 @@ $(LIBFT_A):
 
 $(MLX_A):
 	$(MAKE) -C $(MLX_DIR)
+
+release: CFLAGS += $(RELEASE_FLAGS)
+release: fclean $(NAME)
+
+debug: CFLAGS += $(DEBUG_FLAGS)
+debug: LDFLAGS += $(DEBUG_LDFLAGS)
+debug: fclean $(NAME)
 
 clean:
 	$(RM) $(OBJ_DIR)
