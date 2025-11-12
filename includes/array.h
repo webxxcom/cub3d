@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:51:36 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/28 20:53:30 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:49:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ARRAY_H
 
 #include <stddef.h>
+
+# define INIT_ARR_CAPACITY 8
 
 typedef struct s_array
 {

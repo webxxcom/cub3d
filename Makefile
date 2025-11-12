@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
+CFLAGS		= -Wall -Wextra -Werror -g -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
 
 SRC_FLDR	= sources
 

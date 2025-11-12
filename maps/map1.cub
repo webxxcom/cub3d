@@ -50,9 +50,3 @@ LIGHT					        26.5	10.5	7	2	125,125,0
 LIGHT					        29	0.5	7	2	255,147,41
 WALL					        23	    0	    textures/nazi_eagle_picture.xpm			                SOUTH
 SPRITE					        27.5	12.5	textures/table2_chairs.xpm
-WALL					        27	    3	    textures/animations/flag_nazi.xpm		                EAST
-WALL					        25	    3	    textures/animations/flag_nazi.xpm		                WEST
-WALL					        26	    11	    textures/nazi_eagle_picture.xpm		                    SOUTH
-WALL					        24	    5	    textures/animations/flag_nazi.xpm		                SOUTH
-WALL					        25	    12	    textures/animations/flag_nazi.xpm		                SOUTH
-WALL					        28	    12	    textures/animations/flag_nazi.xpm		                SOUTH

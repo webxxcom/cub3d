@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:54:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/07 16:36:52 by webxxcom         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:49:52 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 t_array	array_init(size_t elem_size)
 {
 	return ((t_array){
-		.capacity = 8,
+		.capacity = INIT_ARR_CAPACITY,
 		.size = 0,
 		.elem_size = elem_size,
-		.data = malloc(8 * elem_size)
+		.data = malloc(INIT_ARR_CAPACITY * elem_size)
 	});
 }
 

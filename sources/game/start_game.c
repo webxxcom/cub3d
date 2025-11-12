@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 14:58:07 by phutran          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:13:08 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	init_game(t_game *g, const char *filename)
 	g->map.decorations = array_init(sizeof (t_decoration));
 	parse(g, filename);
 	g->minimap = minimap_init(g);
-	g->state = GAME_STATE_ON; // ! CUTSCENE SET
+	g->state = GAME_STATE_CUTSCENE; // ! CUTSCENE SET
 	g->cam.dir = g->player.dir;
 	g->cam.plane = g->player.plane;
 	cutscenes_init(g);
