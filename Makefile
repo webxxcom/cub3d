@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g -Wnull-dereference -Wuninitialized -Wunused -pedantic #-Wconversion
+CFLAGS		= -Wall -Wextra -Werror -g -Wnull-dereference -Wuninitialized -Wunused #-Wconversion
 
 SRC_FLDR	= sources
 
@@ -38,8 +38,7 @@ INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(MLX_DIR)
 RELEASE_FLAGS := -O3 -march=native -ffast-math
 
 # Debug build
-DEBUG_FLAGS := -g -O1 -fsanitize=address -fno-omit-frame-pointer
-DEBUG_LDFLAGS := -fsanitize=address
+DEBUG_FLAGS := -g -O1 -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined
 
 RM			= rm -rf
 

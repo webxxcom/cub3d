@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colorf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 18:23:09 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/02 16:33:04 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 14:18:02 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ inline t_colorf	colorf_from_uint(uint32_t color)
 
 inline uint32_t	colorf_to_uint(t_colorf colorf)
 {
-	return (RGB((int)(fminf(1.f, colorf.r) * 255),
+	return (RGB(
+		(int)(fminf(1.f, colorf.r) * 255),
 		(int)(fminf(1.f, colorf.g) * 255),
 		(int)(fminf(1.f, colorf.b) * 255)
 	));

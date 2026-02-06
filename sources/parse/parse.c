@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 14:58:56 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/06 18:49:46 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,22 @@ static size_t	find_longest(t_list *l)
 	return (longest);
 }
 
-static void	save_map(t_game *game, int j, char *l, const size_t longest)
+static void	save_map(t_game *g, int j, char *l, const size_t longest)
 {
 	size_t	i;
 
 	i = 0;
-	game->map.tiles[j] = ft_calloc(longest, sizeof (t_tile));
-	if (!game->map.tiles[j])
-	{
-		printf("oops, malloc failed\n");
-		exit(1); // ! HARDCODED EXIT
-	}
+	g->map.tiles[j] = ft_calloc(longest, sizeof (t_tile));
+	if (!g->map.tiles[j])
+		exit_game("oops, malloc failed\n", g, NULL);
 	while (l[i] && l[i] != '\n')
 	{
-		game->map.tiles[j][i].type = l[i];
+		g->map.tiles[j][i].type = l[i];
 		++i;
 	}
 	while (i < longest)
 	{
-		game->map.tiles[j][i].type = ' ';
+		g->map.tiles[j][i].type = ' ';
 		++i;
 	}
 }
@@ -95,14 +92,21 @@ static void	load_map(t_game *game, t_list *list)
 	game->map.size.y = map_height;
 }
 
-void	parse(t_game *game, const char *map_file)
+void	parse(t_game *g, const char *map_file)
 {
+	int		exit_status;
 	t_list	*list;
 
 	list = NULL;
-	validate_filename(game, map_file);
-	read_file(game, &list, map_file);
-	load_map(game, list);
-	ft_lstclear(&list, free);
-	validate_map(game);
+	exit_status = false;
+	validate_filename(g, map_file);
+	exit_status = read_file(g, &list, map_file);
+	if (!exit_status)
+		load_map(g, list);
+	if (list)
+		ft_lstclear(&list, free);
+	if (exit_status)
+		exit_game(NULL, g, NULL);
+	if (validate_map(g))
+		exit_game(NULL, g, NULL);
 }

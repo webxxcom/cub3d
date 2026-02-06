@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:55:59 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/12 16:07:31 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:01:56 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static void	render_debug_info(t_game *g)
 		snprintf(buf, sizeof(buf), "Keys: W:%d A:%d S:%d D:%d",
 			g->input.moving_keys[0], g->input.moving_keys[1],
 			g->input.moving_keys[2], g->input.moving_keys[3]);
-
 		mlx_string_put(g->mlx, g->win, 10, y, 0xFFFFFF, buf);
 	}
 }
@@ -155,7 +154,6 @@ static void	put_buffer(t_game *const g)
 
 void	game_render(t_game *g)
 {
-	mlx_clear_window(g->mlx, g->win);
 	put_buffer(g);
 	draw_keybindings(g);
 	render_debug_info(g);

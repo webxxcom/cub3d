@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:05:45 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/12 16:58:56 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 18:23:14 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,52 @@ char	**get_chars_map(t_map *map)
 	return (map_chars);
 }
 
-void	parse_decoration(t_game *g, char *line)
+int	parse_decoration(t_game *g, char *line)
 {
 	char	**fields;
+	int		res;
 
-	fields = ft_split(line, " \t");
-	if (fields && ft_strcmp(fields[0], "#"))
+	res = 0;
+	if (*line != '#')
 	{
-		if (!ft_strcmp(fields[0], "WALL"))
-			parse_normal_wall_decoration(g, fields + 1);
-		else if (!ft_strcmp(fields[0], "DOOR"))
-			parse_door_decoration(g, fields + 1);
-		else if (!ft_strcmp(fields[0], "LIGHT"))
-			parse_light_decoration(g, fields + 1);
-		else if (!ft_strcmp(fields[0], "SPRITE"))
-			parse_sprite_decoration(g, fields + 1);
+		fields = ft_split(line, " \t");
+		if (fields)
+		{
+			if (!ft_strcmp(fields[0], "WALL"))
+				res = parse_normal_wall_decoration(g, fields + 1);
+			else if (!ft_strcmp(fields[0], "DOOR"))
+				res = parse_door_decoration(g, fields + 1);
+			else if (!ft_strcmp(fields[0], "LIGHT"))
+				res = parse_light_decoration(g, fields + 1);
+			else if (!ft_strcmp(fields[0], "SPRITE"))
+				res = parse_sprite_decoration(g, fields + 1);
+			ft_free_matrix(fields);
+		}
+		else
+			ft_printf("INFO: The line %s for decoration was not parsed due to unexpected error\n", line);
 	}
-	ft_free_matrix(fields);
+	return (res);
 }
 
-void	read_decorations(t_game *g, int fd)
+int	read_decorations(t_game *g, int fd)
 {
+	int		res;
 	char	*l;
 
-	free(ft_get_next_line(fd));
+	l = ft_get_next_line(fd);
+	if (l)
+		free(l);
+	res = 0;
 	while (1)
 	{
 		l = ft_get_next_line(fd);
 		if (!l)
 			break ;
 		if (!line_is_whitespace(l))
-			parse_decoration(g, remove_nl(l));
+			res = parse_decoration(g, remove_nl(l));
 		freenull(&l);
 	}
+	return (res);
 }
 
 void	set_player_start_pos(t_game *g, int x, int y, char dir)

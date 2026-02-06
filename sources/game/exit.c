@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:50 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 14:57:36 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/06 17:09:39 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ void	exit_game(char *error, t_game *game, char **map)
 	game_cleanup(game);
 	if (error)
 	{
-		printf("Error\n");
 		if (errno)
 			printf("%s: %s\n", error, strerror(errno));
 		else
 			printf("%s\n", error);
-		exit(1);
 	}
-	exit(0);
+	exit(1);
 }

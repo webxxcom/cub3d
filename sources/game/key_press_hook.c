@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_press_hook.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:45:50 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/30 21:04:45 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:04:42 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	repetition_handle(t_game *const g)
 	while (i < array_size(&g->input.pressed_keys))
 	{
 		tmp = array_get(&g->input.pressed_keys, i);
-		process_keypress(g, *tmp);
+		if (tmp)
+			process_keypress(g, *tmp);
 		++i;
 	}
 	handle_movement(g);

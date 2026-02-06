@@ -1,0 +1,7 @@
+Checked:
+    position for sprite is negative
+    unknown configuration faced
+    unknown map element
+
+Unchecked:
+    position for sprite is too large

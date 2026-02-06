@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:41:34 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 17:07:21 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 18:53:33 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	sprites_cleanup(t_game *g, t_array *sprites)
 			free(tmp->interact_text);
 		if (tmp->looking_at_text)
 			free(tmp->looking_at_text);
+		if (tmp->texture_path)
+			free(tmp->texture_path);
 		++i;
 	}
 	array_free(sprites);

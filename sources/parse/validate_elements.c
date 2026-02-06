@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_elements.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 15:01:28 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/06 18:55:33 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	*remove_nl(char *el)
 	return (el);
 }
 
-void	validate_element(t_game *game, char **elements, int *element_count)
+int	validate_element(t_game *game, char **elements, int *element_count)
 {
 	if (!elements[1] || access(elements[1], F_OK | R_OK) == 0) // ! ACCESS is forbidden
-		exit_game(ERROR_TEXTURE_PATH, game, NULL);
+		return error_found(ERROR_TEXTURE_PATH);
 	else
 		errno = 0;
 	if (!ft_strcmp(elements[0], "NO") && !game->paths.north)
@@ -40,6 +40,16 @@ void	validate_element(t_game *game, char **elements, int *element_count)
 	else if (!ft_strcmp(elements[0], "C") && !game->paths.ceiling)
 		game->paths.ceiling = ft_strdup(remove_nl(elements[1]));
 	else
-		exit_game(ERROR_INVALID_IDENTIFIER, game, NULL);
+		return (error_found(ERROR_INVALID_IDENTIFIER));
 	--*element_count;
+	return (0);
+}
+
+inline int	error_found(char *error)
+{
+	if (errno)
+		printf("%s: %s\n", error, strerror(errno));
+	else
+		printf("%s\n", error);
+	return (1);
 }

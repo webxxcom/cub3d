@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 14:57:05 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/06 19:02:34 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@
 # define M_PI 3.14159265358979323846
 #endif
 
-#define freenull(p) free(*(p)), *(p) = NULL;
+# define freenull(p) (free(*(p)), *(p) = NULL)
+# define FLOAT_EPSILON 1e-8 
 
 # define TILE_SIZE 64
 # define WINDOW_WIDTH 1000

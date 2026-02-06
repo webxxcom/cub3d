@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoration_parse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/01 18:12:40 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 18:24:07 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,31 @@ static t_txtres_sides	parse_direction(char *dir)
 	exit(1); // NOTE if decoration direction is incorrect it's better to exit?
 }
 
-static t_vec2i	extract_pos(t_game *g, char *fields[])
+static bool		pos_is_parseable(char *field)
 {
-	t_vec2i	pos;
-
-	(void)g;
-	pos = vec2i_construct(ft_atoi(fields[0]), ft_atoi(fields[1]));
-	if (pos.x < 0 || pos.y < 0)
-	{
-		printf("The position for decoration is out of bounds (%d, %d)\n",
-			pos.x, pos.y);
-		return (t_vec2i){.x = 0, .y = 0};
-	}
-	return (pos);
+	while (ft_isspace(*field))
+		++field;
+	if (*field == '-' || *field == '+')
+		++field;
+	return (ft_isdigit(*field));
 }
 
-static t_vec2f	extract_posf(char *fields[])
+static int	extract_pos(t_vec2i *pos, char *fields[])
+{
+	if (!pos_is_parseable(fields[0]) || !pos_is_parseable(fields[1]))
+		return error_found("The position is not parseable");
+	pos->x = ft_atoi(fields[0]);
+	pos->y = ft_atoi(fields[1]);
+	if (pos->x < 0 || pos->y < 0)
+	{
+		printf("The position for decoration is out of bounds (%d, %d)\n",
+			pos->x, pos->y);
+		return (1);
+	}
+	return (0);
+}
+
+static t_vec2f	extract_posf(t_game *const g, char *fields[])
 {
 	t_vec2f	pos;
 
@@ -50,7 +59,7 @@ static t_vec2f	extract_posf(char *fields[])
 	{
 		printf("ERRROR OUT OF BOUNDS WHILE PARSING POS (%.2f, %.2f)\n",
 			pos.x, pos.y); // NOTE revise for checking if position might be greater than map pos
-		exit(1);// ! HARDCODED EXIT
+		exit_game("", g, NULL);
 	}
 	return (pos);
 }
@@ -60,23 +69,26 @@ void	parse_normal_wall_decoration(t_game *g, char *fields[])
 	t_decoration	decor;
 
 	ft_memset(&decor, 0, sizeof (decor));
-	decor.pos = extract_pos(g, fields);
+	extract_pos(&decor.pos, fields);
 	decor.texture_path = ft_strdup(fields[2]);
 	decor.direction = parse_direction(fields[3]);
 	decor.type = DECOR_WALL;
 	array_push(&g->map.decorations, &decor);
 }
 
-void	parse_door_decoration(t_game *g, char *fields[])
+int	parse_door_decoration(t_game *g, char *fields[])
 {
-	const t_vec2i	pos = extract_pos(g, fields);
 	t_decoration	decor;
 
 	ft_memset(&decor, 0, sizeof (t_decoration));
-	decor.pos = pos;
-	decor.texture_path = ft_strdup(fields[2]);
 	decor.type = DECOR_DOOR;
+	if (extract_pos(&decor.pos, fields))
+		return (1);
+	decor.texture_path = ft_strdup(fields[2]);
+	if (!decor.texture_path)
+		return (1);
 	array_push(&g->map.decorations, &decor);
+	return (0);
 }
 
 void	parse_sprite_decoration(t_game *g, char *fields[])
@@ -84,7 +96,7 @@ void	parse_sprite_decoration(t_game *g, char *fields[])
 	t_sprite	sprite;
 
 	ft_memset(&sprite, 0, sizeof (sprite));
-	sprite.pos = extract_posf(fields);
+	sprite.pos = extract_posf(g, fields);
 	sprite.texture_path = ft_strdup(fields[2]);
 	sprite.type = SPRITE_STATIC;
 	array_push(&g->sprites, &sprite);
@@ -92,7 +104,7 @@ void	parse_sprite_decoration(t_game *g, char *fields[])
 
 void	parse_light_decoration(t_game *g, char *fields[])
 {
-	const t_vec2f	pos = extract_posf(fields);
+	const t_vec2f	pos = extract_posf(g, fields);
 	t_light			light;
 	char			**colors;
 
