@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:47:00 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/21 17:29:57 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/07 13:04:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define ERROR_NO_FILE "Failed to load map: No such file or directory"
 # define ERROR_EMPTY_FILE "Failed to load map: Empty file"
 # define ERROR_INVALID_FILE	"Failed to load map: Invalid file"
-# define ERROR_FILE_EXTENSION "Failed to load map: Missing file extension .ber"
+# define ERROR_FILE_EXTENSION "Failed to load map: Missing file extension .cub"
 # define ERROR_MISSING_TEXTURE "Failed to load map: Missing texture/s"
 # define ERROR_INVALID_IDENTIFIER "Failed to load map: Invalid specifier"
 # define ERROR_TEXTURE_PATH "Failed to load map: Invalid texture path"
@@ -32,6 +32,7 @@
 // Memory allocation
 # define ERROR_PARSE_MAP_FAILED "Failed to parse map"
 # define ERROR_COPY_MAP_FAILED "Failed to validate path"
+# define ERROR_MALLOC_FAILED "Oops, malloc failed"
 
 // MLX
 # define ERROR_MLX_INIT "mlx_init: Failed to initialize MinilibX"

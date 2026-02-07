@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:50 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/06 17:09:39 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/07 12:48:01 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+__attribute__((noreturn))
 void	exit_game(char *error, t_game *game, char **map)
 {
 	if (map)

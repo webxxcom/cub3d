@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoration_parse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/06 18:24:07 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/07 12:14:53 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_vec2f	extract_posf(t_game *const g, char *fields[])
 	return (pos);
 }
 
-void	parse_normal_wall_decoration(t_game *g, char *fields[])
+int	parse_normal_wall_decoration(t_game *g, char *fields[])
 {
 	t_decoration	decor;
 
@@ -74,6 +74,7 @@ void	parse_normal_wall_decoration(t_game *g, char *fields[])
 	decor.direction = parse_direction(fields[3]);
 	decor.type = DECOR_WALL;
 	array_push(&g->map.decorations, &decor);
+	return (0);
 }
 
 int	parse_door_decoration(t_game *g, char *fields[])
@@ -91,7 +92,7 @@ int	parse_door_decoration(t_game *g, char *fields[])
 	return (0);
 }
 
-void	parse_sprite_decoration(t_game *g, char *fields[])
+int	parse_sprite_decoration(t_game *g, char *fields[])
 {
 	t_sprite	sprite;
 
@@ -100,9 +101,10 @@ void	parse_sprite_decoration(t_game *g, char *fields[])
 	sprite.texture_path = ft_strdup(fields[2]);
 	sprite.type = SPRITE_STATIC;
 	array_push(&g->sprites, &sprite);
+	return (0);
 }
 
-void	parse_light_decoration(t_game *g, char *fields[])
+int	parse_light_decoration(t_game *g, char *fields[])
 {
 	const t_vec2f	pos = extract_posf(g, fields);
 	t_light			light;
@@ -118,10 +120,11 @@ void	parse_light_decoration(t_game *g, char *fields[])
 		ft_printf("Misconfiguration for light parsing has been found\n"
 			"	The color values are not correct\n");
 		ft_free_matrix(colors);
-		return ;
+		return 1;
 	}
 	light.color = colorf_from_uint(
 		RGB(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2])));
 	ft_free_matrix(colors);
 	array_push(&g->lights, &light);
+	return (0);
 }

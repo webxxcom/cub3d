@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/06 19:03:31 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/07 12:26:05 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	read_tiles(t_game *game, int fd, int el_count)
 		}
 		freenull(&line);
 	}
-	return ((el_count == 0) && (exit_status == 0));
+	return ((el_count != 0) || (exit_status != 0));
 }
 
 static int	save_line(t_list **list, char *line, t_list *new)
@@ -97,12 +97,21 @@ static int	read_section_by_section(t_game *g, t_list **ls, int fd)
 		}
 		if (!line_is_whitespace(l))
 		{
-			if (ft_strcmp(l, "[TILES]\n") == 0 && read_tiles(g, fd, 6) != 0)
-				return (freenull(&l), 1);
-			else if (ft_strcmp(l, "[MAP]\n") == 0 && read_map(g, ls, fd) != 0)
-				return (freenull(&l), 1);
-			else if (ft_strcmp(l, "[DECORATIONS]\n") == 0 && read_decorations(g, fd) != 0)
-				return (freenull(&l), 1);
+			if (ft_strcmp(l, "[TILES]\n") == 0)
+			{
+				if (read_tiles(g, fd, 6) != 0)
+					return (freenull(&l), 1);
+			}
+			else if (ft_strcmp(l, "[MAP]\n") == 0)
+			{
+				if (read_map(g, ls, fd) != 0)
+					return (freenull(&l), 1);
+			}
+			else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)
+			{
+				if (read_decorations(g, fd) != 0)
+					return (freenull(&l), 1);
+			}
 			else
 			{
 				printf("unknown configuration occured in .cub file: %s\n", l);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_elements.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/06 18:55:33 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/07 12:27:00 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,11 @@ inline int	error_found(char *error)
 	else
 		printf("%s\n", error);
 	return (1);
+}
+
+inline bool	is_valid_mapelement(int el)
+{
+	return (el == TILE_FLOOR || el == TILE_WALL || el == TILE_PLAYER_N
+		|| el == TILE_PLAYER_S || el == TILE_PLAYER_E || el == TILE_PLAYER_W
+		|| el == TILE_VOID || el == TILE_DOOR);
 }
