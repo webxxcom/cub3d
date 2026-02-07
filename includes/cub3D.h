@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/06 19:02:34 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/07 17:05:57 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ void			process_keypress(t_game *const game, int key);
 
 // Game
 void			start_game(t_game *game, const char *filename);
-void			exit_game(char *error, t_game *game, char **map);
+void			exit_game(char *error, t_game *game);
 void 			game_cleanup(t_game *game);
 
 // Cleanups

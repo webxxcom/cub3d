@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:05:45 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 16:36:48 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:06:11 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	parse_decoration(t_game *g, char *line)
 				res = parse_light_decoration(g, fields + 1);
 			else if (!ft_strcmp(fields[0], "SPRITE"))
 				res = parse_sprite_decoration(g, fields + 1);
+			else
+				return (ft_free_matrix(fields), error_found(ERROR_UKNOWN_DECOR_TYPE));
 			ft_free_matrix(fields);
 		}
 		else
@@ -68,7 +70,7 @@ int	read_decorations(t_game *g, int fd)
 	char	*l;
 
 	res = 0;
-	while (1)
+	while (!res)
 	{
 		l = ft_get_next_line(fd);
 		if (!l)

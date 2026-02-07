@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 14:03:28 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 17:45:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,12 @@ static int	read_section_by_section(t_game *g, t_list **ls, int fd)
 	int32_t	sect_count;
 
 	sect_count = 3;
-	while (sect_count)
+	while (1)
 	{
 		l = ft_get_next_line(fd);
 		if (!l)
-		{
-			printf(".cub misses some configurations\n");
-			exit(1); // ! HARDCODE
-		}
-		if (!line_is_whitespace(l))
+			break ;
+		if (!line_is_whitespace(l) && *l != '#')
 		{
 			if (ft_strcmp(l, "[TILES]\n") == 0)
 			{
@@ -113,15 +110,13 @@ static int	read_section_by_section(t_game *g, t_list **ls, int fd)
 					return (freenull(&l), 1);
 			}
 			else
-			{
-				printf("unknown configuration occured in .cub file: %s\n", l);
-				free(l);
-				return (1);
-			}
+				return (freenull(&l), error_found(ERROR_UNKNOW_CONFIGURATION));
 			--sect_count;
 		}
 		freenull(&l);
 	}
+	if (sect_count != 0)
+		return (error_found(ERROR_TOO_FEW_CONFIGURATIONS));
 	return (0);
 }
 

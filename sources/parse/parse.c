@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 13:10:16 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 17:33:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	parse(t_game *g, const char *map_file)
 	{
 		if (list)
 			ft_lstclear(&list, free);
-		exit_game(NULL, g, NULL);
+		exit_game(NULL, g);
 	}
 	ft_lstclear(&list, free);
 }

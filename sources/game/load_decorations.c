@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_decorations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 19:09:37 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/04 14:57:50 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/07 17:06:17 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	load_door(t_game *g, t_decoration *door, t_tile *tile)
 	tile->sides[3] = door;
 	door->animation = init_animation(g, door->texture_path);
 	if (!door->animation)
-		exit_game("load_door", g, NULL);
+		exit_game("load_door", g);
 	door->texture = animation_get_current_image(door->animation);
 	door->update = door_update;
 	door->interact = door_interact;
@@ -33,7 +33,7 @@ void	load_wall_decor(t_game *g, t_decoration *wall, t_tile *tile)
 	(void)g;
 	wall->animation = init_animation(g, wall->texture_path);
 	if (!wall->animation)
-		exit_game("load_wall_decor", g, NULL);
+		exit_game("load_wall_decor", g);
 	wall->texture = animation_get_current_image(wall->animation);
 	wall->update = anim_def_update;
 	tile->sides[wall->direction] = wall;
@@ -46,7 +46,7 @@ void	load_sprite(t_game *g, t_sprite *sprite)
 	if (!sprite->animation)
 	{
 		ft_printf("unable to load: %s\n", sprite->texture_path);
-		exit_game("load_sprite", g, NULL);
+		exit_game("load_sprite", g);
 	}
 	freenull(&sprite->texture_path);
 	sprite->texture = animation_get_current_image(sprite->animation);

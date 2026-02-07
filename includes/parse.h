@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:35:22 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 16:31:35 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 17:57:32 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	find_and_set_player_pos(t_game *g, char *l, int j);
 char	*remove_nl(char *el);
 char	**get_chars_map(t_map *map);
 int 	error_found(char *error);
-
-t_vec2f	extract_posf(t_game *const g, char *fields[]);
 
 bool	is_valid_mapelement(int el);
 bool	is_player_tile(int el);
