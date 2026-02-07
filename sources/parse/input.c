@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 12:26:05 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:03:28 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	read_tiles(t_game *game, int fd, int el_count)
 			if (els)
 			{
 				if (els[0][0] != '\n')
-					exit_status = validate_element(game, els, &el_count);
+					exit_status = validate_tile_texture(game, els, &el_count);
 				ft_free_matrix(els);
 			}
 			else
@@ -125,8 +125,6 @@ static int	read_section_by_section(t_game *g, t_list **ls, int fd)
 	return (0);
 }
 
-
-
 int		read_file(t_game *game, t_list **list, const char *map_file)
 {
 	int	res;
@@ -138,7 +136,5 @@ int		read_file(t_game *game, t_list **list, const char *map_file)
 		return error_found(ERROR_OPEN_FILE_FAILED);
 	res = read_section_by_section(game, list, fd);
 	close(fd);
-	if (errno)
-		return (error_found(ERROR_READ_FILE_FAILED));
 	return (res);
 }

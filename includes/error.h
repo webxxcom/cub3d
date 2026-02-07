@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:47:00 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 13:04:17 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:23:58 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@
 # define ERROR_PLAYER_NOT_FOUND "Invalid map: Player not found"
 # define ERROR_MULTIPLE_PLAYERS_FOUND "Invalid map: Multiple players found"
 # define ERROR_WALL "Invalid map: Incomplete wall"
+# define ERROR_LIGHT_PARSING "Misconfiguration for light color"
 
 #endif

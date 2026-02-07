@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:05:45 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/06 18:23:14 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:36:48 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,13 @@ int	read_decorations(t_game *g, int fd)
 	int		res;
 	char	*l;
 
-	l = ft_get_next_line(fd);
-	if (l)
-		free(l);
 	res = 0;
 	while (1)
 	{
 		l = ft_get_next_line(fd);
 		if (!l)
 			break ;
-		if (!line_is_whitespace(l))
+		if (!line_is_whitespace(l) && *l != '#')
 			res = parse_decoration(g, remove_nl(l));
 		freenull(&l);
 	}

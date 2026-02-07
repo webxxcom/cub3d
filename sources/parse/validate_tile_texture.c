@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_elements.c                                :+:      :+:    :+:   */
+/*   validate_tile_texture.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 12:27:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 14:17:36 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ char	*remove_nl(char *el)
 	return (el);
 }
 
-int	validate_element(t_game *game, char **elements, int *element_count)
+int	validate_tile_texture(t_game *game, char **elements, int *element_count)
 {
-	if (!elements[1] || access(elements[1], F_OK | R_OK) == 0) // ! ACCESS is forbidden
+	if (!elements[1])
 		return error_found(ERROR_TEXTURE_PATH);
-	else
-		errno = 0;
 	if (!ft_strcmp(elements[0], "NO") && !game->paths.north)
 		game->paths.north = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "SO") && !game->paths.south)
@@ -43,20 +41,4 @@ int	validate_element(t_game *game, char **elements, int *element_count)
 		return (error_found(ERROR_INVALID_IDENTIFIER));
 	--*element_count;
 	return (0);
-}
-
-inline int	error_found(char *error)
-{
-	if (errno)
-		printf("%s: %s\n", error, strerror(errno));
-	else
-		printf("%s\n", error);
-	return (1);
-}
-
-inline bool	is_valid_mapelement(int el)
-{
-	return (el == TILE_FLOOR || el == TILE_WALL || el == TILE_PLAYER_N
-		|| el == TILE_PLAYER_S || el == TILE_PLAYER_E || el == TILE_PLAYER_W
-		|| el == TILE_VOID || el == TILE_DOOR);
 }
