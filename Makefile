@@ -80,6 +80,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) a.log
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all

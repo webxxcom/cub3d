@@ -32,13 +32,6 @@
     fun:_X*
 
 }
-{
-   leak name4
-   Memcheck:Param
-   writev(vector[0])
-   fun:writev
-   ...
-}
 
 {
    name22
