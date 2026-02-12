@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mvement_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:44 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/06 15:03:18 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:57:35 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	move(t_game *const g, t_vec2f dir_vec)
 	if (is_walkable(g, pl->pos.x, pl->pos.y + delta.y * pl->radius * 2))
 		pl->pos.y += delta.y * pl->speed;
 }
-#include <stdio.h>
+
 void	handle_movement(t_game *const g)
 {
 	const t_vec2f	plane_norm = vec2f_normalize(g->cam.plane);

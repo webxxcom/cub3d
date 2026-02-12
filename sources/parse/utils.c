@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:05:45 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 18:06:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 10:18:56 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int	parse_decoration(t_game *g, char *line)
 			else if (!ft_strcmp(fields[0], "SPRITE"))
 				res = parse_sprite_decoration(g, fields + 1);
 			else
-				return (ft_free_matrix(fields), error_found(ERROR_UKNOWN_DECOR_TYPE));
+				return (ft_free_matrix(fields), error_found("Unknown decor"));
 			ft_free_matrix(fields);
 		}
 		else
-			ft_printf("INFO: The line %s for decoration was not parsed due to unexpected error\n", line);
+			ft_printf("INFO: The line %s for decoration wasn't parsed\n", line);
 	}
 	return (res);
 }

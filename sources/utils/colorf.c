@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colorf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 18:23:09 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/06 14:18:02 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:38:58 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ inline t_colorf	colorf_from_uint(uint32_t color)
 
 inline uint32_t	colorf_to_uint(t_colorf colorf)
 {
-	return (RGB(
-		(int)(fminf(1.f, colorf.r) * 255),
-		(int)(fminf(1.f, colorf.g) * 255),
-		(int)(fminf(1.f, colorf.b) * 255)
-	));
+	int	r;
+	int	g;
+	int	b;
+
+	r = (int)(fminf(1.f, colorf.r) * 255);
+	g = (int)(fminf(1.f, colorf.g) * 255);
+	b = (int)(fminf(1.f, colorf.b) * 255);
+	return (rgb(r, g, b));
 }
 
 inline t_colorf	colorf_from_rgbf(float r, float g, float b)
@@ -50,5 +53,5 @@ inline t_colorf	colorf_init(void)
 
 inline uint32_t	colorf_from_rgbf_to_uint(float r, float g, float b)
 {
-	return (RGB((int)(r * 255.f), (int)(g * 255.f), (int)(b * 255.f)));
+	return (rgb((int)(r * 255.f), (int)(g * 255.f), (int)(b * 255.f)));
 }

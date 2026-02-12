@@ -3,41 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   decoration_parse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/07 18:02:43 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 10:23:53 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	parse_direction(char *dir, t_txtres_sides *side)
-{
-	if (ft_strcmp(dir, "SOUTH") == 0)
-		return (*side = SOUTH, 0);
-	if (ft_strcmp(dir, "EAST") == 0)
-		return (*side = EAST, 0);
-	if (ft_strcmp(dir, "WEST") == 0)
-		return (*side = WEST, 0);
-	if (ft_strcmp(dir, "NORTH") == 0)
-		return (*side = NORTH, 0);
-	return (error_found(ERROR_DECOR_DIR));
-}
-
-static bool		pos_is_parseable(char *field)
-{
-	while (ft_isspace(*field))
-		++field;
-	if (*field == '-' || *field == '+')
-		++field;
-	return (ft_isdigit(*field));
-}
-
 static int	extract_pos(t_vec2i *pos, char *fields[])
 {
 	if (!pos_is_parseable(fields[0]) || !pos_is_parseable(fields[1]))
-		return error_found("Position is not parseable");
+		return (error_found("Position is not parseable"));
 	pos->x = ft_strtoi(fields[0], NULL);
 	pos->y = ft_strtoi(fields[1], NULL);
 	if (pos->x < 0 || pos->y < 0 || errno == ERANGE)
@@ -60,9 +38,9 @@ int	parse_normal_wall_decoration(t_game *g, char *fields[])
 
 	if (!fields || !fields[0] || !fields[1] || !fields[2])
 		return (error_found(ERROR_FEW_ATTRIBUTES_WALL));
-	ft_memset(&decor, 0, sizeof (decor));
-	if (extract_pos(&decor.pos, fields)
-		|| parse_direction(fields[3], &decor.direction))
+	ft_memset(&decor, 0, sizeof(decor));
+	if (extract_pos(&decor.pos, fields) || parse_direction(fields[3],
+			&decor.direction))
 		return (1);
 	decor.texture_path = ft_strdup(fields[2]);
 	if (!decor.texture_path)
@@ -78,7 +56,7 @@ int	parse_door_decoration(t_game *g, char *fields[])
 
 	if (!fields || !fields[0] || !fields[1] || !fields[2])
 		return (error_found(ERROR_FEW_ATTRIBUTES_DOOR));
-	ft_memset(&decor, 0, sizeof (t_decoration));
+	ft_memset(&decor, 0, sizeof(t_decoration));
 	decor.type = DECOR_DOOR;
 	if (extract_pos(&decor.pos, fields))
 		return (1);
@@ -95,7 +73,7 @@ int	parse_sprite_decoration(t_game *g, char *fields[])
 
 	if (!fields || !fields[0] || !fields[1] || !fields[2])
 		return (error_found(ERROR_FEW_ATTRIBUTES_SPRITE));
-	ft_memset(&sprite, 0, sizeof (sprite));
+	ft_memset(&sprite, 0, sizeof(sprite));
 	if (extract_posf(fields, &sprite.pos))
 		return (1);
 	sprite.texture_path = ft_strdup(fields[2]);
@@ -105,5 +83,3 @@ int	parse_sprite_decoration(t_game *g, char *fields[])
 	array_push(&g->sprites, &sprite);
 	return (0);
 }
-
-

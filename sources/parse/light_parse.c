@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:57:05 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/07 17:48:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:38:58 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	consume_color(int *col, const char **p, bool expect_coma)
 {
 	char	*end;
-	
+
 	errno = 0;
 	*col = ft_strtoi(*p, &end);
 	if (errno == ERANGE || end == *p || *col < 0 || *col > 255)
@@ -42,7 +42,7 @@ static int	extract_light_color(t_colorf *color, const char *field)
 		|| consume_color(&g, &field, true)
 		|| consume_color(&b, &field, false))
 		return (1);
-	*color = colorf_from_uint(RGB(r, g, b));
+	*color = colorf_from_uint(rgb(r, g, b));
 	return (0);
 }
 

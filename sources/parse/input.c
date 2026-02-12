@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:34:14 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 17:45:51 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:57:32 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,6 @@ static int	read_tiles(t_game *game, int fd, int el_count)
 	return ((el_count != 0) || (exit_status != 0));
 }
 
-static int	save_line(t_list **list, char *line, t_list *new)
-{
-	if (!new)
-	{
-		free(line);
-		return (0);
-	}
-	ft_lstadd_back(list, new);
-	return (1);
-}
-
 static int	read_map(t_game *game, t_list **list, int fd)
 {
 	t_list	*new;
@@ -65,20 +54,31 @@ static int	read_map(t_game *game, t_list **list, int fd)
 		line = ft_get_next_line(fd);
 		if (!line)
 			break ;
-		if (line_is_whitespace(line) || line [0] == '[')
+		if (line_is_whitespace(line) || line[0] == '[')
 		{
 			free(line);
-			if (!new)
-				continue ;
-			else
+			if (new)
 				break ;
+			continue ;
 		}
 		find_and_set_player_pos(game, line, j++);
 		new = ft_lstnew(line);
-		if (!save_line(list, line, new))
-			break ;
+		if (!new)
+			return (free(line), 0);
+		ft_lstadd_back(list, new);
 	}
 	return (0);
+}
+
+static int	dispatch_section(t_game *g, t_list **ls, int fd, char *l)
+{
+	if (ft_strcmp(l, "[TILES]\n") == 0)
+		return (read_tiles(g, fd, 6));
+	else if (ft_strcmp(l, "[MAP]\n") == 0)
+		return (read_map(g, ls, fd));
+	else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)
+		return (read_decorations(g, fd));
+	return (error_found(ERROR_UNKNOW_CONFIGURATION));
 }
 
 static int	read_section_by_section(t_game *g, t_list **ls, int fd)
@@ -94,23 +94,8 @@ static int	read_section_by_section(t_game *g, t_list **ls, int fd)
 			break ;
 		if (!line_is_whitespace(l) && *l != '#')
 		{
-			if (ft_strcmp(l, "[TILES]\n") == 0)
-			{
-				if (read_tiles(g, fd, 6) != 0)
-					return (freenull(&l), 1);
-			}
-			else if (ft_strcmp(l, "[MAP]\n") == 0)
-			{
-				if (read_map(g, ls, fd) != 0)
-					return (freenull(&l), 1);
-			}
-			else if (ft_strcmp(l, "[DECORATIONS]\n") == 0)
-			{
-				if (read_decorations(g, fd) != 0)
-					return (freenull(&l), 1);
-			}
-			else
-				return (freenull(&l), error_found(ERROR_UNKNOW_CONFIGURATION));
+			if (dispatch_section(g, ls, fd, l) != 0)
+				return (freenull(&l), 1);
 			--sect_count;
 		}
 		freenull(&l);
@@ -120,7 +105,7 @@ static int	read_section_by_section(t_game *g, t_list **ls, int fd)
 	return (0);
 }
 
-int		read_file(t_game *game, t_list **list, const char *map_file)
+int	read_file(t_game *game, t_list **list, const char *map_file)
 {
 	int	res;
 	int	fd;
@@ -128,7 +113,7 @@ int		read_file(t_game *game, t_list **list, const char *map_file)
 	res = 0;
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
-		return error_found(ERROR_OPEN_FILE_FAILED);
+		return (error_found(ERROR_OPEN_FILE_FAILED));
 	res = read_section_by_section(game, list, fd);
 	close(fd);
 	return (res);

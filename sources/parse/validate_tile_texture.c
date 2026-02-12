@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_tile_texture.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 16:57:01 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 14:17:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 10:20:43 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*remove_nl(char *el)
 int	validate_tile_texture(t_game *game, char **elements, int *element_count)
 {
 	if (!elements[1])
-		return error_found(ERROR_TEXTURE_PATH);
+		return (error_found(ERROR_TEXTURE_PATH));
 	if (!ft_strcmp(elements[0], "NO") && !game->paths.north)
 		game->paths.north = ft_strdup(remove_nl(elements[1]));
 	else if (!ft_strcmp(elements[0], "SO") && !game->paths.south)

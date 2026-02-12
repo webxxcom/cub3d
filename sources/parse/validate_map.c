@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 13:35:24 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 10:30:44 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,21 @@ static int	validate_elements(t_map *const map)
 
 static inline bool	is_incomplete_wall(t_map *const map, int32_t i, int32_t j)
 {
-	return (map->tiles[j][i].type != TILE_VOID && map->tiles[j][i].type != TILE_WALL)
-		&& (i == 0 || j == 0 || i == map->size.x - 1 || j == map->size.y - 1
-		|| map->tiles[j - 1][i - 1].type == TILE_VOID	|| map->tiles[j - 1][i].type == TILE_VOID
-		|| map->tiles[j - 1][i + 1].type == TILE_VOID	|| map->tiles[j][i - 1].type == TILE_VOID
-		|| map->tiles[j][i + 1].type == TILE_VOID		|| map->tiles[j + 1][i - 1].type == TILE_VOID
-		|| map->tiles[j + 1][i].type == TILE_VOID		|| map->tiles[j + 1][i + 1].type == TILE_VOID);
+	return ((map->tiles[j][i].type != TILE_VOID
+		&& map->tiles[j][i].type != TILE_WALL) && (i == 0 || j == 0
+			|| i == map->size.x - 1 || j == map->size.y - 1 || map->tiles[j
+			- 1][i - 1].type == TILE_VOID || map->tiles[j
+			- 1][i].type == TILE_VOID || map->tiles[j - 1][i
+			+ 1].type == TILE_VOID || map->tiles[j][i - 1].type == TILE_VOID
+			|| map->tiles[j][i + 1].type == TILE_VOID || map->tiles[j + 1][i
+			- 1].type == TILE_VOID || map->tiles[j + 1][i].type == TILE_VOID
+			|| map->tiles[j + 1][i + 1].type == TILE_VOID));
 }
 
 static int	validate_walls(t_map *const map)
 {
-	int32_t			i;
-	int32_t			j;
+	int32_t	i;
+	int32_t	j;
 
 	j = 0;
 	while (j < map->size.y)

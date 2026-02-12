@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_floor_and_ceiling.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:01:29 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/06 16:01:13 by rkravche         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:30:38 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static inline void	draw_horizontal_line(t_game *g, t_fac *facd)
 				);
 		draw_textured_fac(g, facd, tex_pos, x);
 		facd->floor_pos = vec2f_vtranslate(
-				facd->floor_pos, facd->floorUnitStep);
+				facd->floor_pos, facd->floorunitstep);
 		++x;
 	}
 }
@@ -61,25 +61,25 @@ void	draw_floor_and_ceiling(t_game *g)
 {
 	t_fac	facd;
 
-	facd.rayDir1 = vec2f_construct(g->cam.dir.x - g->cam.plane.x,
+	facd.raydir1 = vec2f_construct(g->cam.dir.x - g->cam.plane.x,
 			g->cam.dir.y - g->cam.plane.y);
-	facd.rayDir2 = vec2f_construct(g->cam.dir.x + g->cam.plane.x,
+	facd.raydir2 = vec2f_construct(g->cam.dir.x + g->cam.plane.x,
 			g->cam.dir.y + g->cam.plane.y);
-	facd.posZ = 0.5 * g->h;
+	facd.posz = 0.5 * g->h;
 	facd.horizon = g->h / 2 + cam_get_pitch(&g->cam);
 	facd.floor_y = facd.horizon + 1;
 	facd.ceiling_y = facd.horizon + 1;
 	while (facd.floor_y < g->h || facd.ceiling_y > 0)
 	{
 		facd.p = facd.floor_y - facd.horizon;
-		facd.rowDist = facd.posZ / facd.p;
-		facd.floorUnitStep = vec2f_construct(
-				facd.rowDist * (facd.rayDir2.x - facd.rayDir1.x) / g->w,
-				facd.rowDist * (facd.rayDir2.y - facd.rayDir1.y) / g->w);
+		facd.rowdist = facd.posz / facd.p;
+		facd.floorunitstep = vec2f_construct(
+				facd.rowdist * (facd.raydir2.x - facd.raydir1.x) / g->w,
+				facd.rowdist * (facd.raydir2.y - facd.raydir1.y) / g->w);
 		facd.floor_pos = vec2f_construct(
-				g->cam.pos.x + facd.rowDist * facd.rayDir1.x,
-				g->cam.pos.y + facd.rowDist * facd.rayDir1.y);
-		facd.shade = 1 / facd.rowDist;
+				g->cam.pos.x + facd.rowdist * facd.raydir1.x,
+				g->cam.pos.y + facd.rowdist * facd.raydir1.y);
+		facd.shade = 1 / facd.rowdist;
 		draw_horizontal_line(g, &facd);
 		++facd.floor_y;
 		--facd.ceiling_y;
