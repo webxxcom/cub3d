@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:08:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/12 17:03:03 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 15:37:33 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ int	main_loop(t_game *g)
 {
 	update(g);
 	game_render(g);
+	mlx_loop_end(g->mlx); // ! LOOP END
 	return (1);
 }

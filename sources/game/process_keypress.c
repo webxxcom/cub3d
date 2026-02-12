@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_keypress.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:39:06 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 12:23:39 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 14:59:34 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	process_keypress(t_game *const g, int key)
 		g->player.speed = g->player.sprint_speed;
 	if (key == KEY_F)
 		player_interact(g);
-	else if (key == KEY_ESC)
+	if (key == KEY_ESC)
 		mlx_loop_end(g->mlx);
 }

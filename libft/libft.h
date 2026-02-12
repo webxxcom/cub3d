@@ -49,6 +49,7 @@ int			ft_tolower(int ch);
 int			ft_atoi(const char *str);
 float		ft_atof(char *str);
 char		*ft_itoa(int num);
+int			ft_strtoi(const char *str, char **endptr);
 
 // String
 

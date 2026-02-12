@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_dda2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 11:57:13 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/31 14:58:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:19:25 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	intermediate_dda(
 			move_by_y(dda, wall_data);
 		if (g->map.tiles[dda->map_pos.y][dda->map_pos.x].type == TILE_DOOR)
 			add_crossed_texture(g, dda, wall_data, dda_res);
-		else if (g->map.tiles[dda->map_pos.y][dda->map_pos.x].type != '0')
+		else if (g->map.tiles[dda->map_pos.y][dda->map_pos.x].type != TILE_FLOOR)
 			hit = true;
 	}
 	if (dda->ray_dir.x < 0 && wall_data->side == WEST)

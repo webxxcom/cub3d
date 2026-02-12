@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:35:39 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 14:58:56 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/07 17:33:51 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	validate_filename(t_game *game, const char *filename)
+static int	validate_filename(const char *filename)
 {
 	char	*basename;
-	int		len;
+	size_t	len;
 
 	basename = ft_strrchr(filename, '/');
 	if (!basename)
@@ -24,9 +24,10 @@ static void	validate_filename(t_game *game, const char *filename)
 		basename++;
 	len = ft_strlen(basename);
 	if (len == 4 && !ft_strcmp(basename + len - 4, ".cub"))
-		exit_game(ERROR_INVALID_FILE, game, NULL);
+		return (error_found(ERROR_INVALID_FILE));
 	if (len < 4 || ft_strcmp(basename + len - 4, ".cub"))
-		exit_game(ERROR_FILE_EXTENSION, game, NULL);
+		return (error_found(ERROR_FILE_EXTENSION));
+	return (0);
 }
 
 static size_t	find_longest(t_list *l)
@@ -45,64 +46,65 @@ static size_t	find_longest(t_list *l)
 	return (longest);
 }
 
-static void	save_map(t_game *game, int j, char *l, const size_t longest)
+static int	save_map(t_game *g, size_t j, char *l, size_t const longest)
 {
 	size_t	i;
 
 	i = 0;
-	game->map.tiles[j] = ft_calloc(longest, sizeof (t_tile));
-	if (!game->map.tiles[j])
-	{
-		printf("oops, malloc failed\n");
-		exit(1); // ! HARDCODED EXIT
-	}
+	g->map.tiles[j] = ft_calloc(longest, sizeof (t_tile));
+	if (!g->map.tiles[j])
+		return (error_found(ERROR_MALLOC_FAILED));
 	while (l[i] && l[i] != '\n')
 	{
-		game->map.tiles[j][i].type = l[i];
+		g->map.tiles[j][i].type = l[i];
 		++i;
 	}
 	while (i < longest)
 	{
-		game->map.tiles[j][i].type = ' ';
+		g->map.tiles[j][i].type = TILE_VOID;
 		++i;
 	}
+	return (0);
 }
 
-static void	load_map(t_game *game, t_list *list)
+static int	load_map(t_game *game, t_list *list)
 {
 	const size_t	longest = find_longest(list);
 	const size_t	map_height = ft_lstsize(list);
-	int				j;
-	char			*l;
+	size_t			j;
 
 	if (!list)
-		exit_game(ERROR_EMPTY_FILE, game, NULL);
-	game->map.tiles = ft_calloc(map_height, sizeof(t_tile *));
+		return (error_found(ERROR_EMPTY_FILE));
+	game->map.tiles = ft_calloc(map_height, sizeof (t_tile *));
 	if (!game->map.tiles)
-	{
-		ft_lstclear(&list, free);
-		exit_game(ERROR_PARSE_MAP_FAILED, game, NULL);
-	}
+		return (error_found(ERROR_MALLOC_FAILED));
+	game->map.size.x = longest;
+	game->map.size.y = map_height;
 	j = 0;
 	while (list)
 	{
-		l = list->content;
-		save_map(game, j, l, longest);
+		if (save_map(game, j, list->content, longest))
+			return (1);
 		list = list->next;
 		++j;
 	}
-	game->map.size.x = longest;
-	game->map.size.y = map_height;
+	return (0);
 }
 
-void	parse(t_game *game, const char *map_file)
+// list is a temporary buffer; load_map deep-copies all data
+void	parse(t_game *g, const char *map_file)
 {
 	t_list	*list;
 
 	list = NULL;
-	validate_filename(game, map_file);
-	read_file(game, &list, map_file);
-	load_map(game, list);
+	if (validate_filename(map_file)
+		|| read_file(g, &list, map_file)
+		|| load_map(g, list)
+		|| validate_map(g))
+	{
+		if (list)
+			ft_lstclear(&list, free);
+		exit_game(NULL, g);
+	}
 	ft_lstclear(&list, free);
-	validate_map(game);
 }

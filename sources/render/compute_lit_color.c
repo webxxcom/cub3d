@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_lit_color.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 19:01:02 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/02 17:32:24 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:57:06 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ static inline t_colorf	process_light(t_light *l, t_vec2f obs_pos)
 	res = colorf_init();
 	light_bonus = l->strength / (1.f + dx * dx + dy * dy);
 	is_active = light_bonus > 0.05f;
-	res.r += l->color.r * light_bonus * is_active;
-	res.g += l->color.g * light_bonus * is_active;
-	res.b += l->color.b * light_bonus * is_active;
+	if (is_active)
+	{
+		res.r += l->color.r * light_bonus * is_active;
+		res.g += l->color.g * light_bonus * is_active;
+		res.b += l->color.b * light_bonus * is_active;
+	}
 	return (res);
 }
 

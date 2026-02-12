@@ -6,18 +6,19 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:08 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/12 16:13:08 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 17:13:34 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "raycaster.h"
 
-static void	load_texture(t_game *g, char *path, size_t i)
+static void	load_texture(t_game *g, char **path, size_t i)
 {
-	g->textures[i] = im_load_from_xpmfile(g->mlx, path);
+	g->textures[i] = im_load_from_xpmfile(g->mlx, *path);
 	if (!g->textures[i])
-		exit_game("load_texture", g, NULL);
+		exit_game("load_texture", g);
+	freenull(path);
 }
 
 static void	load_textures(t_game *g)
@@ -28,29 +29,23 @@ static void	load_textures(t_game *g)
 	i = 0;
 	g->textures = ft_calloc(tex_count + 1, sizeof (t_image *));
 	if (!g->textures)
-		exit_game("load_textures", g, NULL);
-	load_texture(g, g->paths.north, i++);
-	load_texture(g, g->paths.west, i++);
-	load_texture(g, g->paths.south, i++);
-	load_texture(g, g->paths.east, i++);
-	load_texture(g, g->paths.floor, i++);
-	load_texture(g, g->paths.ceiling, i++);
-	freenull(&g->paths.north);
-	freenull(&g->paths.west);
-	freenull(&g->paths.south);
-	freenull(&g->paths.east);
-	freenull(&g->paths.floor);
-	freenull(&g->paths.ceiling);
+		exit_game("load_textures", g);
+	load_texture(g, &g->paths.north, i++);
+	load_texture(g, &g->paths.west, i++);
+	load_texture(g, &g->paths.south, i++);
+	load_texture(g, &g->paths.east, i++);
+	load_texture(g, &g->paths.floor, i++);
+	load_texture(g, &g->paths.ceiling, i++);
 }
 
 static void	init_mlx(t_game *g)
 {
 	g->mlx = mlx_init();
 	if (!g->mlx)
-		exit_game(ERROR_MLX_INIT, g, NULL);
+		exit_game(ERROR_MLX_INIT, g);
 	g->win = mlx_new_window(g->mlx, g->w, g->h, "cub3D");
 	if (!g->win)
-		exit_game(ERROR_MLX_WIN, g, NULL);
+		exit_game(ERROR_MLX_WIN, g);
 	g->buffer_image = im_get_empty(g->mlx, g->w, g->h);
 	load_textures(g);
 	load_decorations(g);
@@ -81,7 +76,7 @@ static void	init_game(t_game *g, const char *filename)
 	g->map.decorations = array_init(sizeof (t_decoration));
 	parse(g, filename);
 	g->minimap = minimap_init(g);
-	g->state = GAME_STATE_CUTSCENE; // ! CUTSCENE SET
+	g->state = GAME_STATE_ON; // ! CUTSCENE SET
 	g->cam.dir = g->player.dir;
 	g->cam.plane = g->player.plane;
 	cutscenes_init(g);

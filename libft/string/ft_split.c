@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:02:29 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/27 17:30:00 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:02:35 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**ft_split(const char *str, const char *delims)
 	if (!str)
 		return (NULL);
 	word_count = ft_count_words(str, delims);
-	words = malloc((word_count + 1) * sizeof(*words));
+	words = ft_calloc((word_count + 1),  sizeof(*words));
 	if (!words)
 		return (NULL);
 	words = ft_split_words(words, str, delims, word_count);

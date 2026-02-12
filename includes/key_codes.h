@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_codes.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:06:34 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 12:47:16 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/06 14:50:22 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,23 +98,5 @@
 # define KEY_F10			65479
 # define KEY_F11			65480
 # define KEY_F12			65481
-
-/* ------------------------- Numpad Keys ------------------------- */
-# define KEY_NUM_0
-# define KEY_NUM_1
-# define KEY_NUM_2
-# define KEY_NUM_3
-# define KEY_NUM_4
-# define KEY_NUM_5
-# define KEY_NUM_6
-# define KEY_NUM_7
-# define KEY_NUM_8
-# define KEY_NUM_9
-# define KEY_NUM_PLUS
-# define KEY_NUM_MINUS
-# define KEY_NUM_MULTIPLY
-# define KEY_NUM_DIVIDE
-# define KEY_NUM_ENTER
-# define KEY_NUM_DOT
 
 #endif

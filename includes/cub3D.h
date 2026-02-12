@@ -6,7 +6,7 @@
 /*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/06 00:12:29 by danslav1e        ###   ########.fr       */
+/*   Updated: 2026/02/12 08:54:41 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@
 # define M_PI 3.14159265358979323846
 #endif
 
-#define freenull(p) free(*(p)), *(p) = NULL;
+# define freenull(p) (free(*(p)), *(p) = NULL)
+# define FLOAT_EPSILON 1e-8 
 
 # define TILE_SIZE 64
 # define WINDOW_WIDTH 1000
@@ -267,7 +268,7 @@ void			process_keypress(t_game *const game, int key);
 
 // Game
 void			start_game(t_game *game, const char *filename);
-void			exit_game(char *error, t_game *game, char **map);
+void			exit_game(char *error, t_game *game);
 void 			game_cleanup(t_game *game);
 
 // Cleanups

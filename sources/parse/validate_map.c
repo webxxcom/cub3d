@@ -3,110 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:48:04 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 15:01:41 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/07 13:35:24 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	validate_player(t_game *game, int count, char **map)
+static int	validate_player(size_t count)
 {
 	if (count == 0)
-		exit_game(ERROR_PLAYER_NOT_FOUND, game, map);
+		return (error_found(ERROR_PLAYER_NOT_FOUND));
 	if (count > 1)
-		exit_game(ERROR_MULTIPLE_PLAYERS_FOUND, game, map); // ! LEAKS FOUND, check allocated pointers in stack trace
+		return (error_found(ERROR_MULTIPLE_PLAYERS_FOUND));
+	return (0);
 }
 
-static void	validate_elements(t_game *game, char **map)
+static int	validate_elements(t_map *const map)
 {
-	int		player_count;
+	size_t	player_count;
 	int32_t	i;
-	int32_t	j;	
+	int32_t	j;
 
 	player_count = 0;
-	j = -1;
-	while (++j < game->map.size.y)
+	j = 0;
+	while (j < map->size.y)
 	{
-		i = -1;
-		while (++i < game->map.size.x)
+		i = 0;
+		while (i < map->size.x)
 		{
-			if (map[j][i] != '0' && map[j][i] != '1' && map[j][i] != 'N'
-				&& map[j][i] != 'S' && map[j][i] != 'E' && map[j][i] != 'W'
-				&& map[j][i] != ' ' && map[j][i] != TILE_DOOR)
-				exit_game(ERROR_UNKNOWN_ELEMENT_FOUND, game, map);
-			if (map[j][i] == 'N' || map[j][i] == 'S'
-				|| map[j][i] == 'E' || map[j][i] == 'W')
+			if (!is_valid_mapelement(map->tiles[j][i].type))
+				return (error_found(ERROR_UNKNOWN_ELEMENT_FOUND));
+			else if (is_player_tile(map->tiles[j][i].type))
 			{
-				game->map.tiles[j][i].type = '0';
+				map->tiles[j][i].type = TILE_FLOOR;
 				++player_count;
 			}
-		}
-	}
-	validate_player(game, player_count, map);
-}
-
-static void	validate_borders(t_game *game, char **map)
-{
-	int32_t const	w = game->map.size.x;
-	int32_t const	h = game->map.size.y;
-	int32_t			i;
-	int32_t			j;
-	bool			is_border;
-
-	j = 0;
-	while (j < game->map.size.y)
-	{
-		i = 0;
-		while (i < game->map.size.x)
-		{
-			is_border = (j == 0 || j == h - 1 || i == 0 || i == w - 1);
-			if (is_border && map[j][i] != ' ' && map[j][i] != '1')
-				exit_game(ERROR_WALL, game, map);
 			++i;
 		}
 		++j;
 	}
+	return (validate_player(player_count));
 }
 
-static void	validate_walls(t_game *game, char **map)
+static inline bool	is_incomplete_wall(t_map *const map, int32_t i, int32_t j)
 {
-	int32_t const	h = game->map.size.y;
-	int32_t const	w = game->map.size.x;
+	return (map->tiles[j][i].type != TILE_VOID && map->tiles[j][i].type != TILE_WALL)
+		&& (i == 0 || j == 0 || i == map->size.x - 1 || j == map->size.y - 1
+		|| map->tiles[j - 1][i - 1].type == TILE_VOID	|| map->tiles[j - 1][i].type == TILE_VOID
+		|| map->tiles[j - 1][i + 1].type == TILE_VOID	|| map->tiles[j][i - 1].type == TILE_VOID
+		|| map->tiles[j][i + 1].type == TILE_VOID		|| map->tiles[j + 1][i - 1].type == TILE_VOID
+		|| map->tiles[j + 1][i].type == TILE_VOID		|| map->tiles[j + 1][i + 1].type == TILE_VOID);
+}
+
+static int	validate_walls(t_map *const map)
+{
 	int32_t			i;
 	int32_t			j;
 
 	j = 0;
-	while (j < h)
+	while (j < map->size.y)
 	{
 		i = 0;
-		while (i < w)
+		while (i < map->size.x)
 		{
-			if (map[j][i] != ' ' && map[j][i] != '1')
-			{
-				if (i == 0 || j == 0 || i == w - 1 || j == h - 1)
-					exit_game(ERROR_WALL, game, map);
-				if (map[j - 1][i - 1] == ' ' || map[j - 1][i] == ' '
-					|| map[j - 1][i + 1] == ' ' || map[j][i - 1] == ' '
-					|| map[j][i + 1] == ' ' || map[j + 1][i - 1] == ' '
-					|| map[j + 1][i] == ' ' || map[j + 1][i + 1] == ' ')
-					exit_game(ERROR_WALL, game, map);
-			}
+			if (is_incomplete_wall(map, i, j))
+				return (error_found(ERROR_WALL));
 			++i;
 		}
 		++j;
 	}
+	return (0);
 }
 
-void	validate_map(t_game *game)
+int	validate_map(t_game *const g)
 {
-	char	**map;
-
-	map = get_chars_map(&game->map);
-	validate_elements(game, map);
-	validate_borders(game, map);
-	validate_walls(game, map);
-	ft_free_matrix(map);
+	return (validate_elements(&g->map) || validate_walls(&g->map));
 }

@@ -6,7 +6,7 @@
 /*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 18:21:14 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/19 19:07:19 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/07 16:00:35 by webxxcom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "cub3D.h"
 
+// Color representated as red, green and blue in range [0, 1]
 typedef struct	s_colorf
 {
 	float	r;

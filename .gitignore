@@ -1,6 +1,6 @@
 *.o
 cub3D
-*.json
 mlx/
 *.a
 *.log
+*.swp
