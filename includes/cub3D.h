@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phutran <phutran@student.42prague.com>     +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 16:16:53 by phutran           #+#    #+#             */
-/*   Updated: 2025/11/04 14:57:05 by phutran          ###   ########.fr       */
+/*   Updated: 2026/02/06 00:12:29 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ typedef struct s_cutscene
 
 typedef enum	e_game_state
 {
-	GAME_STATE_CUTSCENE = 0,
+	GAME_STATE_CUTSCENE = 1,
 	GAME_STATE_ON
 }	t_game_state;
 
