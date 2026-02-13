@@ -48,7 +48,7 @@ INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(MLX_DIR)
 RELEASE_FLAGS := -O3 -march=native -ffast-math
 
 # Debug build
-DEBUG_FLAGS := -g -O1 -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined
+DEBUG_FLAGS := -g -O0 -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined
 
 RM			= rm -rf
 

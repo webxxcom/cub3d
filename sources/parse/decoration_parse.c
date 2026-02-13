@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decoration_parse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 11:43:00 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/07 18:02:43 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/13 14:39:11 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	extract_pos(t_vec2i *pos, char *fields[])
 	return (0);
 }
 
-static int	extract_posf(char *fields[], t_vec2f *pos)
+int	extract_posf(char *fields[], t_vec2f *pos)
 {
 	pos->x = ft_atof(fields[0]);
 	pos->y = ft_atof(fields[1]);

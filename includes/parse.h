@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:35:22 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 17:57:32 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/13 14:39:25 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		parse_light_decoration(t_game *g, char *fields[]);
 int		parse_decoration(t_game *g, char *line);
 int		parse_sprite_decoration(t_game *g, char *fields[]);
 int		read_decorations(t_game *g, int fd);
+int	    extract_posf(char *fields[], t_vec2f *pos);
 void	set_player_start_pos(t_game *g, int x, int y, char dir);
 void	find_and_set_player_pos(t_game *g, char *l, int j);
 char	*remove_nl(char *el);

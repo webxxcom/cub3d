@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkravche <rkravche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 15:57:05 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/07 17:48:26 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/13 14:40:15 by rkravche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	parse_light_decoration(t_game *g, char *fields[])
 	t_light			light;
 
 	ft_memset(&light, 0, sizeof (light));
+	if (extract_posf(fields, &light.pos))
+		return (1);
 	light.intensity = ft_atof(fields[2]);
 	light.strength = ft_atof(fields[3]);
 	if (extract_light_color(&light.color, fields[4]))
