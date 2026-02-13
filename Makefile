@@ -16,10 +16,12 @@ SRCS		= main.c \
 				$(SRC_FLDR)/game/utils.c 			$(SRC_FLDR)/game/update.c \
 				$(SRC_FLDR)/game/decoration.c 		$(SRC_FLDR)/game/game_cleanup.c \
 				$(SRC_FLDR)/game/load_decorations.c	$(SRC_FLDR)/game/process_keypress.c \
+				$(SRC_FLDR)/game/game_cleanup_utils.c \
 			  $(SRC_FLDR)/parse/parse.c 			$(SRC_FLDR)/parse/input.c \
 			    $(SRC_FLDR)/parse/validate_map.c	$(SRC_FLDR)/parse/validate_tile_texture.c \
 				$(SRC_FLDR)/parse/utils.c 			$(SRC_FLDR)/parse/decoration_parse.c \
 				$(SRC_FLDR)/parse/tile_validate.c	$(SRC_FLDR)/parse/light_parse.c \
+				$(SRC_FLDR)/parse/decoration_parse_utils.c \
 			  $(SRC_FLDR)/render/render.c 			$(SRC_FLDR)/render/put_minimap.c \
 			    $(SRC_FLDR)/render/perform_dda.c	$(SRC_FLDR)/render/draw_keybindings.c \
 			  	$(SRC_FLDR)/render/draw_vert_line.c $(SRC_FLDR)/render/draw_floor_and_ceiling.c \

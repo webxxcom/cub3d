@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:44:27 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/11/02 19:32:06 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:32:37 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_vec2f	vec2f_translate(t_vec2f const vec2f, float dx, float dy);
 t_vec2f	vec2f_vtranslate(t_vec2f const left, t_vec2f const right);
 
 /**
- * Return the normalized vector from the parameter by dividing each axis by magnitude
+ * Return the normalized vector from the parameter by dividing 
+ * each axis by magnitude
  */
 t_vec2f	vec2f_normalize(t_vec2f const vec2f);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decorations.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 10:24:25 by webxxcom          #+#    #+#             */
-/*   Updated: 2026/02/07 16:25:30 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:20:59 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef enum e_decor_types
 	DECOR_WALL = 0,
 	DECOR_LIGHT,
 	DECOR_DOOR
-}	t_decor_types;
+}					t_decor_types;
 
 typedef struct s_decoration
 {
@@ -35,15 +35,15 @@ typedef struct s_decoration
 	char			*looking_at_text;
 	void			(*interact)(t_game *const, struct s_decoration *);
 	void			(*update)(t_game *const, struct s_decoration *);
-}	t_decoration;
+}					t_decoration;
 
 typedef struct s_light
 {
-	t_vec2f		pos;
-	float		intensity;
-	float		strength;
-	t_colorf	color;
-	char		*interact_text;
-}	t_light;
+	t_vec2f			pos;
+	float			intensity;
+	float			strength;
+	t_colorf		color;
+	char			*interact_text;
+}					t_light;
 
 #endif

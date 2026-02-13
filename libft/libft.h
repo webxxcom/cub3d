@@ -98,8 +98,8 @@ void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_lst_free(t_list *list);
-void		ft_lst_remove_if(t_list **lst, void *data_ref, int (*cmp)(void *, void *),
-				void (*del)(void *));
+void		ft_lst_remove_if(t_list **lst, void *data_ref,
+				int (*cmp)(void *, void *), void (*del)(void *));
 
 // Print
 

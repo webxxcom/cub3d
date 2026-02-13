@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst_remove_if.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:29:18 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/09 12:51:36 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:24:46 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_lst_remove_if(t_list **lst, void *data_ref,
 	t_list	*next;
 
 	if (!lst || !*lst || !cmp || !del)
-		return;
+		return ;
 	curr = *lst;
 	prev = NULL;
 	while (curr)

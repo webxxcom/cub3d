@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:53:57 by phutran           #+#    #+#             */
-/*   Updated: 2025/10/28 21:13:02 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:24:14 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_get_next_line(int fd)
 		if (*ptr == '\n')
 		{
 			ptr++;
-			break;
+			break ;
 		}
 		ptr++;
 	}

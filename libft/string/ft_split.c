@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:02:29 by phutran           #+#    #+#             */
-/*   Updated: 2026/02/07 16:02:35 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:28:22 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int is_delim(char c, const char *delims)
+static int	is_delim(char c, const char *delims)
 {
-    while (*delims)
-        if (*delims++ == c)
-            return (1);
-    return (0);
+	while (*delims)
+		if (*delims++ == c)
+			return (1);
+	return (0);
 }
 
 static size_t	ft_count_words(const char *str, const char *delims)
@@ -43,9 +43,10 @@ static size_t	ft_count_words(const char *str, const char *delims)
 
 static char	*ft_strndup(const char *str, size_t count)
 {
-	char *const dup = ft_calloc(count + 1, sizeof(*dup));
-	size_t		i;
+	size_t	i;
+	char	*dup;
 
+	dup = ft_calloc(count + 1, sizeof(*dup));
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -58,12 +59,12 @@ static char	*ft_strndup(const char *str, size_t count)
 	return (dup);
 }
 
-static char	**ft_split_words(
-		char **arr, const char *str, const char *delims, size_t count)
+static char	**ft_split_words(char **arr, const char *str, const char *delims,
+		size_t count)
 {
 	size_t	i;
 	size_t	word_len;
-	
+
 	i = 0;
 	while (i < count)
 	{
@@ -90,7 +91,7 @@ char	**ft_split(const char *str, const char *delims)
 	if (!str)
 		return (NULL);
 	word_count = ft_count_words(str, delims);
-	words = ft_calloc((word_count + 1),  sizeof(*words));
+	words = ft_calloc((word_count + 1), sizeof(*words));
 	if (!words)
 		return (NULL);
 	words = ft_split_words(words, str, delims, word_count);

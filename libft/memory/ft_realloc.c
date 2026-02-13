@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: webxxcom <webxxcom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danslav1e <danslav1e@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 00:22:01 by webxxcom          #+#    #+#             */
-/*   Updated: 2025/10/18 00:22:11 by webxxcom         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:26:15 by danslav1e        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
+	size_t	copy_size;
 
 	if (new_size == 0)
 	{
@@ -26,7 +27,10 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		return (NULL);
 	if (ptr)
 	{
-		size_t	copy_size = old_size < new_size ? old_size : new_size;
+		if (old_size < new_size)
+			copy_size = old_size;
+		else
+			copy_size = new_size;
 		ft_memcpy(new_ptr, ptr, copy_size);
 		free(ptr);
 	}
